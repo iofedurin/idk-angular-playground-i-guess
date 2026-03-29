@@ -14,7 +14,9 @@ import { UserFormComponent } from '@widgets/user-form';
 export class UserEditPage implements OnInit {
   private readonly router = inject(Router);
   private readonly store = inject(UsersStore);
-  protected readonly userId = inject(ActivatedRoute).snapshot.paramMap.get('id')!;
+  private readonly route = inject(ActivatedRoute);
+  protected readonly appId = this.route.snapshot.paramMap.get('appId')!;
+  protected readonly userId = this.route.snapshot.paramMap.get('id')!;
 
   protected readonly model = signal<UserFormModel>({
     username: '',
@@ -34,7 +36,7 @@ export class UserEditPage implements OnInit {
     onSubmit: async () => {
       const { name, ...rest } = this.model();
       await this.store.update(this.userId, { ...rest, firstName: name.firstName, lastName: name.lastName });
-      await this.router.navigate(['/users']);
+      await this.router.navigate(['/app', this.appId, 'users']);
     },
   });
 

@@ -24,5 +24,9 @@ export const JobTitleStore = signalStore(
         patchState(store, { loading: false, error: 'Failed to load job titles' });
       }
     },
+
+    reset(): void {
+      patchState(store, { jobTitles: [], loading: false, error: null });
+    },
   })),
 );

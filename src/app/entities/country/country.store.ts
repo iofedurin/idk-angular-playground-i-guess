@@ -24,5 +24,9 @@ export const CountryStore = signalStore(
         patchState(store, { loading: false, error: 'Failed to load countries' });
       }
     },
+
+    reset(): void {
+      patchState(store, { countries: [], loading: false, error: null });
+    },
   })),
 );

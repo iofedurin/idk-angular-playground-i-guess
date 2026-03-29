@@ -1,7 +1,7 @@
 <div class="container mx-auto p-6">
   <div class="flex items-center justify-between mb-6">
     <h1 class="text-2xl font-bold">Users</h1>
-    <a routerLink="/users/new" class="btn btn-primary">Add User</a>
+    <a [routerLink]="['/app', appId, 'users', 'new']" class="btn btn-primary">Add User</a>
   </div>
 
   @if (store.loading()) {
@@ -45,7 +45,7 @@
               </td>
               <td>
                 <div class="flex gap-2">
-                  <a [routerLink]="['/users', user.id]" class="btn btn-sm btn-ghost">Edit</a>
+                  <a [routerLink]="['/app', appId, 'users', user.id]" class="btn btn-sm btn-ghost">Edit</a>
                   <app-user-delete-action [userId]="user.id" />
                 </div>
               </td>

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { createUserForm, UserFormModel, UserRole, UsersStore } from '@entities/user';
 import { UserFormComponent } from '@widgets/user-form';
 
@@ -14,6 +14,7 @@ import { UserFormComponent } from '@widgets/user-form';
 export class UserCreatePage {
   private readonly router = inject(Router);
   private readonly store = inject(UsersStore);
+  private readonly appId = inject(ActivatedRoute).snapshot.paramMap.get('appId')!;
 
   protected readonly model = signal<UserFormModel>({
     username: '',
@@ -32,7 +33,7 @@ export class UserCreatePage {
     onSubmit: async () => {
       const { name, ...rest } = this.model();
       await this.store.create({ ...rest, firstName: name.firstName, lastName: name.lastName });
-      await this.router.navigate(['/users']);
+      await this.router.navigate(['/app', this.appId, 'users']);
     },
   });
 }

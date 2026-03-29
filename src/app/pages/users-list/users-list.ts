@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { UserRole, UsersStore } from '@entities/user';
 import { UserDeleteActionComponent } from '@features/user-delete';
 
@@ -11,6 +11,7 @@ import { UserDeleteActionComponent } from '@features/user-delete';
 })
 export class UsersListComponent implements OnInit {
   readonly store = inject(UsersStore);
+  protected readonly appId = inject(ActivatedRoute).snapshot.paramMap.get('appId')!;
 
   ngOnInit() {
     this.store.loadAll();

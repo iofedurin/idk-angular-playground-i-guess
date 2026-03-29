@@ -24,5 +24,9 @@ export const DepartmentStore = signalStore(
         patchState(store, { loading: false, error: 'Failed to load departments' });
       }
     },
+
+    reset(): void {
+      patchState(store, { departments: [], loading: false, error: null });
+    },
   })),
 );

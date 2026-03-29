@@ -47,5 +47,9 @@ export const UsersStore = signalStore(
       await lastValueFrom(api.remove(id));
       patchState(store, removeEntity(id));
     },
+
+    reset(): void {
+      patchState(store, setAllEntities([] as User[]), { loading: false, error: null });
+    },
   })),
 );

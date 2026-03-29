@@ -1,4 +1,8 @@
 {
+  "apps": [
+    { "id": "acme", "name": "Acme Corp" },
+    { "id": "globex", "name": "Globex Inc" }
+  ],
   "users": [
     {
       "id": "1",
@@ -12,7 +16,8 @@
       "jobTitle": "senior-frontend",
       "role": "editor",
       "active": true,
-      "bio": "Frontend engineer with a passion for clean UI."
+      "bio": "Frontend engineer with a passion for clean UI.",
+      "appId": "acme"
     },
     {
       "id": "2",
@@ -26,7 +31,8 @@
       "jobTitle": "ux-designer",
       "role": "editor",
       "active": true,
-      "bio": "UX designer focused on accessibility."
+      "bio": "UX designer focused on accessibility.",
+      "appId": "acme"
     },
     {
       "id": "3",
@@ -40,7 +46,8 @@
       "jobTitle": "tech-lead",
       "role": "admin",
       "active": true,
-      "bio": ""
+      "bio": "",
+      "appId": "acme"
     },
     {
       "id": "4",
@@ -54,7 +61,8 @@
       "jobTitle": "product-manager",
       "role": "viewer",
       "active": false,
-      "bio": "Product manager, currently on leave."
+      "bio": "Product manager, currently on leave.",
+      "appId": "acme"
     },
     {
       "id": "5",
@@ -68,10 +76,14 @@
       "jobTitle": "backend-engineer",
       "role": "editor",
       "active": true,
-      "bio": "Backend engineer, Node.js and Go."
+      "bio": "Backend engineer, Node.js and Go.",
+      "appId": "acme"
     },
     {
+      "id": "WZQk9HFF1II",
       "username": "jroger",
+      "firstName": "John",
+      "lastName": "Roger",
       "email": "john@roger.io",
       "age": 67,
       "country": "BR",
@@ -79,148 +91,119 @@
       "jobTitle": "devops-engineer",
       "role": "admin",
       "active": true,
-      "bio": "67",
-      "firstName": "John",
-      "lastName": "Roger",
-      "id": "WZQk9HFF1II"
+      "bio": "",
+      "appId": "acme"
+    },
+    {
+      "id": "g1",
+      "username": "hschmidt",
+      "firstName": "Hans",
+      "lastName": "Schmidt",
+      "email": "hans.schmidt@globex.com",
+      "age": 38,
+      "country": "DE",
+      "department": "engineering",
+      "jobTitle": "tech-lead",
+      "role": "admin",
+      "active": true,
+      "bio": "Engineering lead at Globex.",
+      "appId": "globex"
+    },
+    {
+      "id": "g2",
+      "username": "mwatson",
+      "firstName": "Maria",
+      "lastName": "Watson",
+      "email": "maria.watson@globex.com",
+      "age": 30,
+      "country": "US",
+      "department": "hr",
+      "jobTitle": "product-manager",
+      "role": "editor",
+      "active": true,
+      "bio": "",
+      "appId": "globex"
+    },
+    {
+      "id": "g3",
+      "username": "tsato",
+      "firstName": "Taro",
+      "lastName": "Sato",
+      "email": "taro.sato@globex.com",
+      "age": 26,
+      "country": "JP",
+      "department": "design",
+      "jobTitle": "ux-designer",
+      "role": "viewer",
+      "active": false,
+      "bio": "UX intern.",
+      "appId": "globex"
+    },
+    {
+      "id": "g4",
+      "username": "eoliver",
+      "firstName": "Emma",
+      "lastName": "Oliver",
+      "email": "emma.oliver@globex.com",
+      "age": 44,
+      "country": "GB",
+      "department": "finance",
+      "jobTitle": "backend-engineer",
+      "role": "editor",
+      "active": true,
+      "bio": "",
+      "appId": "globex"
+    },
+    {
+      "id": "g5",
+      "username": "rlopez",
+      "firstName": "Ricardo",
+      "lastName": "Lopez",
+      "email": "ricardo.lopez@globex.com",
+      "age": 31,
+      "country": "MX",
+      "department": "product",
+      "jobTitle": "product-manager",
+      "role": "editor",
+      "active": true,
+      "bio": "Product lead.",
+      "appId": "globex"
     }
   ],
   "countries": [
-    {
-      "code": "AU",
-      "name": "Australia",
-      "id": "5hfObxiwQWY"
-    },
-    {
-      "code": "BR",
-      "name": "Brazil",
-      "id": "mRs4TrOz6gM"
-    },
-    {
-      "code": "CA",
-      "name": "Canada",
-      "id": "tvVF3tXMFgA"
-    },
-    {
-      "code": "CN",
-      "name": "China",
-      "id": "Af5Caruy_R8"
-    },
-    {
-      "code": "DE",
-      "name": "Germany",
-      "id": "q_4fYi0ppnU"
-    },
-    {
-      "code": "FR",
-      "name": "France",
-      "id": "fURUYy51GcA"
-    },
-    {
-      "code": "GB",
-      "name": "United Kingdom",
-      "id": "TkZXhBg_gJs"
-    },
-    {
-      "code": "IN",
-      "name": "India",
-      "id": "cMKMOO-rYcI"
-    },
-    {
-      "code": "JP",
-      "name": "Japan",
-      "id": "CKO6-Zljw0U"
-    },
-    {
-      "code": "KR",
-      "name": "South Korea",
-      "id": "8YvSUk2ZBcQ"
-    },
-    {
-      "code": "MX",
-      "name": "Mexico",
-      "id": "hb69uZvqsw8"
-    },
-    {
-      "code": "NL",
-      "name": "Netherlands",
-      "id": "aTIF8BGMhPQ"
-    },
-    {
-      "code": "PL",
-      "name": "Poland",
-      "id": "VjXJNgr68RY"
-    },
-    {
-      "code": "UA",
-      "name": "Ukraine",
-      "id": "V2o1_Lb29jM"
-    },
-    {
-      "code": "US",
-      "name": "United States",
-      "id": "g9mhyBi95OM"
-    }
+    { "code": "AU", "name": "Australia", "id": "5hfObxiwQWY" },
+    { "code": "BR", "name": "Brazil", "id": "mRs4TrOz6gM" },
+    { "code": "CA", "name": "Canada", "id": "tvVF3tXMFgA" },
+    { "code": "CN", "name": "China", "id": "Af5Caruy_R8" },
+    { "code": "DE", "name": "Germany", "id": "q_4fYi0ppnU" },
+    { "code": "FR", "name": "France", "id": "fURUYy51GcA" },
+    { "code": "GB", "name": "United Kingdom", "id": "TkZXhBg_gJs" },
+    { "code": "IN", "name": "India", "id": "cMKMOO-rYcI" },
+    { "code": "JP", "name": "Japan", "id": "CKO6-Zljw0U" },
+    { "code": "KR", "name": "South Korea", "id": "8YvSUk2ZBcQ" },
+    { "code": "MX", "name": "Mexico", "id": "hb69uZvqsw8" },
+    { "code": "NL", "name": "Netherlands", "id": "aTIF8BGMhPQ" },
+    { "code": "PL", "name": "Poland", "id": "VjXJNgr68RY" },
+    { "code": "UA", "name": "Ukraine", "id": "V2o1_Lb29jM" },
+    { "code": "US", "name": "United States", "id": "g9mhyBi95OM" }
   ],
   "departments": [
-    {
-      "id": "engineering",
-      "name": "Engineering"
-    },
-    {
-      "id": "design",
-      "name": "Design"
-    },
-    {
-      "id": "product",
-      "name": "Product"
-    },
-    {
-      "id": "marketing",
-      "name": "Marketing"
-    },
-    {
-      "id": "hr",
-      "name": "Human Resources"
-    },
-    {
-      "id": "finance",
-      "name": "Finance"
-    }
+    { "id": "engineering", "name": "Engineering" },
+    { "id": "design", "name": "Design" },
+    { "id": "product", "name": "Product" },
+    { "id": "marketing", "name": "Marketing" },
+    { "id": "hr", "name": "Human Resources" },
+    { "id": "finance", "name": "Finance" }
   ],
   "job-titles": [
-    {
-      "id": "junior-frontend",
-      "name": "Junior Frontend Engineer"
-    },
-    {
-      "id": "senior-frontend",
-      "name": "Senior Frontend Engineer"
-    },
-    {
-      "id": "backend-engineer",
-      "name": "Backend Engineer"
-    },
-    {
-      "id": "tech-lead",
-      "name": "Tech Lead"
-    },
-    {
-      "id": "ux-designer",
-      "name": "UX Designer"
-    },
-    {
-      "id": "product-manager",
-      "name": "Product Manager"
-    },
-    {
-      "id": "devops-engineer",
-      "name": "DevOps Engineer"
-    },
-    {
-      "id": "qa-engineer",
-      "name": "QA Engineer"
-    }
+    { "id": "junior-frontend", "name": "Junior Frontend Engineer" },
+    { "id": "senior-frontend", "name": "Senior Frontend Engineer" },
+    { "id": "backend-engineer", "name": "Backend Engineer" },
+    { "id": "tech-lead", "name": "Tech Lead" },
+    { "id": "ux-designer", "name": "UX Designer" },
+    { "id": "product-manager", "name": "Product Manager" },
+    { "id": "devops-engineer", "name": "DevOps Engineer" },
+    { "id": "qa-engineer", "name": "QA Engineer" }
   ],
   "$schema": "./node_modules/json-server/schema.json"
 }

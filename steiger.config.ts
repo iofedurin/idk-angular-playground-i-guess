@@ -12,7 +12,8 @@ export default defineConfig([
   },
   {
     // Pages are single-component routing shells — no extra segments needed.
-    files: ['./src/app/pages/**'],
+    // entities/app has no UI layer — model + store only.
+    files: ['./src/app/pages/**', './src/app/entities/app/**'],
     rules: {
       'fsd/no-segmentless-slices': 'off',
     },
