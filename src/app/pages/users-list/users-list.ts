@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UserRole, UsersStore } from '@entities/user';
 import { UserDeleteActionComponent } from '@features/user-delete';
 
@@ -10,17 +9,12 @@ import { UserDeleteActionComponent } from '@features/user-delete';
   templateUrl: './users-list.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UsersListComponent {
+export class UsersListComponent implements OnInit {
   readonly store = inject(UsersStore);
-  protected appId = '';
+  protected readonly appId = inject(ActivatedRoute).snapshot.paramMap.get('appId')!;
 
-  constructor() {
-    inject(ActivatedRoute)
-      .paramMap.pipe(takeUntilDestroyed())
-      .subscribe((params) => {
-        this.appId = params.get('appId')!;
-        this.store.loadAll();
-      });
+  ngOnInit() {
+    this.store.loadAll();
   }
 
   roleBadgeClass(role: UserRole): string {
