@@ -3,7 +3,7 @@
 ## Текущее состояние
 
 - **Runner**: Vitest 4.0.8 + jsdom, `@angular/build:unit-test`
-- **Покрытие**: 0% (только `app.spec.ts` — сломан после добавления навбара)
+- **Покрытие**: T1–T4 реализованы (12 spec-файлов, 65 тестов)
 - **Паттерн файлов**: `**/*.spec.ts`
 - **Команда**: `bun run test`
 
@@ -21,11 +21,11 @@
 - Ошибки (HTTP failure)
 
 **Файлы:**
-- [ ] `entities/user/user.store.spec.ts`
-- [ ] `entities/country/country.store.spec.ts`
-- [ ] `entities/department/department.store.spec.ts`
-- [ ] `entities/job-title/job-title.store.spec.ts`
-- [ ] `entities/app/app.store.spec.ts`
+- [x] `entities/user/user.store.spec.ts`
+- [x] `entities/country/country.store.spec.ts`
+- [x] `entities/department/department.store.spec.ts`
+- [x] `entities/job-title/job-title.store.spec.ts`
+- [x] `entities/app/app.store.spec.ts`
 
 **Паттерн:**
 ```typescript
@@ -57,48 +57,55 @@ describe('UsersStore', () => {
 
 ### 2. Unit-тесты инфраструктуры
 
-- [ ] `shared/lib/app-id.interceptor.spec.ts` — GET добавляет `?appId=`, POST добавляет в body, другие методы не трогает, не-users запросы пропускает
-- [ ] `app.guard.spec.ts` — вызывает reset + switchApp при смене appId, пропускает при том же appId
+- [x] `shared/lib/app-id.interceptor.spec.ts` — GET добавляет `?appId=`, POST добавляет в body, другие методы не трогает, не-users запросы пропускает
+- [x] `app.guard.spec.ts` — вызывает reset + switchApp при смене appId, пропускает при том же appId
+- [x] `app-route-reuse-strategy.spec.ts` — regression-тест: возвращает false при смене appId (принудительное пересоздание компонентов)
 
 ### 3. Integration-тесты страниц
 
 Тестируют компонент + стор + роутинг вместе. Используют `HttpClientTestingModule` для мока HTTP.
 
-- [ ] `pages/users-list/users-list.spec.ts`
+- [x] `pages/users-list/users-list.spec.ts`
   - Рендерит таблицу после загрузки
   - Показывает спиннер во время loading
-  - **Критический**: перезагружает данные при смене appId (баг, который ловим)
   - RouterLink ведут на правильные пути с appId
-- [ ] `pages/user-create/user-create.spec.ts`
+- [x] `pages/user-create/user-create.spec.ts`
   - Рендерит форму
   - После submit — навигация с appId
-- [ ] `pages/user-edit/user-edit.spec.ts`
+- [x] `pages/user-edit/user-edit.spec.ts`
   - Загружает данные пользователя
   - Патчит модель
   - После submit — навигация с appId
 
 ### 4. App-level тесты
 
-- [ ] `app.spec.ts` (обновить)
+- [x] `app.spec.ts` (обновлён)
   - Рендерит навбар с app switcher
   - Показывает имя текущего аппа
 
 ## Порядок имплементации
 
 ```
-Фаза T1: Сторы (entities)         — 5 файлов
-Фаза T2: Инфраструктура           — 2 файла (interceptor, guard)
-Фаза T3: Страницы                  — 3 файла (users-list, user-create, user-edit)
-Фаза T4: App-level                 — 1 файл (app.spec.ts)
+[x] Фаза T1: Сторы (entities)         — 5 файлов
+[x] Фаза T2: Инфраструктура           — 3 файла (interceptor, guard, route-reuse-strategy)
+[x] Фаза T3: Страницы                  — 3 файла (users-list, user-create, user-edit)
+[x] Фаза T4: App-level                 — 1 файл (app.spec.ts)
 ```
 
-**Итого**: ~11 spec-файлов
+**Итого**: 12 spec-файлов, 65 тестов
 
 ## Подход к мокам
 
 - **HTTP**: `provideHttpClientTesting()` + `HttpTestingController`
 - **Router**: `RouterTestingHarness` для integration тестов с навигацией
 - **Stores в компонентах**: реальные сторы + мок HTTP (не мокаем стор, тестируем реальное взаимодействие)
+
+## Zoneless-тестирование
+
+Приложение использует zoneless Angular (без zone.js). Тесты работают без `fakeAsync`/`tick()`:
+- **Store-тесты**: `await store.method()` — ждём Promise от `lastValueFrom()`
+- **Component-тесты**: `await flush()` (setTimeout-based) — дренаж микротасков после `httpMock.flush()`
+- Async-валидаторы форм (username/email uniqueness) — сбрасываются через `httpMock.match()` в `afterEach`
 
 ## Принципы
 

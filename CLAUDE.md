@@ -22,6 +22,7 @@ This is a research/playground Angular application for exploring modern Angular f
 - **HTTP mocking**: `provideHttpClientTesting()` + `HttpTestingController` — do NOT mock stores, test real store + mocked HTTP
 - **Router testing**: `RouterTestingHarness` for navigation integration tests
 - **Test plan**: `docs/test-plan.md`
+- **Zoneless**: no zone.js — do NOT use `fakeAsync`/`tick()`. Store tests: `await store.method()`. Component tests: `const flush = () => new Promise<void>(r => setTimeout(r))` after `httpMock.flush()`
 
 ## App Switching (Multi-workspace)
 
