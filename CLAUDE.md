@@ -7,12 +7,22 @@ This is a research/playground Angular application for exploring modern Angular f
 @.claude/angular-skills/angular-developer/SKILL.md
 @.claude/angular-skills/angular-new-app/SKILL.md
 
+## Architecture Decision Records
+
+Before making architectural decisions, consult the ADRs:
+
+@docs/adr/0001-reference-data-loading-pattern.md
+@docs/adr/0002-fsd-architecture.md
+@docs/adr/0003-zoneless-testing.md
+
+Follow the established patterns. When making a new non-obvious decision, create a new ADR in `docs/adr/`.
+
 ## Project Notes
 
 - Angular v21+ — use Signal Forms by default
 - Vibe coding mode: suggest permanent changes when appropriate, ask to add to CLAUDE.md
 - When unsure about modern Angular APIs, check https://angular.dev
-- **Plan tracking**: when a plan file (e.g. `PLAN.md`) exists, mark completed steps with `[x]` immediately after finishing them — both in phase headers and in the "Implementation order" checklist
+- **Plan tracking**: when a plan file exists in `docs/`, mark completed steps with `[x]` immediately after finishing them — both in phase headers and in the "Implementation order" checklist
 
 ## Testing
 
