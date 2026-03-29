@@ -1,0 +1,226 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "username": "jdoe",
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john.doe@example.com",
+      "age": 32,
+      "country": "US",
+      "department": "engineering",
+      "jobTitle": "senior-frontend",
+      "role": "editor",
+      "active": true,
+      "bio": "Frontend engineer with a passion for clean UI."
+    },
+    {
+      "id": "2",
+      "username": "asmith",
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "email": "alice.smith@example.com",
+      "age": 28,
+      "country": "GB",
+      "department": "design",
+      "jobTitle": "ux-designer",
+      "role": "editor",
+      "active": true,
+      "bio": "UX designer focused on accessibility."
+    },
+    {
+      "id": "3",
+      "username": "bmueller",
+      "firstName": "Boris",
+      "lastName": "Mueller",
+      "email": "boris.mueller@example.com",
+      "age": 41,
+      "country": "DE",
+      "department": "engineering",
+      "jobTitle": "tech-lead",
+      "role": "admin",
+      "active": true,
+      "bio": ""
+    },
+    {
+      "id": "4",
+      "username": "ykim",
+      "firstName": "Yuna",
+      "lastName": "Kim",
+      "email": "yuna.kim@example.com",
+      "age": 25,
+      "country": "KR",
+      "department": "product",
+      "jobTitle": "product-manager",
+      "role": "viewer",
+      "active": false,
+      "bio": "Product manager, currently on leave."
+    },
+    {
+      "id": "5",
+      "username": "cpatel",
+      "firstName": "Chetan",
+      "lastName": "Patel",
+      "email": "chetan.patel@example.com",
+      "age": 35,
+      "country": "IN",
+      "department": "engineering",
+      "jobTitle": "backend-engineer",
+      "role": "editor",
+      "active": true,
+      "bio": "Backend engineer, Node.js and Go."
+    },
+    {
+      "username": "jroger",
+      "email": "john@roger.io",
+      "age": 67,
+      "country": "BR",
+      "department": "engineering",
+      "jobTitle": "devops-engineer",
+      "role": "admin",
+      "active": true,
+      "bio": "67",
+      "firstName": "John",
+      "lastName": "Roger",
+      "id": "WZQk9HFF1II"
+    }
+  ],
+  "countries": [
+    {
+      "code": "AU",
+      "name": "Australia",
+      "id": "5hfObxiwQWY"
+    },
+    {
+      "code": "BR",
+      "name": "Brazil",
+      "id": "mRs4TrOz6gM"
+    },
+    {
+      "code": "CA",
+      "name": "Canada",
+      "id": "tvVF3tXMFgA"
+    },
+    {
+      "code": "CN",
+      "name": "China",
+      "id": "Af5Caruy_R8"
+    },
+    {
+      "code": "DE",
+      "name": "Germany",
+      "id": "q_4fYi0ppnU"
+    },
+    {
+      "code": "FR",
+      "name": "France",
+      "id": "fURUYy51GcA"
+    },
+    {
+      "code": "GB",
+      "name": "United Kingdom",
+      "id": "TkZXhBg_gJs"
+    },
+    {
+      "code": "IN",
+      "name": "India",
+      "id": "cMKMOO-rYcI"
+    },
+    {
+      "code": "JP",
+      "name": "Japan",
+      "id": "CKO6-Zljw0U"
+    },
+    {
+      "code": "KR",
+      "name": "South Korea",
+      "id": "8YvSUk2ZBcQ"
+    },
+    {
+      "code": "MX",
+      "name": "Mexico",
+      "id": "hb69uZvqsw8"
+    },
+    {
+      "code": "NL",
+      "name": "Netherlands",
+      "id": "aTIF8BGMhPQ"
+    },
+    {
+      "code": "PL",
+      "name": "Poland",
+      "id": "VjXJNgr68RY"
+    },
+    {
+      "code": "UA",
+      "name": "Ukraine",
+      "id": "V2o1_Lb29jM"
+    },
+    {
+      "code": "US",
+      "name": "United States",
+      "id": "g9mhyBi95OM"
+    }
+  ],
+  "departments": [
+    {
+      "id": "engineering",
+      "name": "Engineering"
+    },
+    {
+      "id": "design",
+      "name": "Design"
+    },
+    {
+      "id": "product",
+      "name": "Product"
+    },
+    {
+      "id": "marketing",
+      "name": "Marketing"
+    },
+    {
+      "id": "hr",
+      "name": "Human Resources"
+    },
+    {
+      "id": "finance",
+      "name": "Finance"
+    }
+  ],
+  "job-titles": [
+    {
+      "id": "junior-frontend",
+      "name": "Junior Frontend Engineer"
+    },
+    {
+      "id": "senior-frontend",
+      "name": "Senior Frontend Engineer"
+    },
+    {
+      "id": "backend-engineer",
+      "name": "Backend Engineer"
+    },
+    {
+      "id": "tech-lead",
+      "name": "Tech Lead"
+    },
+    {
+      "id": "ux-designer",
+      "name": "UX Designer"
+    },
+    {
+      "id": "product-manager",
+      "name": "Product Manager"
+    },
+    {
+      "id": "devops-engineer",
+      "name": "DevOps Engineer"
+    },
+    {
+      "id": "qa-engineer",
+      "name": "QA Engineer"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

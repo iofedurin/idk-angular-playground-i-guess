@@ -1,0 +1,62 @@
+<div class="container mx-auto p-6">
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-bold">Users</h1>
+    <a routerLink="/users/new" class="btn btn-primary">Add User</a>
+  </div>
+
+  @if (store.loading()) {
+    <div class="flex justify-center py-12">
+      <span class="loading loading-spinner loading-lg"></span>
+    </div>
+  } @else if (store.error()) {
+    <div class="alert alert-error">
+      <span>{{ store.error() }}</span>
+    </div>
+  } @else {
+    <div class="overflow-x-auto rounded-box border border-base-content/10">
+      <table class="table table-zebra">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Department</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (user of store.entities(); track user.id) {
+            <tr>
+              <td class="font-mono text-sm">{{ user.username }}</td>
+              <td>{{ user.firstName }} {{ user.lastName }}</td>
+              <td>{{ user.email }}</td>
+              <td class="capitalize">{{ user.department }}</td>
+              <td>
+                <span [class]="roleBadgeClass(user.role)">{{ user.role }}</span>
+              </td>
+              <td>
+                @if (user.active) {
+                  <span class="badge badge-success badge-sm">Active</span>
+                } @else {
+                  <span class="badge badge-neutral badge-sm">Inactive</span>
+                }
+              </td>
+              <td>
+                <div class="flex gap-2">
+                  <a [routerLink]="['/users', user.id]" class="btn btn-sm btn-ghost">Edit</a>
+                  <app-user-delete-action [userId]="user.id" />
+                </div>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="7" class="text-center text-base-content/50 py-8">No users found</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

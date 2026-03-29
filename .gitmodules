@@ -1,0 +1,3 @@
+[submodule ".claude/angular-skills"]
+	path = .claude/angular-skills
+	url = https://github.com/angular/skills.git
