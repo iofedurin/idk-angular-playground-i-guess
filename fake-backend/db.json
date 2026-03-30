@@ -1,7 +1,13 @@
 {
   "apps": [
-    { "id": "acme", "name": "Acme Corp" },
-    { "id": "globex", "name": "Globex Inc" }
+    {
+      "id": "acme",
+      "name": "Acme Corp"
+    },
+    {
+      "id": "globex",
+      "name": "Globex Inc"
+    }
   ],
   "users": [
     {
@@ -47,21 +53,6 @@
       "role": "admin",
       "active": true,
       "bio": "",
-      "appId": "acme"
-    },
-    {
-      "id": "4",
-      "username": "ykim",
-      "firstName": "Yuna",
-      "lastName": "Kim",
-      "email": "yuna.kim@example.com",
-      "age": 25,
-      "country": "KR",
-      "department": "product",
-      "jobTitle": "product-manager",
-      "role": "viewer",
-      "active": false,
-      "bio": "Product manager, currently on leave.",
       "appId": "acme"
     },
     {
@@ -171,39 +162,153 @@
     }
   ],
   "countries": [
-    { "code": "AU", "name": "Australia", "id": "5hfObxiwQWY" },
-    { "code": "BR", "name": "Brazil", "id": "mRs4TrOz6gM" },
-    { "code": "CA", "name": "Canada", "id": "tvVF3tXMFgA" },
-    { "code": "CN", "name": "China", "id": "Af5Caruy_R8" },
-    { "code": "DE", "name": "Germany", "id": "q_4fYi0ppnU" },
-    { "code": "FR", "name": "France", "id": "fURUYy51GcA" },
-    { "code": "GB", "name": "United Kingdom", "id": "TkZXhBg_gJs" },
-    { "code": "IN", "name": "India", "id": "cMKMOO-rYcI" },
-    { "code": "JP", "name": "Japan", "id": "CKO6-Zljw0U" },
-    { "code": "KR", "name": "South Korea", "id": "8YvSUk2ZBcQ" },
-    { "code": "MX", "name": "Mexico", "id": "hb69uZvqsw8" },
-    { "code": "NL", "name": "Netherlands", "id": "aTIF8BGMhPQ" },
-    { "code": "PL", "name": "Poland", "id": "VjXJNgr68RY" },
-    { "code": "UA", "name": "Ukraine", "id": "V2o1_Lb29jM" },
-    { "code": "US", "name": "United States", "id": "g9mhyBi95OM" }
+    {
+      "code": "AU",
+      "name": "Australia",
+      "id": "5hfObxiwQWY"
+    },
+    {
+      "code": "BR",
+      "name": "Brazil",
+      "id": "mRs4TrOz6gM"
+    },
+    {
+      "code": "CA",
+      "name": "Canada",
+      "id": "tvVF3tXMFgA"
+    },
+    {
+      "code": "CN",
+      "name": "China",
+      "id": "Af5Caruy_R8"
+    },
+    {
+      "code": "DE",
+      "name": "Germany",
+      "id": "q_4fYi0ppnU"
+    },
+    {
+      "code": "FR",
+      "name": "France",
+      "id": "fURUYy51GcA"
+    },
+    {
+      "code": "GB",
+      "name": "United Kingdom",
+      "id": "TkZXhBg_gJs"
+    },
+    {
+      "code": "IN",
+      "name": "India",
+      "id": "cMKMOO-rYcI"
+    },
+    {
+      "code": "JP",
+      "name": "Japan",
+      "id": "CKO6-Zljw0U"
+    },
+    {
+      "code": "KR",
+      "name": "South Korea",
+      "id": "8YvSUk2ZBcQ"
+    },
+    {
+      "code": "MX",
+      "name": "Mexico",
+      "id": "hb69uZvqsw8"
+    },
+    {
+      "code": "NL",
+      "name": "Netherlands",
+      "id": "aTIF8BGMhPQ"
+    },
+    {
+      "code": "PL",
+      "name": "Poland",
+      "id": "VjXJNgr68RY"
+    },
+    {
+      "code": "UA",
+      "name": "Ukraine",
+      "id": "V2o1_Lb29jM"
+    },
+    {
+      "code": "US",
+      "name": "United States",
+      "id": "g9mhyBi95OM"
+    }
   ],
   "departments": [
-    { "id": "engineering", "name": "Engineering" },
-    { "id": "design", "name": "Design" },
-    { "id": "product", "name": "Product" },
-    { "id": "marketing", "name": "Marketing" },
-    { "id": "hr", "name": "Human Resources" },
-    { "id": "finance", "name": "Finance" }
+    {
+      "id": "engineering",
+      "name": "Engineering",
+      "group": "Technology"
+    },
+    {
+      "id": "design",
+      "name": "Design",
+      "group": "Technology"
+    },
+    {
+      "id": "product",
+      "name": "Product",
+      "group": "Business"
+    },
+    {
+      "id": "marketing",
+      "name": "Marketing",
+      "group": "Business"
+    },
+    {
+      "id": "hr",
+      "name": "Human Resources",
+      "group": "Operations"
+    },
+    {
+      "id": "finance",
+      "name": "Finance",
+      "group": "Operations"
+    },
+    {
+      "name": "Brand New Dep",
+      "id": "5y8uR6kzMUk",
+      "group": "Other"
+    }
   ],
   "job-titles": [
-    { "id": "junior-frontend", "name": "Junior Frontend Engineer" },
-    { "id": "senior-frontend", "name": "Senior Frontend Engineer" },
-    { "id": "backend-engineer", "name": "Backend Engineer" },
-    { "id": "tech-lead", "name": "Tech Lead" },
-    { "id": "ux-designer", "name": "UX Designer" },
-    { "id": "product-manager", "name": "Product Manager" },
-    { "id": "devops-engineer", "name": "DevOps Engineer" },
-    { "id": "qa-engineer", "name": "QA Engineer" }
+    {
+      "id": "junior-frontend",
+      "name": "Junior Frontend Engineer"
+    },
+    {
+      "id": "senior-frontend",
+      "name": "Senior Frontend Engineer"
+    },
+    {
+      "id": "backend-engineer",
+      "name": "Backend Engineer"
+    },
+    {
+      "id": "tech-lead",
+      "name": "Tech Lead"
+    },
+    {
+      "id": "ux-designer",
+      "name": "UX Designer"
+    },
+    {
+      "id": "product-manager",
+      "name": "Product Manager"
+    },
+    {
+      "id": "devops-engineer",
+      "name": "DevOps Engineer"
+    },
+    {
+      "id": "qa-engineer",
+      "name": "QA Engineer"
+    }
   ],
+  "invitations": [],
   "$schema": "./node_modules/json-server/schema.json"
 }

@@ -1,0 +1,57 @@
+<div class="flex flex-wrap gap-3 mb-4">
+  <input
+    type="text"
+    placeholder="Search by name, username, email..."
+    class="input input-bordered input-sm w-64"
+    [value]="filters().search"
+    (input)="setSearch($any($event.target).value)"
+  />
+
+  <select
+    class="select select-bordered select-sm"
+    [value]="filters().role"
+    (change)="setRole($any($event.target).value)"
+  >
+    <option value="">All roles</option>
+    @for (role of roles; track role) {
+      <option [value]="role">{{ role }}</option>
+    }
+  </select>
+
+  <select
+    class="select select-bordered select-sm"
+    [value]="filters().department"
+    (change)="setDepartment($any($event.target).value)"
+  >
+    <option value="">All departments</option>
+    <app-department-options [groupSelectable]="true" />
+  </select>
+
+  <select
+    class="select select-bordered select-sm"
+    [value]="filters().country"
+    (change)="setCountry($any($event.target).value)"
+  >
+    <option value="">All countries</option>
+    <app-country-options />
+  </select>
+
+  <select
+    class="select select-bordered select-sm"
+    [value]="filters().jobTitle"
+    (change)="setJobTitle($any($event.target).value)"
+  >
+    <option value="">All job titles</option>
+    <app-job-title-options />
+  </select>
+
+  <select
+    class="select select-bordered select-sm"
+    [value]="filters().active"
+    (change)="setActive($any($event.target).value)"
+  >
+    <option value="">All statuses</option>
+    <option value="true">Active</option>
+    <option value="false">Inactive</option>
+  </select>
+</div>

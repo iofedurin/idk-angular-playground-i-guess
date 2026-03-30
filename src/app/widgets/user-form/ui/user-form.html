@@ -3,7 +3,7 @@
     <form [formRoot]="userForm()" class="card-body gap-4">
       <div class="flex items-center justify-between">
         <h2 class="card-title text-2xl">{{ title() }}</h2>
-        <a routerLink="/users" class="btn btn-ghost btn-sm">← Back</a>
+        <a [routerLink]="cancelLink()" class="btn btn-ghost btn-sm">← Back</a>
       </div>
 
       <app-username-field [field]="userForm().username" />
@@ -19,7 +19,7 @@
 
       <div class="card-actions mt-2 gap-2">
         <app-submit-button [pending]="userForm()().submitting()">{{ submitLabel() }}</app-submit-button>
-        <a routerLink="/users" class="btn btn-ghost w-full">Cancel</a>
+        <a [routerLink]="cancelLink()" class="btn btn-ghost w-full">Cancel</a>
       </div>
 
       <div class="collapse collapse-arrow bg-base-200">

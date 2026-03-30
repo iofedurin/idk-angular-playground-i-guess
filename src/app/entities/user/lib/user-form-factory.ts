@@ -1,6 +1,7 @@
 import { WritableSignal } from '@angular/core';
-import { debounce, email, form, max, min, minLength, required, validateHttp } from '@angular/forms/signals';
+import { debounce, form, max, min, minLength, required, validateHttp } from '@angular/forms/signals';
 import type { User, UserFormModel } from '../user.model';
+import { emailBaseSchema, roleSchema } from './field-schemas';
 
 export interface UserFormOptions {
   excludeId?: () => string | undefined;
@@ -31,8 +32,7 @@ export function createUserForm(model: WritableSignal<UserFormModel>, options: Us
       minLength(s.name.firstName, 2);
       required(s.name.lastName);
 
-      required(s.email, { message: 'Email is required' });
-      email(s.email, { message: 'Enter a valid email' });
+      emailBaseSchema(s.email);
       debounce(s.email, 400);
       validateHttp<string, User[]>(s.email, {
         request: (ctx) => {
@@ -54,7 +54,7 @@ export function createUserForm(model: WritableSignal<UserFormModel>, options: Us
       required(s.country);
       required(s.department);
       required(s.jobTitle);
-      required(s.role, { message: 'Role is required' });
+      roleSchema(s.role);
     },
     {
       submission: {

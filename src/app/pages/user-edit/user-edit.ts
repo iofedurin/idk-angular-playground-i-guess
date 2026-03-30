@@ -7,7 +7,7 @@ import { UserFormComponent } from '@widgets/user-form';
   selector: 'app-user-edit-page',
   imports: [UserFormComponent],
   template: `
-    <app-user-form [userForm]="userForm" [model]="model" title="Edit User" submitLabel="Save" />
+    <app-user-form [userForm]="userForm" [model]="model" title="Edit User" submitLabel="Save" [cancelLink]="['/app', appId, 'users', userId]" />
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -36,7 +36,7 @@ export class UserEditPage implements OnInit {
     onSubmit: async () => {
       const { name, ...rest } = this.model();
       await this.store.update(this.userId, { ...rest, firstName: name.firstName, lastName: name.lastName });
-      await this.router.navigate(['/app', this.appId, 'users']);
+      await this.router.navigate(['/app', this.appId, 'users', this.userId]);
     },
   });
 

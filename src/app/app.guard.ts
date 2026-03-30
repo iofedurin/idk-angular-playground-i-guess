@@ -3,6 +3,7 @@ import { CanActivateFn } from '@angular/router';
 import { AppStore } from '@entities/app';
 import { CountryStore } from '@entities/country';
 import { DepartmentStore } from '@entities/department';
+import { InvitationStore } from '@entities/invitation';
 import { JobTitleStore } from '@entities/job-title';
 import { UsersStore } from '@entities/user';
 
@@ -15,6 +16,7 @@ export const appSwitchGuard: CanActivateFn = (route) => {
     inject(CountryStore).reset();
     inject(DepartmentStore).reset();
     inject(JobTitleStore).reset();
+    inject(InvitationStore).reset();
     appStore.switchApp(appId);
   }
 

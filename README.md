@@ -1,59 +1,86 @@
-# Playground
+# Angular HR Portal — Playground
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.5.
+Исследовательский проект на Angular 21+ для изучения современных фич: Signal Forms, CVA, NgRx Signal Store, FSD-архитектура, zoneless-режим.
 
-## Development server
+## Что это
 
-To start a local development server, run:
+HR-портал с поддержкой multi-workspace. Два рабочих пространства (Acme Corp, Globex Inc) с независимыми данными, разделёнными по `appId`.
 
-```bash
-ng serve
-```
+**Реализованные эпики:**
+- **App Switching** — переключение workspace, HTTP interceptor, guard сброса сторов
+- **Dashboard** — статистика по пользователям, разбивка по ролям и отделам
+- **Departments CRUD** — список, создание, редактирование, удаление с группировкой по категориям
+- **User Profile** — карточка просмотра отдельно от формы редактирования
+- **Filtering & Search** — фильтры с debounce, сортировка по колонкам, фильтрация по группам отделов
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Стек
 
-## Code scaffolding
+| | |
+|---|---|
+| Framework | Angular 21+ (zoneless, standalone) |
+| Forms | Signal Forms (`@angular/forms/signals`) |
+| State | NgRx Signal Store (`withEntities`) |
+| Styling | Tailwind CSS v4 + DaisyUI v5 |
+| Tests | Vitest 4 + jsdom (builder `@angular/build:unit-test`) |
+| Architecture | Feature-Sliced Design (FSD) |
+| Fake backend | json-server |
+| Package manager | bun |
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+## Запуск
 
 ```bash
-ng build
+# Установить зависимости
+bun install
+
+# Запустить dev-сервер + fake backend одновременно
+bun run dev
+
+# Только fake backend (порт 3000)
+bun run backend
+
+# Только Angular dev server (порт 4200)
+bun run start
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Открыть: `http://localhost:4200` — сразу редиректит на `/app/acme/dashboard`.
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Команды
 
 ```bash
-ng test
+bun run build        # Production build
+bun run test         # Vitest (watch mode)
+bun run lint:arch    # steiger — проверка FSD-импортов
 ```
 
-## Running end-to-end tests
+## Архитектура
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
+```
+src/app/
+  app/         — инициализация: routes, config, layout, guards
+  pages/       — роутинговые компоненты (один компонент = одна страница)
+  widgets/     — составные UI-блоки (user-form, department-form, stats-cards, user-card)
+  features/    — изолированные действия (user-delete, department-delete, user-filters)
+  entities/    — доменные модели с API + Store + UI (user, country, department, job-title, app)
+  shared/      — UI-кит и утилиты без бизнес-логики
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Правило импортов: только вниз по иерархии. Контролируется `steiger`.
 
-## Additional Resources
+## Тестирование
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Zoneless — без `zone.js`. Паттерны:
+
+```ts
+// Store-тесты
+const promise = store.loadAll();
+httpMock.expectOne('/api/users').flush(data);
+await promise;
+
+// Component-тесты
+fixture.detectChanges();
+httpMock.expectOne(...).flush(data);
+await new Promise<void>(r => setTimeout(r)); // drain microtasks
+fixture.detectChanges();
+```
+
+Подробнее: [ADR-003](docs/adr/0003-zoneless-testing.md).

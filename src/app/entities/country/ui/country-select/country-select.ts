@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core
 import { Field, FormField } from '@angular/forms/signals';
 import { FieldErrorsComponent } from '@shared/ui';
 import { CountryStore } from '../../country.store';
+import { CountryOptionsComponent } from '../country-options/country-options';
 
 const MESSAGES: Record<string, string> = {
   required: 'Country is required',
@@ -9,7 +10,7 @@ const MESSAGES: Record<string, string> = {
 
 @Component({
   selector: 'app-country-select',
-  imports: [FormField, FieldErrorsComponent],
+  imports: [FormField, FieldErrorsComponent, CountryOptionsComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <fieldset class="fieldset">
@@ -18,10 +19,8 @@ const MESSAGES: Record<string, string> = {
         <div class="skeleton h-10 w-full rounded-field"></div>
       } @else {
         <select [formField]="field()" class="select w-full">
-          <option value="">Select country...</option>
-          @for (c of store.countries(); track c.code) {
-            <option [value]="c.code">{{ c.name }}</option>
-          }
+          <option value="" disabled hidden>Select country...</option>
+          <app-country-options />
         </select>
       }
       <app-field-errors [field]="field()" [messages]="messages" />

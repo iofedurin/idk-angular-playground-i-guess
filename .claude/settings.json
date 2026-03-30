@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bun run build*)",
+      "Bash(bun run test*)",
+      "Bash(bun run lint*)",
+      "Bash(bun run dev*)",
+      "Bash(bun run backend*)",
+      "Bash(ng build*)",
+      "Bash(ng test*)"
+    ]
+  }
+}

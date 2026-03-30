@@ -34,7 +34,10 @@ describe('UserEditPage', () => {
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
-        provideRouter([{ path: 'app/:appId/users', component: UserEditPage }]),
+        provideRouter([
+          { path: 'app/:appId/users/:id/edit', component: UserEditPage },
+          { path: 'app/:appId/users/:id', component: UserEditPage },
+        ]),
         {
           provide: ActivatedRoute,
           useValue: {
@@ -101,14 +104,14 @@ describe('UserEditPage', () => {
     };
     const navPromise = component.store
       .update(component.userId, { username: 'jdoe2' })
-      .then(() => router.navigate(['/app', component.appId, 'users']));
+      .then(() => router.navigate(['/app', component.appId, 'users', component.userId]));
 
     httpMock
       .expectOne((r) => r.url.includes('/api/users/1') && r.method === 'PATCH')
       .flush({ ...mockUser, username: 'jdoe2' });
     await navPromise;
 
-    expect(navigateSpy).toHaveBeenCalledWith(['/app', 'acme', 'users']);
+    expect(navigateSpy).toHaveBeenCalledWith(['/app', 'acme', 'users', '1']);
   });
 });
 

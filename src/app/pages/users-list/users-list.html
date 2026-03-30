@@ -1,8 +1,19 @@
 <div class="container mx-auto p-6">
   <div class="flex items-center justify-between mb-6">
     <h1 class="text-2xl font-bold">Users</h1>
-    <a [routerLink]="['/app', appId, 'users', 'new']" class="btn btn-primary">Add User</a>
+    <div class="flex gap-2">
+      <button class="btn btn-outline" (click)="showInviteDialog.set(true)">Invite</button>
+      <a [routerLink]="['/app', appId, 'users', 'new']" class="btn btn-primary">Add User</a>
+    </div>
   </div>
+
+  <app-user-invite-dialog
+    [open]="showInviteDialog()"
+    [appId]="appId"
+    (closed)="showInviteDialog.set(false)"
+  />
+
+  <app-user-filters [(filters)]="filters" />
 
   @if (store.loading()) {
     <div class="flex justify-center py-12">
@@ -18,16 +29,31 @@
         <thead>
           <tr>
             <th>Username</th>
-            <th>Name</th>
+            <th class="cursor-pointer select-none" (click)="toggleSort('name')">
+              Name
+              @if (sort().field === 'name') {
+                <span class="ml-1 text-xs">{{ sort().direction === 'asc' ? '↑' : '↓' }}</span>
+              }
+            </th>
             <th>Email</th>
-            <th>Department</th>
-            <th>Role</th>
+            <th class="cursor-pointer select-none" (click)="toggleSort('department')">
+              Department
+              @if (sort().field === 'department') {
+                <span class="ml-1 text-xs">{{ sort().direction === 'asc' ? '↑' : '↓' }}</span>
+              }
+            </th>
+            <th class="cursor-pointer select-none" (click)="toggleSort('role')">
+              Role
+              @if (sort().field === 'role') {
+                <span class="ml-1 text-xs">{{ sort().direction === 'asc' ? '↑' : '↓' }}</span>
+              }
+            </th>
             <th>Status</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          @for (user of store.entities(); track user.id) {
+          @for (user of filteredUsers(); track user.id) {
             <tr>
               <td class="font-mono text-sm">{{ user.username }}</td>
               <td>{{ user.firstName }} {{ user.lastName }}</td>
@@ -45,7 +71,7 @@
               </td>
               <td>
                 <div class="flex gap-2">
-                  <a [routerLink]="['/app', appId, 'users', user.id]" class="btn btn-sm btn-ghost">Edit</a>
+                  <a [routerLink]="['/app', appId, 'users', user.id]" class="btn btn-sm btn-ghost">View</a>
                   <app-user-delete-action [userId]="user.id" />
                 </div>
               </td>

@@ -1,0 +1,15 @@
+<div class="min-h-screen bg-base-200 flex items-center justify-center p-8">
+  @if (store$.loading()) {
+    <div class="flex justify-center py-12">
+      <span class="loading loading-spinner loading-lg"></span>
+    </div>
+  } @else if (store$.entityMap()[userId]; as user) {
+    <div class="flex flex-col gap-4 w-full max-w-lg">
+      <app-user-card [user]="user" />
+      <div class="flex gap-2">
+        <a [routerLink]="['/app', appId, 'users', userId, 'edit']" class="btn btn-primary flex-1">Edit</a>
+        <a [routerLink]="['/app', appId, 'users']" class="btn btn-ghost flex-1">← Back to list</a>
+      </div>
+    </div>
+  }
+</div>

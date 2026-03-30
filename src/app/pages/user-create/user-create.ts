@@ -7,14 +7,14 @@ import { UserFormComponent } from '@widgets/user-form';
   selector: 'app-user-create-page',
   imports: [UserFormComponent],
   template: `
-    <app-user-form [userForm]="userForm" [model]="model" title="New User" submitLabel="Create" />
+    <app-user-form [userForm]="userForm" [model]="model" title="New User" submitLabel="Create" [cancelLink]="['/app', appId, 'users']" />
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserCreatePage {
   private readonly router = inject(Router);
   private readonly store = inject(UsersStore);
-  private readonly appId = inject(ActivatedRoute).snapshot.paramMap.get('appId')!;
+  protected readonly appId = inject(ActivatedRoute).snapshot.paramMap.get('appId')!;
 
   protected readonly model = signal<UserFormModel>({
     username: '',

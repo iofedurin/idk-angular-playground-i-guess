@@ -44,4 +44,5 @@ export class UserFormComponent {
   readonly model = input.required<Signal<UserFormModel>>();
   readonly title = input.required<string>();
   readonly submitLabel = input<string>('Save');
+  readonly cancelLink = input<string[]>(['/']);
 }

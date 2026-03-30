@@ -1,0 +1,44 @@
+<div class="container mx-auto p-6">
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-bold">Departments</h1>
+    <a [routerLink]="['/app', appId, 'departments', 'new']" class="btn btn-primary">Add Department</a>
+  </div>
+
+  @if (store.loading()) {
+    <div class="flex justify-center py-12">
+      <span class="loading loading-spinner loading-lg"></span>
+    </div>
+  } @else if (store.error()) {
+    <div class="alert alert-error">
+      <span>{{ store.error() }}</span>
+    </div>
+  } @else {
+    <div class="overflow-x-auto rounded-box border border-base-content/10">
+      <table class="table table-zebra">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (dept of store.entities(); track dept.id) {
+            <tr>
+              <td>{{ dept.name }}</td>
+              <td>
+                <div class="flex gap-2">
+                  <a [routerLink]="['/app', appId, 'departments', dept.id]" class="btn btn-sm btn-ghost">Edit</a>
+                  <app-department-delete-action [departmentId]="dept.id" />
+                </div>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="2" class="text-center text-base-content/50 py-8">No departments found</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

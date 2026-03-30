@@ -1,0 +1,75 @@
+<div class="container mx-auto p-6">
+  <h1 class="text-2xl font-bold mb-6">Dashboard</h1>
+
+  @if (store.loading()) {
+    <div class="flex justify-center py-12">
+      <span class="loading loading-spinner loading-lg"></span>
+    </div>
+  } @else if (store.error()) {
+    <div class="alert alert-error">
+      <span>{{ store.error() }}</span>
+    </div>
+  } @else {
+    <app-stats-cards
+      [total]="totalUsers()"
+      [active]="activeUsers()"
+      [byRole]="byRole()"
+    />
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+      <div class="card bg-base-100 shadow">
+        <div class="card-body">
+          <h2 class="card-title text-base">By Department</h2>
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th>Department</th>
+                <th class="text-right">Users</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (dept of byDepartment(); track dept.name) {
+                <tr>
+                  <td class="capitalize">{{ dept.name }}</td>
+                  <td class="text-right">{{ dept.count }}</td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="2" class="text-center text-base-content/50">No data</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card bg-base-100 shadow">
+        <div class="card-body">
+          <h2 class="card-title text-base">Recent Users</h2>
+          <ul class="space-y-2">
+            @for (user of recentUsers(); track user.id) {
+              <li class="flex items-center gap-3">
+                <div class="avatar avatar-placeholder">
+                  <div class="bg-neutral text-neutral-content rounded-full w-8">
+                    <span class="text-xs">{{ user.firstName[0] }}{{ user.lastName[0] }}</span>
+                  </div>
+                </div>
+                <div>
+                  <div class="font-medium text-sm">{{ user.firstName }} {{ user.lastName }}</div>
+                  <div class="text-xs text-base-content/60">{{ user.username }}</div>
+                </div>
+                @if (user.active) {
+                  <span class="badge badge-success badge-sm ml-auto">Active</span>
+                } @else {
+                  <span class="badge badge-neutral badge-sm ml-auto">Inactive</span>
+                }
+              </li>
+            } @empty {
+              <li class="text-center text-base-content/50 py-4">No users yet</li>
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  }
+</div>

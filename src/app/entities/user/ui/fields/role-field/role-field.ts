@@ -20,6 +20,6 @@ import { UserRole } from '../../../user.model';
   `,
 })
 export class RoleFieldComponent {
-  field = input.required<Field<UserRole>>();
+  field = input.required<Field<string>>();
   protected readonly roles: UserRole[] = ['viewer', 'editor', 'admin'];
 }
