@@ -45,12 +45,12 @@ describe('ActivityBellComponent', () => {
     expect(badge?.textContent?.trim()).toBe('2');
   });
 
-  it('clicking bell marks all as read', () => {
+  it('focusing bell (dropdown open) marks all as read', () => {
     store.addEvent({ resource: 'users', action: 'created', summary: 'user created', timestamp: 1 });
     fixture.detectChanges();
 
     const btn = el.querySelector<HTMLElement>('[aria-label="Notifications"]');
-    btn?.click();
+    btn?.dispatchEvent(new FocusEvent('focus'));
     fixture.detectChanges();
 
     expect(store.unreadCount()).toBe(0);

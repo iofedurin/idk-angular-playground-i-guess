@@ -11,7 +11,7 @@ import { ActivityFeedStore } from '../../activity-feed.store';
         role="button"
         class="btn btn-ghost btn-circle"
         aria-label="Notifications"
-        (click)="store.markAllRead()"
+        (focus)="store.markAllRead()"
       >
         <div class="indicator">
           <svg
