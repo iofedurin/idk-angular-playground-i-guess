@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { AuditEntry } from '@entities/audit-entry';
-import { InfiniteScrollDirective } from '@shared/lib/infinite-scroll.directive';
+import { InfiniteScrollDirective } from '@shared/ui';
 
 const ACTION_LABELS: Record<string, string> = {
   create: 'Created',

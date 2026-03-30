@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { HttpInterceptorFn } from '@angular/common/http';
 import { tap } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ToastService } from '@shared/ui/toast/toast';
+import { ToastService } from '@shared/ui';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const toast = inject(ToastService);

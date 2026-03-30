@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { ToastService } from '@shared/ui/toast/toast';
+import { ToastService } from '@shared/ui';
 import { errorInterceptor } from './error.interceptor';
 
 describe('errorInterceptor', () => {
