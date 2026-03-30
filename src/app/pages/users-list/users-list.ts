@@ -12,6 +12,7 @@ import {
   UserFiltersComponent,
 } from '@features/user-filters';
 import { UserInviteDialogComponent } from '@features/user-invite';
+import { ErrorAlertComponent, SpinnerComponent } from '@shared/ui';
 
 const SORT_FIELD_MAP: Record<SortField, string> = {
   name: 'firstName',
@@ -21,7 +22,7 @@ const SORT_FIELD_MAP: Record<SortField, string> = {
 
 @Component({
   selector: 'app-users-list',
-  imports: [RouterLink, UserDeleteActionComponent, UserFiltersComponent, UserInviteDialogComponent, BulkToolbarComponent],
+  imports: [RouterLink, UserDeleteActionComponent, UserFiltersComponent, UserInviteDialogComponent, BulkToolbarComponent, SpinnerComponent, ErrorAlertComponent],
   templateUrl: './users-list.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -82,15 +83,13 @@ export class UsersListComponent {
   }
 
   protected async bulkDelete(): Promise<void> {
-    const ids = [...this.selectionStore.selectedIds()];
-    await Promise.all(ids.map((id) => this.store.remove(id)));
-    this.selectionStore.clearAll();
+    const ok = await this.store.bulkRemove([...this.selectionStore.selectedIds()]);
+    if (ok) this.selectionStore.clearAll();
   }
 
   protected async bulkChangeRole(role: UserRole): Promise<void> {
-    const ids = [...this.selectionStore.selectedIds()];
-    await Promise.all(ids.map((id) => this.store.update(id, { role })));
-    this.selectionStore.clearAll();
+    const ok = await this.store.bulkUpdate([...this.selectionStore.selectedIds()], { role });
+    if (ok) this.selectionStore.clearAll();
   }
 
   roleBadgeClass(role: UserRole): string {

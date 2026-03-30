@@ -1,17 +1,18 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { AuditEntryStore } from '@entities/audit-entry';
 import { AuditFeedComponent } from '@widgets/audit-feed';
+import { ErrorAlertComponent } from '@shared/ui';
 
 @Component({
   selector: 'app-audit-log',
-  imports: [AuditFeedComponent],
+  imports: [AuditFeedComponent, ErrorAlertComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="p-6 max-w-2xl mx-auto">
       <h1 class="text-2xl font-bold mb-6">Audit Log</h1>
 
-      @if (store.error()) {
-        <div role="alert" class="alert alert-error mb-4">{{ store.error() }}</div>
+      @if (store.error(); as error) {
+        <app-error-alert [message]="error" class="mb-4" />
       }
 
       <app-audit-feed

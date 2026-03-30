@@ -1,4 +1,5 @@
-export type UserRole = 'viewer' | 'editor' | 'admin';
+import type { UserRole } from './lib/roles';
+export type { UserRole };
 
 export interface User {
   id: string;

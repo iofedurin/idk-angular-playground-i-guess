@@ -25,8 +25,8 @@ export class DepartmentCreatePage {
 
   protected readonly departmentForm = createDepartmentForm(this.model, {
     onSubmit: async () => {
-      await this.store.create(this.model());
-      await this.router.navigate(['/app', this.appId, 'departments']);
+      const dept = await this.store.create(this.model());
+      if (dept) await this.router.navigate(['/app', this.appId, 'departments']);
     },
   });
 }

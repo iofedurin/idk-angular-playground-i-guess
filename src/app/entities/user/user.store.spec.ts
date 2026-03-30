@@ -132,6 +132,39 @@ describe('UsersStore', () => {
     expect(store.error()).toBeNull();
   });
 
+  it('bulkRemove(ids) sends POST to bulk-delete and removes entities', async () => {
+    const user2: User = { ...mockUser, id: '2', username: 'bsmith' };
+    const loadPromise = store.loadAll();
+    httpMock.expectOne((r) => r.url.includes('/api/users')).flush([mockUser, user2]);
+    await loadPromise;
+
+    const promise = store.bulkRemove(['1', '2']);
+    httpMock
+      .expectOne((r) => r.url === '/api/users/bulk-delete' && r.method === 'POST')
+      .flush(null, { status: 204, statusText: 'No Content' });
+    await promise;
+
+    expect(store.entities()).toEqual([]);
+  });
+
+  it('bulkUpdate(ids, changes) sends PATCH to bulk-update and updates entities', async () => {
+    const user2: User = { ...mockUser, id: '2', username: 'bsmith', role: 'viewer' };
+    const loadPromise = store.loadAll();
+    httpMock.expectOne((r) => r.url.includes('/api/users')).flush([mockUser, user2]);
+    await loadPromise;
+
+    const updated1: User = { ...mockUser, role: 'admin' };
+    const updated2: User = { ...user2, role: 'admin' };
+    const promise = store.bulkUpdate(['1', '2'], { role: 'admin' });
+    httpMock
+      .expectOne((r) => r.url === '/api/users/bulk-update' && r.method === 'PATCH')
+      .flush([updated1, updated2]);
+    await promise;
+
+    expect(store.entityMap()['1'].role).toBe('admin');
+    expect(store.entityMap()['2'].role).toBe('admin');
+  });
+
   describe('loadPage()', () => {
     it('sets loading=true immediately, then replaces entities', async () => {
       const promise = store.loadPage({ page: 1 });

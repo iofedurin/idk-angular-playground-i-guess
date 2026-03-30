@@ -3,10 +3,7 @@ import { ActivatedRouteSnapshot, convertToParamMap, RouterStateSnapshot } from '
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { AppStore } from '@entities/app';
-import { CountryStore } from '@entities/country';
-import { DepartmentStore } from '@entities/department';
-import { JobTitleStore } from '@entities/job-title';
-import { UsersStore } from '@entities/user';
+import { AppScopeRegistry } from '@shared/lib/app-scope-registry';
 import { appSwitchGuard } from './app.guard';
 
 function makeRoute(appId: string): ActivatedRouteSnapshot {
@@ -32,35 +29,26 @@ describe('appSwitchGuard', () => {
   });
 
   it('does NOT reset stores when appId is unchanged', () => {
-    const usersStore = TestBed.inject(UsersStore);
-    const resetSpy = vi.spyOn(usersStore, 'reset');
+    const registry = TestBed.inject(AppScopeRegistry);
+    const resetAllSpy = vi.spyOn(registry, 'resetAll');
 
     // default currentAppId is 'acme', navigating to same app
     TestBed.runInInjectionContext(() => appSwitchGuard(makeRoute('acme'), fakeState));
 
-    expect(resetSpy).not.toHaveBeenCalled();
+    expect(resetAllSpy).not.toHaveBeenCalled();
   });
 
-  it('resets all entity stores when appId changes', () => {
+  it('calls registry.resetAll() when appId changes', () => {
     const appStore = TestBed.inject(AppStore);
-    const usersStore = TestBed.inject(UsersStore);
-    const countryStore = TestBed.inject(CountryStore);
-    const deptStore = TestBed.inject(DepartmentStore);
-    const jobStore = TestBed.inject(JobTitleStore);
+    const registry = TestBed.inject(AppScopeRegistry);
 
     appStore.switchApp('acme'); // ensure we start at acme
 
-    const usersReset = vi.spyOn(usersStore, 'reset');
-    const countryReset = vi.spyOn(countryStore, 'reset');
-    const deptReset = vi.spyOn(deptStore, 'reset');
-    const jobReset = vi.spyOn(jobStore, 'reset');
+    const resetAllSpy = vi.spyOn(registry, 'resetAll');
 
     TestBed.runInInjectionContext(() => appSwitchGuard(makeRoute('globex'), fakeState));
 
-    expect(usersReset).toHaveBeenCalledOnce();
-    expect(countryReset).toHaveBeenCalledOnce();
-    expect(deptReset).toHaveBeenCalledOnce();
-    expect(jobReset).toHaveBeenCalledOnce();
+    expect(resetAllSpy).toHaveBeenCalledOnce();
   });
 
   it('updates AppStore.currentAppId after switch', () => {

@@ -1,6 +1,7 @@
 import { inject } from '@angular/core';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { lastValueFrom } from 'rxjs';
+import { withAppScoped } from '@shared/lib/with-app-scoped';
 import { JobTitle } from './job-title.model';
 import { JobTitleApi } from './job-title-api';
 
@@ -29,4 +30,5 @@ export const JobTitleStore = signalStore(
       patchState(store, { jobTitles: [], loading: false, error: null });
     },
   })),
+  withAppScoped(),
 );

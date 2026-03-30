@@ -1,16 +1,23 @@
 import { ChangeDetectionStrategy, Component, inject, output } from '@angular/core';
-import { UserRole } from '@entities/user';
+import { ROLE_VALUES, UserRole } from '@entities/user';
+import { ConfirmDialogComponent } from '@shared/ui';
 import { SelectionStore } from '../../lib/selection.store';
 
 @Component({
   selector: 'app-bulk-toolbar',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [ConfirmDialogComponent],
   template: `
     @if (selectionStore.selectedCount() > 0) {
+      <app-confirm-dialog
+        #confirmDialog
+        [message]="'Delete ' + selectionStore.selectedCount() + ' selected users?'"
+        (confirmed)="deleteSelected.emit()"
+      />
       <div class="flex items-center gap-3 p-3 bg-base-200 rounded-box mb-4">
         <span class="text-sm font-medium">{{ selectionStore.selectedCount() }} selected</span>
 
-        <button class="btn btn-sm btn-error" (click)="deleteSelected.emit()">
+        <button class="btn btn-sm btn-error" (click)="confirmDialog.open()">
           Delete selected ({{ selectionStore.selectedCount() }})
         </button>
 
@@ -30,7 +37,7 @@ import { SelectionStore } from '../../lib/selection.store';
 })
 export class BulkToolbarComponent {
   protected readonly selectionStore = inject(SelectionStore);
-  protected readonly roles: UserRole[] = ['viewer', 'editor', 'admin'];
+  protected readonly roles = ROLE_VALUES;
 
   readonly deleteSelected = output<void>();
   readonly changeRole = output<UserRole>();

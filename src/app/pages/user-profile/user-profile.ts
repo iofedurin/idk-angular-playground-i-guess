@@ -2,10 +2,11 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UsersStore } from '@entities/user';
 import { UserCardComponent } from '@widgets/user-card';
+import { SpinnerComponent } from '@shared/ui';
 
 @Component({
   selector: 'app-user-profile-page',
-  imports: [RouterLink, UserCardComponent],
+  imports: [RouterLink, UserCardComponent, SpinnerComponent],
   templateUrl: './user-profile.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -9,11 +9,10 @@ const PER_PAGE = 10;
 export class AuditEntryApi {
   private readonly http = inject(HttpClient);
 
-  getPage(page: number, appId: string) {
+  getPage(page: number) {
     const params = new HttpParams()
       .set('_page', page)
-      .set('_per_page', PER_PAGE)
-      .set('appId', appId);
+      .set('_per_page', PER_PAGE);
     return this.http.get<AuditPage>(BASE, { params });
   }
 }

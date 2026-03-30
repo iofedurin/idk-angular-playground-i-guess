@@ -8,6 +8,8 @@ import {
   withEntities,
 } from '@ngrx/signals/entities';
 import { lastValueFrom } from 'rxjs';
+import { httpMutation } from '@shared/lib/http-mutation';
+import { withAppScoped } from '@shared/lib/with-app-scoped';
 import { CreateDepartmentDto, Department, UpdateDepartmentDto } from './department.model';
 import { DepartmentApi } from './department-api';
 
@@ -20,8 +22,9 @@ export const DepartmentStore = signalStore(
   { providedIn: 'root' },
   withEntities<Department>(),
   withState<DepartmentState>({ loading: false, error: null }),
-  withMethods((store, api = inject(DepartmentApi)) => {
-    const fetchAll = async (): Promise<void> => {
+  withMethods((store, api = inject(DepartmentApi)) => ({
+    async load(): Promise<void> {
+      if (store.entities().length) return;
       patchState(store, { loading: true, error: null });
       try {
         const departments = await lastValueFrom(api.getAll());
@@ -29,38 +32,32 @@ export const DepartmentStore = signalStore(
       } catch {
         patchState(store, { loading: false, error: 'Failed to load departments' });
       }
-    };
+    },
 
-    return {
-      /** Cached load — used by DepartmentSelectComponent. */
-      async load(): Promise<void> {
-        if (store.entities().length) return;
-        await fetchAll();
-      },
+    async create(dto: CreateDepartmentDto): Promise<Department | undefined> {
+      const r = await httpMutation(api.create(dto));
+      if (!r.ok) return undefined;
+      patchState(store, addEntity(r.data));
+      return r.data;
+    },
 
-      /** Always re-fetches — used by departments-list page. */
-      loadAll: fetchAll,
+    async update(id: string, dto: UpdateDepartmentDto): Promise<Department | undefined> {
+      const r = await httpMutation(api.update(id, dto));
+      if (!r.ok) return undefined;
+      patchState(store, updateEntity({ id, changes: r.data }));
+      return r.data;
+    },
 
-      async create(dto: CreateDepartmentDto): Promise<Department> {
-        const department = await lastValueFrom(api.create(dto));
-        patchState(store, addEntity(department));
-        return department;
-      },
+    async remove(id: string): Promise<boolean> {
+      const r = await httpMutation(api.remove(id));
+      if (!r.ok) return false;
+      patchState(store, removeEntity(id));
+      return true;
+    },
 
-      async update(id: string, dto: UpdateDepartmentDto): Promise<Department> {
-        const department = await lastValueFrom(api.update(id, dto));
-        patchState(store, updateEntity({ id, changes: department }));
-        return department;
-      },
-
-      async remove(id: string): Promise<void> {
-        await lastValueFrom(api.remove(id));
-        patchState(store, removeEntity(id));
-      },
-
-      reset(): void {
-        patchState(store, setAllEntities([] as Department[]), { loading: false, error: null });
-      },
-    };
-  }),
+    reset(): void {
+      patchState(store, setAllEntities([] as Department[]), { loading: false, error: null });
+    },
+  })),
+  withAppScoped(),
 );

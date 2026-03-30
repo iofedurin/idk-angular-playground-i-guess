@@ -8,6 +8,14 @@ describe('BulkToolbarComponent', () => {
   let store: InstanceType<typeof SelectionStore>;
 
   beforeEach(async () => {
+    // jsdom may not implement HTMLDialogElement.showModal/close
+    if (!HTMLDialogElement.prototype.showModal) {
+      HTMLDialogElement.prototype.showModal = () => {};
+    }
+    if (!HTMLDialogElement.prototype.close) {
+      HTMLDialogElement.prototype.close = () => {};
+    }
+
     await TestBed.configureTestingModule({}).compileComponents();
     fixture = TestBed.createComponent(BulkToolbarComponent);
     el = fixture.nativeElement;
@@ -28,14 +36,17 @@ describe('BulkToolbarComponent', () => {
     expect(el.textContent).toContain('Delete selected (3)');
   });
 
-  it('emits deleteSelected on delete button click', () => {
+  it('emits deleteSelected after confirm dialog is confirmed', () => {
     store.selectAll(['1']);
     fixture.detectChanges();
 
     let count = 0;
     fixture.componentInstance.deleteSelected.subscribe(() => count++);
 
-    el.querySelector<HTMLButtonElement>('.btn-error')!.click();
+    // Click trigger button (btn-sm distinguishes it from the dialog's confirm button)
+    el.querySelector<HTMLButtonElement>('button.btn-sm.btn-error')!.click();
+    // Click confirm button inside the dialog
+    el.querySelector<HTMLButtonElement>('dialog .btn-error')!.click();
     expect(count).toBe(1);
   });
 

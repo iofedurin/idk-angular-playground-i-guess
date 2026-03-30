@@ -35,8 +35,8 @@ export class UserEditPage implements OnInit {
     excludeId: () => this.userId,
     onSubmit: async () => {
       const { name, ...rest } = this.model();
-      await this.store.update(this.userId, { ...rest, firstName: name.firstName, lastName: name.lastName });
-      await this.router.navigate(['/app', this.appId, 'users', this.userId]);
+      const user = await this.store.update(this.userId, { ...rest, firstName: name.firstName, lastName: name.lastName });
+      if (user) await this.router.navigate(['/app', this.appId, 'users', this.userId]);
     },
   });
 

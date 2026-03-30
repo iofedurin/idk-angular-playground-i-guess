@@ -32,15 +32,13 @@ export class DepartmentEditPage implements OnInit {
 
   protected readonly departmentForm = createDepartmentForm(this.model, {
     onSubmit: async () => {
-      await this.store.update(this.departmentId, this.model());
-      await this.router.navigate(['/app', this.appId, 'departments']);
+      const dept = await this.store.update(this.departmentId, this.model());
+      if (dept) await this.router.navigate(['/app', this.appId, 'departments']);
     },
   });
 
   async ngOnInit() {
-    if (!this.store.entityMap()[this.departmentId]) {
-      await this.store.loadAll();
-    }
+    await this.store.load();
     const dept = this.store.entityMap()[this.departmentId];
     if (dept) {
       this.patchModel(dept);

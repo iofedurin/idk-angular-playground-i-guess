@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, computed, inject, OnInit } from '@angular/core';
 import { UserRole, UsersStore } from '@entities/user';
+import { ErrorAlertComponent, SpinnerComponent } from '@shared/ui';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [],
+  imports: [SpinnerComponent, ErrorAlertComponent],
   templateUrl: './dashboard.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

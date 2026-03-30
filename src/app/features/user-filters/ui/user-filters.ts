@@ -2,9 +2,8 @@ import { ChangeDetectionStrategy, Component, DestroyRef, inject, model } from '@
 import { CountryOptionsComponent, CountryStore } from '@entities/country';
 import { DepartmentOptionsComponent, DepartmentStore } from '@entities/department';
 import { JobTitleOptionsComponent, JobTitleStore } from '@entities/job-title';
+import { ROLE_VALUES } from '@entities/user';
 import { UserFilters } from '../lib/user-filters.model';
-
-const ROLES = ['viewer', 'editor', 'admin'] as const;
 
 @Component({
   selector: 'app-user-filters',
@@ -14,7 +13,7 @@ const ROLES = ['viewer', 'editor', 'admin'] as const;
 })
 export class UserFiltersComponent {
   readonly filters = model.required<UserFilters>();
-  protected readonly roles = ROLES;
+  protected readonly roles = ROLE_VALUES;
 
   private readonly destroyRef = inject(DestroyRef);
   private searchTimer?: ReturnType<typeof setTimeout>;

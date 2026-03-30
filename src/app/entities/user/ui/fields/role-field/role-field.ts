@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { Field, FormField } from '@angular/forms/signals';
 import { FieldErrorsComponent } from '@shared/ui';
-import { UserRole } from '../../../user.model';
+import { ROLE_VALUES } from '../../../lib/roles';
 
 @Component({
   selector: 'app-role-field',
@@ -21,5 +21,5 @@ import { UserRole } from '../../../user.model';
 })
 export class RoleFieldComponent {
   field = input.required<Field<string>>();
-  protected readonly roles: UserRole[] = ['viewer', 'editor', 'admin'];
+  protected readonly roles = ROLE_VALUES;
 }

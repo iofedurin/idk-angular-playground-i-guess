@@ -2,13 +2,9 @@
   <h1 class="text-2xl font-bold mb-6">Dashboard</h1>
 
   @if (store.loading()) {
-    <div class="flex justify-center py-12">
-      <span class="loading loading-spinner loading-lg"></span>
-    </div>
-  } @else if (store.error()) {
-    <div class="alert alert-error">
-      <span>{{ store.error() }}</span>
-    </div>
+    <app-spinner />
+  } @else if (store.error(); as error) {
+    <app-error-alert [message]="error" />
   } @else {
     <div class="stats stats-vertical lg:stats-horizontal shadow w-full">
       <div class="stat">

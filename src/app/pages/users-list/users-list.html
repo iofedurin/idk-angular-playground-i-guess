@@ -21,13 +21,9 @@
   />
 
   @if (store.loading()) {
-    <div class="flex justify-center py-12">
-      <span class="loading loading-spinner loading-lg"></span>
-    </div>
-  } @else if (store.error()) {
-    <div class="alert alert-error">
-      <span>{{ store.error() }}</span>
-    </div>
+    <app-spinner />
+  } @else if (store.error(); as error) {
+    <app-error-alert [message]="error" />
   } @else {
     <div class="overflow-x-auto rounded-box border border-base-content/10">
       <table class="table table-zebra">

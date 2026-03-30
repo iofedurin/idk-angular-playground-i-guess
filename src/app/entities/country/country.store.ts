@@ -1,6 +1,7 @@
 import { inject } from '@angular/core';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { lastValueFrom } from 'rxjs';
+import { withAppScoped } from '@shared/lib/with-app-scoped';
 import { Country } from './country.model';
 import { CountryApi } from './country-api';
 
@@ -29,4 +30,5 @@ export const CountryStore = signalStore(
       patchState(store, { countries: [], loading: false, error: null });
     },
   })),
+  withAppScoped(),
 );

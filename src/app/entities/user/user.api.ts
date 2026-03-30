@@ -43,6 +43,14 @@ export class UsersApi {
     return this.http.delete<void>(`${BASE}/${id}`);
   }
 
+  bulkRemove(ids: string[]) {
+    return this.http.post<void>(`${BASE}/bulk-delete`, { ids });
+  }
+
+  bulkUpdate(ids: string[], changes: UpdateUserDto) {
+    return this.http.patch<User[]>(`${BASE}/bulk-update`, { ids, changes });
+  }
+
   checkEmailTaken(email: string, excludeId?: string) {
     return this.http.get<User[]>(`${BASE}?email=${encodeURIComponent(email)}`);
   }

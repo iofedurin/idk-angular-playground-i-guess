@@ -59,28 +59,6 @@ describe('DepartmentStore', () => {
     });
   });
 
-  describe('loadAll()', () => {
-    it('fetches departments', async () => {
-      const promise = store.loadAll();
-      httpMock.expectOne('/api/departments').flush(mockDepartments);
-      await promise;
-
-      expect(store.entities()).toEqual(mockDepartments);
-    });
-
-    it('re-fetches even when already loaded', async () => {
-      let promise = store.loadAll();
-      httpMock.expectOne('/api/departments').flush(mockDepartments);
-      await promise;
-
-      promise = store.loadAll();
-      httpMock.expectOne('/api/departments').flush(mockDepartments);
-      await promise;
-
-      expect(store.entities()).toHaveLength(2);
-    });
-  });
-
   describe('create()', () => {
     it('adds a new department', async () => {
       const newDept: Department = { id: 'marketing', name: 'Marketing', group: 'Business' };
@@ -95,7 +73,7 @@ describe('DepartmentStore', () => {
 
   describe('update()', () => {
     it('updates an existing department', async () => {
-      const loadPromise = store.loadAll();
+      const loadPromise = store.load();
       httpMock.expectOne('/api/departments').flush(mockDepartments);
       await loadPromise;
 
@@ -111,7 +89,7 @@ describe('DepartmentStore', () => {
 
   describe('remove()', () => {
     it('removes a department', async () => {
-      const loadPromise = store.loadAll();
+      const loadPromise = store.load();
       httpMock.expectOne('/api/departments').flush(mockDepartments);
       await loadPromise;
 

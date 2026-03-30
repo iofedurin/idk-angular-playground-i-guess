@@ -17,6 +17,14 @@ describe('DepartmentDeleteActionComponent', () => {
   let httpMock: HttpTestingController;
 
   beforeEach(async () => {
+    // jsdom may not implement HTMLDialogElement.showModal/close
+    if (!HTMLDialogElement.prototype.showModal) {
+      HTMLDialogElement.prototype.showModal = () => {};
+    }
+    if (!HTMLDialogElement.prototype.close) {
+      HTMLDialogElement.prototype.close = () => {};
+    }
+
     await TestBed.configureTestingModule({
       imports: [DepartmentDeleteActionComponent],
       providers: [provideHttpClient(), provideHttpClientTesting()],
@@ -24,7 +32,7 @@ describe('DepartmentDeleteActionComponent', () => {
 
     // Pre-populate the store so delete can find the entity
     const store = TestBed.inject(DepartmentStore);
-    const loadPromise = store.loadAll();
+    const loadPromise = store.load();
     httpMock = TestBed.inject(HttpTestingController);
     httpMock.expectOne('/api/departments').flush(mockDepartments);
     await loadPromise;
@@ -37,13 +45,17 @@ describe('DepartmentDeleteActionComponent', () => {
   afterEach(() => httpMock.verify());
 
   it('renders a Delete button', () => {
-    const btn = fixture.nativeElement.querySelector('button');
+    const btn = fixture.nativeElement.querySelector('button.btn-outline');
     expect(btn?.textContent?.trim()).toContain('Delete');
   });
 
-  it('calls store.remove() and removes entity on click', async () => {
-    const btn: HTMLButtonElement = fixture.nativeElement.querySelector('button');
-    btn.click();
+  it('calls store.remove() and removes entity after confirmation', async () => {
+    const triggerBtn: HTMLButtonElement = fixture.nativeElement.querySelector('button.btn-outline');
+    triggerBtn.click();
+    fixture.detectChanges();
+
+    const confirmBtn: HTMLButtonElement = fixture.nativeElement.querySelector('dialog button.btn-error');
+    confirmBtn.click();
 
     httpMock.expectOne('/api/departments/engineering').flush(null);
     await flush();
@@ -54,16 +66,20 @@ describe('DepartmentDeleteActionComponent', () => {
   });
 
   it('disables the button while deleting', async () => {
-    const btn: HTMLButtonElement = fixture.nativeElement.querySelector('button');
-    btn.click();
+    const triggerBtn: HTMLButtonElement = fixture.nativeElement.querySelector('button.btn-outline');
+    triggerBtn.click();
     fixture.detectChanges();
 
-    expect(btn.disabled).toBe(true);
+    const confirmBtn: HTMLButtonElement = fixture.nativeElement.querySelector('dialog button.btn-error');
+    confirmBtn.click();
+    fixture.detectChanges();
+
+    expect(triggerBtn.disabled).toBe(true);
 
     httpMock.expectOne('/api/departments/engineering').flush(null);
     await flush();
     fixture.detectChanges();
 
-    expect(btn.disabled).toBe(false);
+    expect(triggerBtn.disabled).toBe(false);
   });
 });

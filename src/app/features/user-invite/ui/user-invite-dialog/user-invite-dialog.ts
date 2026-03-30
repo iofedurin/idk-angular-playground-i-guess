@@ -10,8 +10,8 @@ import {
   viewChild,
 } from '@angular/core';
 import { form, FormRoot } from '@angular/forms/signals';
-import { InvitationStore, InviteFormModel, InviteRole } from '@entities/invitation';
-import { EmailFieldComponent, RoleFieldComponent, roleSchema, userEmailSchema } from '@entities/user';
+import { InvitationStore, InviteFormModel } from '@entities/invitation';
+import { EmailFieldComponent, RoleFieldComponent, UserRole, roleSchema, userEmailSchema } from '@entities/user';
 
 @Component({
   selector: 'app-user-invite-dialog',
@@ -47,7 +47,7 @@ export class UserInviteDialogComponent {
   private readonly dialogRef = viewChild<ElementRef<HTMLDialogElement>>('dialog');
   private readonly store = inject(InvitationStore);
 
-  private readonly model = signal<InviteFormModel>({ email: '', role: '' as InviteRole });
+  private readonly model = signal<InviteFormModel>({ email: '', role: '' as UserRole });
 
   protected readonly inviteForm = form(
     this.model,
@@ -79,7 +79,7 @@ export class UserInviteDialogComponent {
       } else {
         dialog.close();
         this.inviteForm().reset();
-        this.model.set({ email: '', role: '' as InviteRole });
+        this.model.set({ email: '', role: '' as UserRole });
       }
     });
   }

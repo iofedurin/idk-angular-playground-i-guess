@@ -115,7 +115,10 @@ describe('UserEditPage', () => {
   });
 });
 
-/** Flush pending async validator HTTP requests (username/email uniqueness). */
+/**
+ * Flush pending async validator HTTP requests (username/email uniqueness).
+ * TODO: remove when Signal Forms cancels in-flight validateHttp requests on form destroy
+ */
 function dismissValidatorRequests(httpMock: HttpTestingController) {
   // validateHttp bakes query params into the URL string, so r.url includes them
   httpMock

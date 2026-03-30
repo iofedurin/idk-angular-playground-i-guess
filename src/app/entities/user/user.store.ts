@@ -2,12 +2,15 @@ import { inject } from '@angular/core';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import {
   addEntity,
+  removeEntities,
   removeEntity,
   setAllEntities,
   updateEntity,
   withEntities,
 } from '@ngrx/signals/entities';
 import { lastValueFrom } from 'rxjs';
+import { httpMutation } from '@shared/lib/http-mutation';
+import { withAppScoped } from '@shared/lib/with-app-scoped';
 import { CreateUserDto, UpdateUserDto, User, UserPageParams } from './user.model';
 import { UsersApi } from './user.api';
 
@@ -49,21 +52,39 @@ export const UsersStore = signalStore(
       }
     },
 
-    async create(dto: CreateUserDto): Promise<User> {
-      const user = await lastValueFrom(api.create(dto));
-      patchState(store, addEntity(user));
-      return user;
+    async create(dto: CreateUserDto): Promise<User | undefined> {
+      const r = await httpMutation(api.create(dto));
+      if (!r.ok) return undefined;
+      patchState(store, addEntity(r.data));
+      return r.data;
     },
 
-    async update(id: string, dto: UpdateUserDto): Promise<User> {
-      const user = await lastValueFrom(api.update(id, dto));
-      patchState(store, updateEntity({ id, changes: user }));
-      return user;
+    async update(id: string, dto: UpdateUserDto): Promise<User | undefined> {
+      const r = await httpMutation(api.update(id, dto));
+      if (!r.ok) return undefined;
+      patchState(store, updateEntity({ id, changes: r.data }));
+      return r.data;
     },
 
-    async remove(id: string): Promise<void> {
-      await lastValueFrom(api.remove(id));
+    async remove(id: string): Promise<boolean> {
+      const r = await httpMutation(api.remove(id));
+      if (!r.ok) return false;
       patchState(store, removeEntity(id));
+      return true;
+    },
+
+    async bulkRemove(ids: string[]): Promise<boolean> {
+      const r = await httpMutation(api.bulkRemove(ids));
+      if (!r.ok) return false;
+      patchState(store, removeEntities(ids));
+      return true;
+    },
+
+    async bulkUpdate(ids: string[], changes: UpdateUserDto): Promise<boolean> {
+      const r = await httpMutation(api.bulkUpdate(ids, changes));
+      if (!r.ok) return false;
+      r.data.forEach((u) => patchState(store, updateEntity({ id: u.id, changes: u })));
+      return true;
     },
 
     reset(): void {
@@ -72,4 +93,5 @@ export const UsersStore = signalStore(
       });
     },
   })),
+  withAppScoped(),
 );

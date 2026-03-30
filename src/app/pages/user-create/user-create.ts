@@ -32,8 +32,8 @@ export class UserCreatePage {
   protected readonly userForm = createUserForm(this.model, {
     onSubmit: async () => {
       const { name, ...rest } = this.model();
-      await this.store.create({ ...rest, firstName: name.firstName, lastName: name.lastName });
-      await this.router.navigate(['/app', this.appId, 'users']);
+      const user = await this.store.create({ ...rest, firstName: name.firstName, lastName: name.lastName });
+      if (user) await this.router.navigate(['/app', this.appId, 'users']);
     },
   });
 }

@@ -1,8 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { HttpClient, HttpContext, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { AppStore } from '@entities/app';
 import { appIdInterceptor } from './app-id.interceptor';
+import { GLOBAL_REQUEST } from './app-id.interceptor';
 
 describe('appIdInterceptor', () => {
   let http: HttpClient;
@@ -91,21 +92,23 @@ describe('appIdInterceptor', () => {
     });
   });
 
-  describe('non-users endpoints', () => {
-    it('does not modify GET /api/countries', () => {
-      http.get('/api/countries').subscribe();
+  describe('GLOBAL_REQUEST context', () => {
+    it('skips appId query param for GET when set', () => {
+      const ctx = new HttpContext().set(GLOBAL_REQUEST, true);
+      http.get('/api/countries', { context: ctx }).subscribe();
 
       const req = httpMock.expectOne('/api/countries');
       expect(req.request.params.has('appId')).toBe(false);
       req.flush([]);
     });
 
-    it('does not modify GET /api/departments', () => {
-      http.get('/api/departments').subscribe();
+    it('skips appId body injection for POST when set', () => {
+      const ctx = new HttpContext().set(GLOBAL_REQUEST, true);
+      http.post('/api/departments', { name: 'HR' }, { context: ctx }).subscribe();
 
-      const req = httpMock.expectOne('/api/departments');
-      expect(req.request.params.has('appId')).toBe(false);
-      req.flush([]);
+      const req = httpMock.expectOne((r) => r.url === '/api/departments' && r.method === 'POST');
+      expect((req.request.body as Record<string, unknown>)['appId']).toBeUndefined();
+      req.flush({});
     });
   });
 });

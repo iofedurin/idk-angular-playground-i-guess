@@ -1,5 +1,6 @@
 export type { User, UserRole, CreateUserDto, UpdateUserDto, UserFormModel, UserPageParams, UsersPage } from './user.model';
 export { PER_PAGE } from './user.model';
+export { ROLE_VALUES } from './lib/roles';
 export { createUserForm } from './lib/user-form-factory';
 export type { UserForm, UserFormOptions } from './lib/user-form-factory';
 export { emailBaseSchema, roleSchema, userEmailSchema } from './lib/field-schemas';
