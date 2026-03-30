@@ -29,6 +29,10 @@ Follow the established patterns. When making a new non-obvious decision, create 
 - **Plan tracking**: when a plan file exists in `docs/`, mark completed steps with `[x]` immediately after finishing them — both in phase headers and in the "Implementation order" checklist
 - **Plan file lifecycle**: plan files are named `docs/PLAN-<feature>.md` and are temporary. When all items are `[x]`, review the file — if it documents a non-obvious architectural decision, extract an ADR to `docs/adr/`; if it captures a reusable Angular pattern, consider updating the skills. Then **delete the plan file**. (`docs/epics.md` is the permanent project roadmap, not a temporary plan.)
 
+## Git workflow
+
+- **Before every commit**: run `bun run test` and ensure all tests pass
+
 ## Testing
 
 - **Runner**: Vitest 4.0.8 + jsdom, builder `@angular/build:unit-test`

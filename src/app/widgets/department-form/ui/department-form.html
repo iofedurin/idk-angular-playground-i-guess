@@ -35,7 +35,7 @@
       </fieldset>
 
       <div class="card-actions mt-2 gap-2">
-        <app-submit-button [pending]="departmentForm()().submitting()">{{ submitLabel() }}</app-submit-button>
+        <button type="submit" [disabled]="departmentForm()().submitting()" class="btn btn-primary w-full">{{ submitLabel() }}</button>
         <a [routerLink]="cancelLink()" class="btn btn-ghost w-full">Cancel</a>
       </div>
     </form>

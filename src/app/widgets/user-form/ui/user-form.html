@@ -18,7 +18,7 @@
       <app-bio-field [field]="userForm().bio" />
 
       <div class="card-actions mt-2 gap-2">
-        <app-submit-button [pending]="userForm()().submitting()">{{ submitLabel() }}</app-submit-button>
+        <button type="submit" [disabled]="userForm()().submitting()" class="btn btn-primary w-full">{{ submitLabel() }}</button>
         <a [routerLink]="cancelLink()" class="btn btn-ghost w-full">Cancel</a>
       </div>
 

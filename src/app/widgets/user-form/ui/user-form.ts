@@ -16,7 +16,6 @@ import {
 import { CountrySelectComponent } from '@entities/country';
 import { DepartmentSelectComponent } from '@entities/department';
 import { JobTitleSelectComponent } from '@entities/job-title';
-import { SubmitButtonComponent } from '@shared/ui';
 
 @Component({
   selector: 'app-user-form',
@@ -34,7 +33,6 @@ import { SubmitButtonComponent } from '@shared/ui';
     RoleFieldComponent,
     ActiveFieldComponent,
     BioFieldComponent,
-    SubmitButtonComponent,
   ],
   templateUrl: './user-form.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

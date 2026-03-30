@@ -437,20 +437,20 @@ features/user-bulk-actions/
 
 ### Фазы
 
-- [ ] **7.1 — Selection store**
+- [x] **7.1 — Selection store**
   - `SelectionStore` — `selectedIds: Set<string>`, методы: toggle, selectAll, clearAll, isSelected
   - Не entity-стор — чисто feature-level state
 
-- [ ] **7.2 — UI чекбоксов**
+- [x] **7.2 — UI чекбоксов**
   - Чекбокс в хедере таблицы (select all) + чекбокс в каждой строке
   - Тулбар с кнопками "Delete selected (N)", "Change role"
   - Тулбар появляется когда selectedIds.size > 0
 
-- [ ] **7.3 — Bulk delete**
+- [x] **7.3 — Bulk delete**
   - Вызывает `usersStore.remove()` для каждого выбранного (или batch endpoint)
   - После завершения — clearAll()
 
-- [ ] **7.4 — Bulk role change**
+- [x] **7.4 — Bulk role change**
   - Dropdown с ролью + "Apply"
   - Вызывает `usersStore.update(id, { role })` для каждого
 

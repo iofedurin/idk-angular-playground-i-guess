@@ -12,11 +12,10 @@ import {
 import { form, FormRoot } from '@angular/forms/signals';
 import { InvitationStore, InviteFormModel, InviteRole } from '@entities/invitation';
 import { EmailFieldComponent, RoleFieldComponent, roleSchema, userEmailSchema } from '@entities/user';
-import { SubmitButtonComponent } from '@shared/ui';
 
 @Component({
   selector: 'app-user-invite-dialog',
-  imports: [FormRoot, EmailFieldComponent, RoleFieldComponent, SubmitButtonComponent],
+  imports: [FormRoot, EmailFieldComponent, RoleFieldComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <dialog class="modal" #dialog>
@@ -28,7 +27,7 @@ import { SubmitButtonComponent } from '@shared/ui';
           <app-role-field [field]="inviteForm.role" />
 
           <div class="modal-action mt-0">
-            <app-submit-button [pending]="inviteForm().submitting()">Send Invite</app-submit-button>
+            <button type="submit" [disabled]="inviteForm().submitting()" class="btn btn-primary">Send Invite</button>
             <button type="button" class="btn btn-ghost" (click)="closed.emit()">Cancel</button>
           </div>
         </form>

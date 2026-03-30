@@ -15,6 +15,11 @@
 
   <app-user-filters [(filters)]="filters" />
 
+  <app-bulk-toolbar
+    (deleteSelected)="bulkDelete()"
+    (changeRole)="bulkChangeRole($event)"
+  />
+
   @if (store.loading()) {
     <div class="flex justify-center py-12">
       <span class="loading loading-spinner loading-lg"></span>
@@ -28,6 +33,14 @@
       <table class="table table-zebra">
         <thead>
           <tr>
+            <th>
+              <input
+                type="checkbox"
+                class="checkbox checkbox-sm"
+                [checked]="selectionStore.allSelected(filteredUsers().map(u => u.id))"
+                (change)="toggleSelectAll()"
+              />
+            </th>
             <th>Username</th>
             <th class="cursor-pointer select-none" (click)="toggleSort('name')">
               Name
@@ -54,7 +67,15 @@
         </thead>
         <tbody>
           @for (user of filteredUsers(); track user.id) {
-            <tr>
+            <tr [class.bg-base-200]="selectionStore.isSelected(user.id)">
+              <td>
+                <input
+                  type="checkbox"
+                  class="checkbox checkbox-sm"
+                  [checked]="selectionStore.isSelected(user.id)"
+                  (change)="selectionStore.toggle(user.id)"
+                />
+              </td>
               <td class="font-mono text-sm">{{ user.username }}</td>
               <td>{{ user.firstName }} {{ user.lastName }}</td>
               <td>{{ user.email }}</td>
@@ -78,7 +99,7 @@
             </tr>
           } @empty {
             <tr>
-              <td colspan="7" class="text-center text-base-content/50 py-8">No users found</td>
+              <td colspan="8" class="text-center text-base-content/50 py-8">No users found</td>
             </tr>
           }
         </tbody>

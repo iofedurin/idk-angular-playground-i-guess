@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } 
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DepartmentStore } from '@entities/department';
 import { UserRole, UsersStore } from '@entities/user';
+import { BulkToolbarComponent, SelectionStore } from '@features/user-bulk-actions';
 import { UserDeleteActionComponent } from '@features/user-delete';
 import {
   applyFilters,
@@ -17,12 +18,13 @@ import { UserInviteDialogComponent } from '@features/user-invite';
 
 @Component({
   selector: 'app-users-list',
-  imports: [RouterLink, UserDeleteActionComponent, UserFiltersComponent, UserInviteDialogComponent],
+  imports: [RouterLink, UserDeleteActionComponent, UserFiltersComponent, UserInviteDialogComponent, BulkToolbarComponent],
   templateUrl: './users-list.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsersListComponent implements OnInit {
   readonly store = inject(UsersStore);
+  protected readonly selectionStore = inject(SelectionStore);
   private readonly departmentStore = inject(DepartmentStore);
   protected readonly appId = inject(ActivatedRoute).snapshot.paramMap.get('appId')!;
 
@@ -45,6 +47,27 @@ export class UsersListComponent implements OnInit {
       field,
       direction: s.field === field && s.direction === 'asc' ? 'desc' : 'asc',
     }));
+  }
+
+  protected toggleSelectAll(): void {
+    const allIds = this.filteredUsers().map((u) => u.id);
+    if (this.selectionStore.allSelected(allIds)) {
+      this.selectionStore.clearAll();
+    } else {
+      this.selectionStore.selectAll(allIds);
+    }
+  }
+
+  protected async bulkDelete(): Promise<void> {
+    const ids = [...this.selectionStore.selectedIds()];
+    await Promise.all(ids.map((id) => this.store.remove(id)));
+    this.selectionStore.clearAll();
+  }
+
+  protected async bulkChangeRole(role: UserRole): Promise<void> {
+    const ids = [...this.selectionStore.selectedIds()];
+    await Promise.all(ids.map((id) => this.store.update(id, { role })));
+    this.selectionStore.clearAll();
   }
 
   roleBadgeClass(role: UserRole): string {
