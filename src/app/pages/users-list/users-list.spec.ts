@@ -228,7 +228,7 @@ describe('UsersListComponent', () => {
       expect(nameHeader.textContent).toContain('↑');
     });
 
-    it('toggleSort sends _sort and _order params to server', async () => {
+    it('toggleSort sends _sort with minus prefix for desc to server', async () => {
       fixture.detectChanges();
       httpMock.expectOne((r) => r.url === '/api/users').flush(makePage(mockUsers));
       await flush();
@@ -238,8 +238,7 @@ describe('UsersListComponent', () => {
       fixture.detectChanges();
 
       const req = httpMock.expectOne((r) => r.url === '/api/users');
-      expect(req.request.params.get('_sort')).toBe('firstName');
-      expect(req.request.params.get('_order')).toBe('desc');
+      expect(req.request.params.get('_sort')).toBe('-firstName');
       req.flush(makePage(mockUsers));
       await flush();
       fixture.detectChanges();
@@ -261,8 +260,7 @@ describe('UsersListComponent', () => {
       fixture.detectChanges();
 
       const req = httpMock.expectOne((r) => r.url === '/api/users');
-      expect(req.request.params.get('_sort')).toBe('role');
-      expect(req.request.params.get('_order')).toBe('asc');
+      expect(req.request.params.get('_sort')).toBe('role'); // no minus = asc
       req.flush(makePage(mockUsers));
       await flush();
       fixture.detectChanges();

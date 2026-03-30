@@ -20,7 +20,10 @@ export class UsersApi {
     if (params.country) p = p.set('country', params.country);
     if (params.jobTitle) p = p.set('jobTitle', params.jobTitle);
     if (params.active) p = p.set('active', params.active);
-    if (params.sortField) p = p.set('_sort', params.sortField).set('_order', params.sortOrder ?? 'asc');
+    if (params.sortField) {
+      const sortParam = params.sortOrder === 'desc' ? `-${params.sortField}` : params.sortField;
+      p = p.set('_sort', sortParam);
+    }
     return this.http.get<UsersPage>(BASE, { params: p });
   }
 

@@ -172,12 +172,21 @@ describe('UsersStore', () => {
       expect(store.loading()).toBe(false);
     });
 
-    it('sends _sort and _order params when provided', async () => {
+    it('sends _sort with minus prefix for desc order', async () => {
       const p = store.loadPage({ page: 1, sortField: 'firstName', sortOrder: 'desc' });
       const req = httpMock.expectOne((r) => r.url === '/api/users');
 
+      expect(req.request.params.get('_sort')).toBe('-firstName');
+
+      req.flush(makePage([]));
+      await p;
+    });
+
+    it('sends _sort without minus prefix for asc order', async () => {
+      const p = store.loadPage({ page: 1, sortField: 'firstName', sortOrder: 'asc' });
+      const req = httpMock.expectOne((r) => r.url === '/api/users');
+
       expect(req.request.params.get('_sort')).toBe('firstName');
-      expect(req.request.params.get('_order')).toBe('desc');
 
       req.flush(makePage([]));
       await p;
