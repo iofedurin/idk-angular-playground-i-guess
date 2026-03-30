@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { form, FormRoot } from '@angular/forms/signals';
 import { InvitationStore, InviteFormModel, InviteRole } from '@entities/invitation';
-import { EmailFieldComponent, emailBaseSchema, RoleFieldComponent, roleSchema } from '@entities/user';
+import { EmailFieldComponent, RoleFieldComponent, roleSchema, userEmailSchema } from '@entities/user';
 import { SubmitButtonComponent } from '@shared/ui';
 
 @Component({
@@ -53,7 +53,7 @@ export class UserInviteDialogComponent {
   protected readonly inviteForm = form(
     this.model,
     (s) => {
-      emailBaseSchema(s.email);
+      userEmailSchema(s.email);
       roleSchema(s.role);
     },
     {
@@ -64,7 +64,6 @@ export class UserInviteDialogComponent {
             role: this.model().role,
             appId: this.appId(),
           });
-          this.model.set({ email: '', role: '' as InviteRole });
           this.closed.emit();
           return undefined;
         },
@@ -80,6 +79,8 @@ export class UserInviteDialogComponent {
         dialog.showModal();
       } else {
         dialog.close();
+        this.inviteForm().reset();
+        this.model.set({ email: '', role: '' as InviteRole });
       }
     });
   }

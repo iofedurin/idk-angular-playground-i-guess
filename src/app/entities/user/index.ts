@@ -1,7 +1,7 @@
 export type { User, UserRole, CreateUserDto, UpdateUserDto, UserFormModel } from './user.model';
 export { createUserForm } from './lib/user-form-factory';
 export type { UserForm, UserFormOptions } from './lib/user-form-factory';
-export { emailBaseSchema, roleSchema } from './lib/field-schemas';
+export { emailBaseSchema, roleSchema, userEmailSchema } from './lib/field-schemas';
 export { UsersStore } from './user.store';
 
 export { NameGroupComponent } from './ui/fields/name-group/name-group';
