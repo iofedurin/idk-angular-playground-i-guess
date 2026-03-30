@@ -58,12 +58,12 @@ export class UserInviteDialogComponent {
     {
       submission: {
         action: async () => {
-          await this.store.create({
+          const invitation = await this.store.create({
             email: this.model().email,
             role: this.model().role,
             appId: this.appId(),
           });
-          this.closed.emit();
+          if (invitation) this.closed.emit();
           return undefined;
         },
       },

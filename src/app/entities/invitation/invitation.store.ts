@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { addEntity, setAllEntities, withEntities } from '@ngrx/signals/entities';
 import { lastValueFrom } from 'rxjs';
-import { withAppScoped } from '@shared/lib/app-scope/with-app-scoped';
+import { httpMutation, withAppScoped } from '@shared/lib';
 import { CreateInvitationDto, Invitation } from './invitation.model';
 import { InvitationApi } from './invitation-api';
 
@@ -26,10 +26,11 @@ export const InvitationStore = signalStore(
       }
     },
 
-    async create(dto: CreateInvitationDto): Promise<Invitation> {
-      const invitation = await lastValueFrom(api.create(dto));
-      patchState(store, addEntity(invitation));
-      return invitation;
+    async create(dto: CreateInvitationDto): Promise<Invitation | undefined> {
+      const r = await httpMutation(api.create(dto));
+      if (!r.ok) return;
+      patchState(store, addEntity(r.data));
+      return r.data;
     },
 
     reset(): void {

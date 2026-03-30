@@ -8,8 +8,7 @@ import {
   withEntities,
 } from '@ngrx/signals/entities';
 import { lastValueFrom } from 'rxjs';
-import { httpMutation } from '@shared/lib/http/http-mutation';
-import { withAppScoped } from '@shared/lib/app-scope/with-app-scoped';
+import { httpMutation, withAppScoped } from '@shared/lib';
 import { CreateDepartmentDto, Department, UpdateDepartmentDto } from './department.model';
 import { DepartmentApi } from './department-api';
 

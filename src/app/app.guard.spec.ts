@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, convertToParamMap, RouterStateSnapshot } from '
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { AppStore } from '@entities/app';
-import { AppScopeRegistry } from '@shared/lib/app-scope/app-scope-registry';
+import { AppScopeRegistry } from '@shared/lib';
 import { appSwitchGuard } from './app.guard';
 
 function makeRoute(appId: string): ActivatedRouteSnapshot {

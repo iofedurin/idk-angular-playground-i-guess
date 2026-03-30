@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { lastValueFrom } from 'rxjs';
-import { withAppScoped } from '@shared/lib/app-scope/with-app-scoped';
+import { withAppScoped } from '@shared/lib';
 import { Country } from './country.model';
 import { CountryApi } from './country-api';
 

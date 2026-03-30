@@ -20,8 +20,15 @@ export const AppStore = signalStore(
   withMethods((store, http = inject(HttpClient)) => ({
     async loadApps(): Promise<void> {
       if (store.apps().length) return;
-      const apps = await lastValueFrom(http.get<App[]>('/api/apps'));
-      patchState(store, { apps });
+      try {
+        const apps = await lastValueFrom(http.get<App[]>('/api/apps'));
+        patchState(store, { apps });
+      } catch {
+        // Deviation from store-pattern (no loading/error state):
+        // AppStore is infrastructure, not a domain entity. Workspace switcher
+        // degrades gracefully — shows appId as fallback name. No user-facing
+        // error state needed; retrying on next navigation via cache check.
+      }
     },
     switchApp(appId: string): void {
       patchState(store, { currentAppId: appId });
