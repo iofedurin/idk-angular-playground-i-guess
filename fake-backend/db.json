@@ -273,6 +273,11 @@
       "name": "Brand New Dep",
       "id": "5y8uR6kzMUk",
       "group": "Other"
+    },
+    {
+      "name": "Brand New Dep 2",
+      "group": "Other",
+      "id": "F8Yf0v66buc"
     }
   ],
   "job-titles": [
@@ -310,5 +315,37 @@
     }
   ],
   "invitations": [],
+  "audit-log": [
+    { "id": "al1", "appId": "acme", "action": "create", "entityType": "user", "entityId": "1", "userName": "bmueller", "timestamp": "2026-03-30T09:55:00Z", "details": "Created user jdoe" },
+    { "id": "al2", "appId": "acme", "action": "update", "entityType": "user", "entityId": "2", "userName": "bmueller", "timestamp": "2026-03-30T09:40:00Z", "details": "Updated role for asmith" },
+    { "id": "al3", "appId": "acme", "action": "invite", "entityType": "invitation", "entityId": "inv1", "userName": "jdoe", "timestamp": "2026-03-30T08:15:00Z", "details": "Invited dev@example.com as editor" },
+    { "id": "al4", "appId": "acme", "action": "delete", "entityType": "user", "entityId": "4", "userName": "bmueller", "timestamp": "2026-03-29T17:30:00Z", "details": "Deleted user mlopez" },
+    { "id": "al5", "appId": "acme", "action": "role_change", "entityType": "user", "entityId": "5", "userName": "bmueller", "timestamp": "2026-03-29T16:20:00Z", "details": "Changed role of cpatel to admin" },
+    { "id": "al6", "appId": "acme", "action": "create", "entityType": "department", "entityId": "engineering", "userName": "bmueller", "timestamp": "2026-03-29T14:00:00Z", "details": "Created department Engineering" },
+    { "id": "al7", "appId": "acme", "action": "update", "entityType": "user", "entityId": "1", "userName": "jdoe", "timestamp": "2026-03-29T11:45:00Z", "details": "Updated profile for jdoe" },
+    { "id": "al8", "appId": "acme", "action": "invite", "entityType": "invitation", "entityId": "inv2", "userName": "asmith", "timestamp": "2026-03-29T10:30:00Z", "details": "Invited qa@example.com as viewer" },
+    { "id": "al9", "appId": "acme", "action": "create", "entityType": "user", "entityId": "WZQk9HFF1II", "userName": "bmueller", "timestamp": "2026-03-28T15:55:00Z", "details": "Created user jroger" },
+    { "id": "al10", "appId": "acme", "action": "role_change", "entityType": "user", "entityId": "2", "userName": "bmueller", "timestamp": "2026-03-28T14:10:00Z", "details": "Changed role of asmith to editor" },
+    { "id": "al11", "appId": "acme", "action": "update", "entityType": "department", "entityId": "design", "userName": "bmueller", "timestamp": "2026-03-28T12:00:00Z", "details": "Updated department Design" },
+    { "id": "al12", "appId": "acme", "action": "delete", "entityType": "user", "entityId": "6", "userName": "bmueller", "timestamp": "2026-03-27T18:00:00Z", "details": "Deleted user ktanaka" },
+    { "id": "al13", "appId": "acme", "action": "invite", "entityType": "invitation", "entityId": "inv3", "userName": "jdoe", "timestamp": "2026-03-27T16:30:00Z", "details": "Invited pm@example.com as editor" },
+    { "id": "al14", "appId": "acme", "action": "create", "entityType": "user", "entityId": "5", "userName": "bmueller", "timestamp": "2026-03-27T13:20:00Z", "details": "Created user cpatel" },
+    { "id": "al15", "appId": "acme", "action": "update", "entityType": "user", "entityId": "3", "userName": "bmueller", "timestamp": "2026-03-27T11:00:00Z", "details": "Updated bio for bmueller" },
+    { "id": "al16", "appId": "acme", "action": "role_change", "entityType": "user", "entityId": "1", "userName": "bmueller", "timestamp": "2026-03-26T17:45:00Z", "details": "Changed role of jdoe to viewer" },
+    { "id": "al17", "appId": "acme", "action": "invite", "entityType": "invitation", "entityId": "inv4", "userName": "asmith", "timestamp": "2026-03-26T15:00:00Z", "details": "Invited design@example.com as viewer" },
+    { "id": "al18", "appId": "acme", "action": "delete", "entityType": "department", "entityId": "temp", "userName": "bmueller", "timestamp": "2026-03-26T10:30:00Z", "details": "Deleted department Temp" },
+    { "id": "al19", "appId": "acme", "action": "create", "entityType": "user", "entityId": "2", "userName": "bmueller", "timestamp": "2026-03-25T14:00:00Z", "details": "Created user asmith" },
+    { "id": "al20", "appId": "acme", "action": "update", "entityType": "user", "entityId": "5", "userName": "cpatel", "timestamp": "2026-03-25T12:30:00Z", "details": "Updated country for cpatel" },
+    { "id": "al21", "appId": "acme", "action": "invite", "entityType": "invitation", "entityId": "inv5", "userName": "bmueller", "timestamp": "2026-03-25T09:15:00Z", "details": "Invited ops@example.com as editor" },
+    { "id": "al22", "appId": "acme", "action": "role_change", "entityType": "user", "entityId": "WZQk9HFF1II", "userName": "bmueller", "timestamp": "2026-03-24T17:00:00Z", "details": "Changed role of jroger to admin" },
+    { "id": "al23", "appId": "acme", "action": "create", "entityType": "department", "entityId": "hr", "userName": "bmueller", "timestamp": "2026-03-24T14:30:00Z", "details": "Created department HR" },
+    { "id": "al24", "appId": "acme", "action": "delete", "entityType": "user", "entityId": "7", "userName": "bmueller", "timestamp": "2026-03-24T11:00:00Z", "details": "Deleted user fgrande" },
+    { "id": "al25", "appId": "acme", "action": "update", "entityType": "user", "entityId": "1", "userName": "jdoe", "timestamp": "2026-03-24T09:00:00Z", "details": "Updated email for jdoe" },
+    { "id": "al26", "appId": "globex", "action": "create", "entityType": "user", "entityId": "g1", "userName": "hschmidt", "timestamp": "2026-03-30T09:00:00Z", "details": "Created user hschmidt" },
+    { "id": "al27", "appId": "globex", "action": "invite", "entityType": "invitation", "entityId": "ginv1", "userName": "hschmidt", "timestamp": "2026-03-29T14:00:00Z", "details": "Invited new@globex.com as viewer" },
+    { "id": "al28", "appId": "globex", "action": "update", "entityType": "user", "entityId": "g2", "userName": "hschmidt", "timestamp": "2026-03-28T11:00:00Z", "details": "Updated role for mwatson" },
+    { "id": "al29", "appId": "globex", "action": "role_change", "entityType": "user", "entityId": "g3", "userName": "hschmidt", "timestamp": "2026-03-27T16:00:00Z", "details": "Changed role of tsato to editor" },
+    { "id": "al30", "appId": "globex", "action": "delete", "entityType": "user", "entityId": "g6", "userName": "hschmidt", "timestamp": "2026-03-26T10:00:00Z", "details": "Deleted user rchang" }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }

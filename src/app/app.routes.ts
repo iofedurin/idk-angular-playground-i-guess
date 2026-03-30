@@ -44,6 +44,10 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/department-edit').then((m) => m.DepartmentEditPage),
       },
+      {
+        path: 'audit',
+        loadComponent: () => import('./pages/audit-log').then((m) => m.AuditLogPage),
+      },
     ],
   },
 ];

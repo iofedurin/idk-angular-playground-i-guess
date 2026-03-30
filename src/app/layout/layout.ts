@@ -29,6 +29,12 @@ import { AppStore } from '@entities/app';
               routerLinkActive="active"
             >Departments</a>
           </li>
+          <li>
+            <a
+              [routerLink]="['/app', appStore.currentAppId(), 'audit']"
+              routerLinkActive="active"
+            >Audit Log</a>
+          </li>
         </ul>
       </div>
       <div class="flex-none">

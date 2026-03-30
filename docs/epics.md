@@ -506,18 +506,18 @@ pages/audit-log/
 
 ### Фазы
 
-- [ ] **8.1 — Backend**
+- [x] **8.1 — Backend**
   - Добавить коллекцию `audit-log` в db.json с ~30 записей
   - json-server поддерживает `_page` и `_per_page` для пагинации
 
-- [ ] **8.2 — Entity**
+- [x] **8.2 — Entity**
   - `entities/audit-entry/` — модель, API с пагинацией, стор (append-mode: новая страница добавляется к массиву)
 
-- [ ] **8.3 — Infinite scroll**
+- [x] **8.3 — Infinite scroll**
   - `shared/lib/infinite-scroll.directive.ts` — директива с IntersectionObserver
   - При появлении sentinel-элемента → подгрузить следующую страницу
 
-- [ ] **8.4 — Страница + виджет**
+- [x] **8.4 — Страница + виджет**
   - `pages/audit-log/` — рендерит виджет
   - `widgets/audit-feed/` — timeline-компонент
   - Роут: `/app/:appId/audit`
