@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { addEntity, setAllEntities, withEntities } from '@ngrx/signals/entities';
 import { lastValueFrom } from 'rxjs';
-import { withAppScoped } from '@shared/lib/with-app-scoped';
+import { withAppScoped } from '@shared/lib/app-scope/with-app-scoped';
 import { CreateInvitationDto, Invitation } from './invitation.model';
 import { InvitationApi } from './invitation-api';
 

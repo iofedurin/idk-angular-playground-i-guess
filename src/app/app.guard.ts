@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn } from '@angular/router';
 import { AppStore } from '@entities/app';
-import { AppScopeRegistry } from '@shared/lib/app-scope-registry';
+import { AppScopeRegistry } from '@shared/lib/app-scope/app-scope-registry';
 
 export const appSwitchGuard: CanActivateFn = (route) => {
   const appId = route.paramMap.get('appId')!;

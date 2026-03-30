@@ -9,8 +9,8 @@ import {
   withEntities,
 } from '@ngrx/signals/entities';
 import { lastValueFrom } from 'rxjs';
-import { httpMutation } from '@shared/lib/http-mutation';
-import { withAppScoped } from '@shared/lib/with-app-scoped';
+import { httpMutation } from '@shared/lib/http/http-mutation';
+import { withAppScoped } from '@shared/lib/app-scope/with-app-scoped';
 import { CreateUserDto, UpdateUserDto, User, UserPageParams } from './user.model';
 import { UsersApi } from './user.api';
 
