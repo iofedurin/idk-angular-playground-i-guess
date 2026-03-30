@@ -45,3 +45,6 @@ Thumbs.db
 
 # Scratch / experiments (not for version control)
 /_scratch
+
+# Personal todo (local only)
+docs/user-todo.md
