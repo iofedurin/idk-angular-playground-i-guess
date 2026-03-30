@@ -607,28 +607,28 @@ shared/ui/
 
 ### Фазы
 
-- [ ] **9.1 — Seed data**
+- [x] **9.1 — Seed data**
   - Расширить `db.json`: 50-100 пользователей для обоих app (acme, globex)
   - Разнообразить: разные роли, отделы, страны, active/inactive
 
-- [ ] **9.2 — API + Store**
+- [x] **9.2 — API + Store**
   - `UsersApi.getAll(params)` → формирует URL с query params (`_page`, `_limit`, фильтры, `_sort`, `_order`, `appId`)
   - `UsersStore`: `page`, `limit`, `totalCount` state. `loadPage(page, filters, sort)` — заменяет `loadAll()`
   - Парсить `X-Total-Count` из response headers (`observe: 'response'`)
   - `totalPages = computed(() => Math.ceil(totalCount / limit))`
 
-- [ ] **9.3 — Миграция фильтров и сортировки**
+- [x] **9.3 — Миграция фильтров и сортировки**
   - Удалить `applyFilters()` и `sortUsers()` (чистые функции) — логика на сервере
   - `UserFiltersComponent`: при изменении фильтра → emit, страница вызывает `store.loadPage(1, newFilters, sort)`
   - Сортировка: клик по заголовку → `store.loadPage(1, filters, newSort)`
   - Маппинг: `search` → `q`, `role` → `role=`, `department` → группы или exact, `active` → `active=true/false`
 
-- [ ] **9.4 — Pagination UI**
+- [x] **9.4 — Pagination UI**
   - Pagination controls под таблицей: prev/next, номера страниц, "Page X of Y"
   - Показывать total count: "Showing 1-10 of 87 users"
   - Пагинация сбрасывается на страницу 1 при смене фильтров/сортировки
 
-- [ ] **9.5 — Тесты**
+- [x] **9.5 — Тесты**
   - Обновить `user.store.spec.ts`: `loadPage()`, pagination state, `X-Total-Count` parsing
   - Обновить `users-list.spec.ts`: pagination UI, фильтры триггерят серверный запрос
   - Удалить `user-filters.model.unit.spec.ts` и `user-sort.model.unit.spec.ts` (in-memory логика удалена)
