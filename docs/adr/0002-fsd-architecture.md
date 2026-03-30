@@ -193,17 +193,36 @@ validateHttp(s.username, { ... });
 
 ---
 
+## Исключения
+
+### `entities/app/` — инфраструктурная entity
+
+`entities/app/` хранит workspace identity (`currentAppId`, `apps[]`). По природе это инфраструктурное состояние, а не бизнес-домен. Единственное нарушение FSD в проекте:
+
+- `shared/lib/http/app-id.interceptor.ts` импортирует `AppStore` из `@entities/app` — **reverse import** (shared → entities). Interceptor инжектит `AppStore.currentAppId()` для scope'инга всех API-запросов.
+
+**Почему принято:**
+`appIdInterceptor` — инфраструктурный код, которому нужен инфраструктурный state. Альтернативы (вынести `currentAppId` в `shared/` как отдельный signal или InjectionToken) добавляют косвенность без пользы — `AppStore` уже `providedIn: 'root'`, разделять его state бессмысленно.
+
+Steiger не проверяет cross-layer imports (только cross-slice). Нарушение задокументировано здесь как исключение. При появлении второго reverse import — пересмотреть решение.
+
+---
+
 ## Текущее состояние проекта
 
 Проект полностью следует FSD. `steiger ./src/app` — **No problems found**.
 
 **Все слои задействованы:**
 ```
-pages/      users-list, user-create, user-edit
-widgets/    user-form
-features/   user-delete
-entities/   user, country, department, job-title
-shared/     ui (FieldErrors, SubmitButton)
+pages/      audit-log, dashboard, department-create, department-edit, departments-list,
+            user-create, user-edit, user-profile, users-list
+widgets/    audit-feed, department-form, user-card, user-form
+features/   activity-feed, department-delete, user-bulk-actions, user-delete, user-filters, user-invite
+entities/   app, audit-entry, country, department, invitation, job-title, user
+shared/     ui (ConfirmDialog, ErrorAlert, FieldErrors, Spinner, Toast)
+            lib/http (appIdInterceptor, errorInterceptor, httpMutation)
+            lib/app-scope (AppScopeRegistry, withAppScoped)
+            lib (WebSocketService, InfiniteScrollDirective)
 ```
 
 **Path aliases** (настроены в `tsconfig.json`):
@@ -212,6 +231,7 @@ import { UsersStore } from '@entities/user';
 import { UserFormComponent } from '@widgets/user-form';
 import { UserDeleteActionComponent } from '@features/user-delete';
 import { FieldErrorsComponent } from '@shared/ui';
+import { httpMutation } from '@shared/lib';
 ```
 
 ---

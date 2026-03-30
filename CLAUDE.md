@@ -7,6 +7,10 @@ This is a research/playground Angular application for exploring modern Angular f
 @.claude/angular-skills/angular-developer/SKILL.md
 @.claude/angular-skills/angular-new-app/SKILL.md
 
+## Project Skills
+
+@.claude/project-skills/SKILL.md
+
 ## Architecture Decision Records
 
 Before making architectural decisions, consult the ADRs:
@@ -16,6 +20,11 @@ Before making architectural decisions, consult the ADRs:
 @docs/adr/0003-zoneless-testing.md
 @docs/adr/0004-entity-options-components.md
 @docs/adr/0005-signal-forms-schema-decomposition.md
+@docs/adr/0006-websocket-live-activity-feed.md
+@docs/adr/0007-signal-first-architecture.md
+@docs/adr/0008-form-model-ownership.md
+@docs/adr/0009-effect-usage-policy.md
+@docs/adr/0010-mutation-error-handling.md
 
 Follow the established patterns. When making a new non-obvious decision, create a new ADR in `docs/adr/`.
 
