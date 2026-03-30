@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, Component, computed, inject, OnInit } from '@angular/core';
 import { UserRole, UsersStore } from '@entities/user';
-import { StatsCardsComponent } from '@widgets/stats-cards';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [StatsCardsComponent],
+  imports: [],
   templateUrl: './dashboard.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

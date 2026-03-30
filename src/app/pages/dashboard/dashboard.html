@@ -10,11 +10,29 @@
       <span>{{ store.error() }}</span>
     </div>
   } @else {
-    <app-stats-cards
-      [total]="totalUsers()"
-      [active]="activeUsers()"
-      [byRole]="byRole()"
-    />
+    <div class="stats stats-vertical lg:stats-horizontal shadow w-full">
+      <div class="stat">
+        <div class="stat-title">Total Users</div>
+        <div class="stat-value">{{ totalUsers() }}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">Active</div>
+        <div class="stat-value text-success">{{ activeUsers() }}</div>
+        <div class="stat-desc">{{ totalUsers() - activeUsers() }} inactive</div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">Admins</div>
+        <div class="stat-value">{{ byRole().admin }}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">Editors</div>
+        <div class="stat-value">{{ byRole().editor }}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">Viewers</div>
+        <div class="stat-value">{{ byRole().viewer }}</div>
+      </div>
+    </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
       <div class="card bg-base-100 shadow">

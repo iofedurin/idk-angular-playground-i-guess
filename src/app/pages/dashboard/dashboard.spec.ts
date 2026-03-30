@@ -79,7 +79,7 @@ describe('DashboardPage', () => {
     fixture.detectChanges();
 
     expect(el.querySelector('.loading')).toBeTruthy();
-    expect(el.querySelector('app-stats-cards')).toBeFalsy();
+    expect(el.querySelector('.stats')).toBeFalsy();
 
     httpMock.expectOne((r) => r.url.includes('/api/users')).flush([]);
   });

@@ -69,10 +69,18 @@ Rule: if a slice has both a pure function and a component, they get separate spe
 - The file always contains two permanent headers — `TODO для Sonnet:` and `TODO для Opus:` — **never delete them**, only the items beneath them
 - Items may be rough notes; use judgment to interpret intent
 
-## Updating Skills
+## Skills (submodules)
 
-To update Angular skills to the latest version from GitHub:
+Angular skills live in `.claude/angular-skills/` as a **git submodule** — do not copy files manually.
+
+To update skills to the latest version from GitHub:
 
 ```bash
 git submodule update --remote .claude/angular-skills
+```
+
+To add a new skill repo:
+
+```bash
+git submodule add <repo-url> .claude/<skill-name>
 ```
