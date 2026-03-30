@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { RouterOutlet } from '@angular/router';
 import { AppStore } from '@entities/app';
 import { ToastComponent } from '@shared/ui';
+import { WebSocketService } from '@shared/lib';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,10 @@ import { ToastComponent } from '@shared/ui';
 })
 export class App implements OnInit {
   private readonly appStore = inject(AppStore);
+
+  constructor() {
+    inject(WebSocketService).connect('ws://localhost:3000');
+  }
 
   ngOnInit() {
     this.appStore.loadApps();

@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AppStore } from '@entities/app';
+import { ActivityBellComponent } from '@features/activity-feed';
 
 @Component({
   selector: 'app-layout',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, ActivityBellComponent],
   template: `
     <header class="navbar bg-base-200 shadow-sm px-4">
       <div class="flex-1">
@@ -37,7 +38,8 @@ import { AppStore } from '@entities/app';
           </li>
         </ul>
       </div>
-      <div class="flex-none">
+      <div class="flex-none flex items-center gap-1">
+        <app-activity-bell />
         <div class="dropdown dropdown-end">
           <button tabindex="0" class="btn btn-ghost btn-sm gap-1" aria-haspopup="true" aria-label="Switch workspace">
             {{ appStore.currentAppName() }}
