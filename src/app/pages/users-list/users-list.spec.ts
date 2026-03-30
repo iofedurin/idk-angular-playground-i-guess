@@ -3,9 +3,8 @@ import { ActivatedRoute, convertToParamMap, provideRouter } from '@angular/route
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { UsersListComponent } from './users-list';
-import { Department } from '@entities/department';
-import { User } from '@entities/user';
-import { DEFAULT_SORT, EMPTY_FILTERS } from '@features/user-filters';
+import { User, UsersPage } from '@entities/user';
+import { EMPTY_FILTERS } from '@features/user-filters';
 
 const mockUsers: User[] = [
   {
@@ -38,15 +37,20 @@ const mockUsers: User[] = [
   },
 ];
 
-const mockDepartments: Department[] = [
-  { id: 'engineering', name: 'Engineering', group: 'Technology' },
-  { id: 'design', name: 'Design', group: 'Technology' },
-];
+const makePage = (data: User[], next: number | null = null, total = data.length): UsersPage => ({
+  data,
+  items: total,
+  pages: Math.max(1, Math.ceil(total / 10)),
+  first: 1,
+  prev: null,
+  next,
+  last: Math.max(1, Math.ceil(total / 10)),
+});
 
 /** Drain all pending microtasks (store awaits) before resuming the test. */
 const flush = () => new Promise<void>((r) => setTimeout(r));
 
-/** Flush reference-data requests triggered by UserFiltersComponent. */
+/** Flush reference-data requests triggered by UserFiltersComponent children. */
 function flushRefData(httpMock: HttpTestingController): void {
   httpMock.match('/api/departments').forEach((r) => r.flush([]));
   httpMock.match('/api/countries').forEach((r) => r.flush([]));
@@ -58,7 +62,6 @@ describe('UsersListComponent', () => {
   let httpMock: HttpTestingController;
 
   beforeEach(async () => {
-    // UserInviteDialogComponent uses native dialog APIs not implemented in jsdom
     if (!HTMLDialogElement.prototype.showModal) {
       HTMLDialogElement.prototype.showModal = () => {};
     }
@@ -94,13 +97,12 @@ describe('UsersListComponent', () => {
     expect(fixture.nativeElement.querySelector('.loading')).toBeTruthy();
     expect(fixture.nativeElement.querySelector('table')).toBeFalsy();
 
-    // flush to satisfy httpMock.verify()
-    httpMock.expectOne((r) => r.url.includes('/api/users')).flush([]);
+    httpMock.expectOne((r) => r.url === '/api/users').flush(makePage([]));
   });
 
   it('renders table with users after data loads', async () => {
     fixture.detectChanges();
-    httpMock.expectOne((r) => r.url.includes('/api/users')).flush(mockUsers);
+    httpMock.expectOne((r) => r.url === '/api/users').flush(makePage(mockUsers));
     await flush();
     fixture.detectChanges();
 
@@ -112,7 +114,7 @@ describe('UsersListComponent', () => {
 
   it('shows empty state when no users', async () => {
     fixture.detectChanges();
-    httpMock.expectOne((r) => r.url.includes('/api/users')).flush([]);
+    httpMock.expectOne((r) => r.url === '/api/users').flush(makePage([]));
     await flush();
     fixture.detectChanges();
 
@@ -122,7 +124,7 @@ describe('UsersListComponent', () => {
   it('shows error alert on HTTP failure', async () => {
     fixture.detectChanges();
     httpMock
-      .expectOne((r) => r.url.includes('/api/users'))
+      .expectOne((r) => r.url === '/api/users')
       .flush('error', { status: 500, statusText: 'Server Error' });
     await flush();
     fixture.detectChanges();
@@ -132,7 +134,7 @@ describe('UsersListComponent', () => {
 
   it('"Add User" link contains correct appId', async () => {
     fixture.detectChanges();
-    httpMock.expectOne((r) => r.url.includes('/api/users')).flush([]);
+    httpMock.expectOne((r) => r.url === '/api/users').flush(makePage([]));
     await flush();
     fixture.detectChanges();
 
@@ -142,7 +144,7 @@ describe('UsersListComponent', () => {
 
   it('"View" links contain correct appId and user id', async () => {
     fixture.detectChanges();
-    httpMock.expectOne((r) => r.url.includes('/api/users')).flush(mockUsers);
+    httpMock.expectOne((r) => r.url === '/api/users').flush(makePage(mockUsers));
     await flush();
     fixture.detectChanges();
 
@@ -155,74 +157,70 @@ describe('UsersListComponent', () => {
 
   it('displays correct role badges', async () => {
     fixture.detectChanges();
-    httpMock.expectOne((r) => r.url.includes('/api/users')).flush(mockUsers);
+    httpMock.expectOne((r) => r.url === '/api/users').flush(makePage(mockUsers));
     await flush();
     fixture.detectChanges();
 
-    const el = fixture.nativeElement as HTMLElement;
-    const badgeTexts = Array.from(el.querySelectorAll('.badge')).map((b) => b.textContent?.trim());
+    const badgeTexts = Array.from<Element>(fixture.nativeElement.querySelectorAll('.badge')).map(
+      (b) => b.textContent?.trim(),
+    );
     expect(badgeTexts).toContain('editor');
     expect(badgeTexts).toContain('admin');
   });
 
   it('renders filter panel', async () => {
     fixture.detectChanges();
-    httpMock.expectOne((r) => r.url.includes('/api/users')).flush([]);
+    httpMock.expectOne((r) => r.url === '/api/users').flush(makePage([]));
     await flush();
     fixture.detectChanges();
 
     expect(fixture.nativeElement.querySelector('app-user-filters')).toBeTruthy();
   });
 
-  it('filters table by role', async () => {
+  it('sends role filter as query param on filter change', async () => {
     fixture.detectChanges();
-    httpMock.expectOne((r) => r.url.includes('/api/users')).flush(mockUsers);
+    httpMock.expectOne((r) => r.url === '/api/users').flush(makePage(mockUsers));
     await flush();
     fixture.detectChanges();
 
-    fixture.componentInstance['filters'].set({ ...EMPTY_FILTERS, role: 'admin' });
+    fixture.componentInstance['onFiltersChange']({ ...EMPTY_FILTERS, role: 'admin' });
     fixture.detectChanges();
 
-    const rows = fixture.nativeElement.querySelectorAll('tbody tr');
-    expect(rows.length).toBe(1);
+    const req = httpMock.expectOne((r) => r.url === '/api/users');
+    expect(req.request.params.get('role')).toBe('admin');
+    req.flush(makePage([mockUsers[1]]));
+    await flush();
+    fixture.detectChanges();
+
     expect(fixture.nativeElement.textContent).toContain('asmith');
     expect(fixture.nativeElement.textContent).not.toContain('jdoe');
   });
 
-  it('filters table by text search', async () => {
+  it('sends search query param on filter change', async () => {
     fixture.detectChanges();
-    httpMock.expectOne((r) => r.url.includes('/api/users')).flush(mockUsers);
+    httpMock.expectOne((r) => r.url === '/api/users').flush(makePage(mockUsers));
     await flush();
     fixture.detectChanges();
 
-    fixture.componentInstance['filters'].set({ ...EMPTY_FILTERS, search: 'john' });
+    fixture.componentInstance['onFiltersChange']({ ...EMPTY_FILTERS, search: 'john' });
     fixture.detectChanges();
 
-    const rows = fixture.nativeElement.querySelectorAll('tbody tr');
-    expect(rows.length).toBe(1);
+    const req = httpMock.expectOne((r) => r.url === '/api/users');
+    expect(req.request.params.get('q')).toBe('john');
+    req.flush(makePage([mockUsers[0]]));
+    await flush();
+    fixture.detectChanges();
+
     expect(fixture.nativeElement.textContent).toContain('jdoe');
-  });
-
-  it('shows "No users found" when filters match nothing', async () => {
-    fixture.detectChanges();
-    httpMock.expectOne((r) => r.url.includes('/api/users')).flush(mockUsers);
-    await flush();
-    fixture.detectChanges();
-
-    fixture.componentInstance['filters'].set({ ...EMPTY_FILTERS, search: 'xyz-no-match' });
-    fixture.detectChanges();
-
-    expect(fixture.nativeElement.textContent).toContain('No users found');
   });
 
   describe('sorting', () => {
     it('renders sort indicator on active column', async () => {
       fixture.detectChanges();
-      httpMock.expectOne((r) => r.url.includes('/api/users')).flush(mockUsers);
+      httpMock.expectOne((r) => r.url === '/api/users').flush(makePage(mockUsers));
       await flush();
       fixture.detectChanges();
 
-      // Default sort is name ↑
       const headers = fixture.nativeElement.querySelectorAll('thead th');
       const nameHeader = Array.from(headers as NodeList).find((th) =>
         (th as HTMLElement).textContent?.includes('Name'),
@@ -230,31 +228,21 @@ describe('UsersListComponent', () => {
       expect(nameHeader.textContent).toContain('↑');
     });
 
-    it('sorts table rows by name ascending by default', async () => {
+    it('toggleSort sends _sort and _order params to server', async () => {
       fixture.detectChanges();
-      httpMock.expectOne((r) => r.url.includes('/api/users')).flush(mockUsers);
+      httpMock.expectOne((r) => r.url === '/api/users').flush(makePage(mockUsers));
       await flush();
       fixture.detectChanges();
 
-      const rows = fixture.nativeElement.querySelectorAll('tbody tr');
-      // Alice Smith (id=2) comes before John Doe (id=1) alphabetically
-      expect(rows[0].textContent).toContain('asmith');
-      expect(rows[1].textContent).toContain('jdoe');
-    });
-
-    it('toggleSort flips direction when clicking same column', async () => {
+      fixture.componentInstance['toggleSort']('name'); // flips name asc → desc
       fixture.detectChanges();
-      httpMock.expectOne((r) => r.url.includes('/api/users')).flush(mockUsers);
+
+      const req = httpMock.expectOne((r) => r.url === '/api/users');
+      expect(req.request.params.get('_sort')).toBe('firstName');
+      expect(req.request.params.get('_order')).toBe('desc');
+      req.flush(makePage(mockUsers));
       await flush();
       fixture.detectChanges();
-
-      // Click Name header (already active) — should flip to desc
-      fixture.componentInstance['toggleSort']('name');
-      fixture.detectChanges();
-
-      const rows = fixture.nativeElement.querySelectorAll('tbody tr');
-      expect(rows[0].textContent).toContain('jdoe');   // John Doe first in desc
-      expect(rows[1].textContent).toContain('asmith');
 
       const headers = fixture.nativeElement.querySelectorAll('thead th');
       const nameHeader = Array.from(headers as NodeList).find((th) =>
@@ -263,38 +251,48 @@ describe('UsersListComponent', () => {
       expect(nameHeader.textContent).toContain('↓');
     });
 
-    it('toggleSort changes field and resets to asc', async () => {
+    it('toggleSort to new field resets direction to asc', async () => {
       fixture.detectChanges();
-      httpMock.expectOne((r) => r.url.includes('/api/users')).flush(mockUsers);
+      httpMock.expectOne((r) => r.url === '/api/users').flush(makePage(mockUsers));
       await flush();
       fixture.detectChanges();
 
-      // Switch to role sort
       fixture.componentInstance['toggleSort']('role');
       fixture.detectChanges();
 
+      const req = httpMock.expectOne((r) => r.url === '/api/users');
+      expect(req.request.params.get('_sort')).toBe('role');
+      expect(req.request.params.get('_order')).toBe('asc');
+      req.flush(makePage(mockUsers));
+      await flush();
+      fixture.detectChanges();
+
       expect(fixture.componentInstance['sort']()).toEqual({ field: 'role', direction: 'asc' });
-      const rows = fixture.nativeElement.querySelectorAll('tbody tr');
-      // admin (asmith) comes before editor (jdoe)
-      expect(rows[0].textContent).toContain('asmith');
     });
   });
 
-  it('filters by department group when departments are loaded', async () => {
+  it('goToPage sends correct _page param', async () => {
     fixture.detectChanges();
-    httpMock.expectOne((r) => r.url.includes('/api/users')).flush(mockUsers);
-    // Flush departments with real data so group resolution works
-    httpMock.match('/api/departments').forEach((r) => r.flush(mockDepartments));
-    httpMock.match('/api/countries').forEach((r) => r.flush([]));
-    httpMock.match('/api/job-titles').forEach((r) => r.flush([]));
+    httpMock.expectOne((r) => r.url === '/api/users').flush(makePage(mockUsers, 2, 25));
     await flush();
     fixture.detectChanges();
 
-    // Both users are in Technology group (engineering + design)
-    fixture.componentInstance['filters'].set({ ...EMPTY_FILTERS, department: 'group:Technology' });
+    fixture.componentInstance['goToPage'](2);
     fixture.detectChanges();
 
-    const rows = fixture.nativeElement.querySelectorAll('tbody tr');
-    expect(rows.length).toBe(2);
+    const req = httpMock.expectOne((r) => r.url === '/api/users');
+    expect(req.request.params.get('_page')).toBe('2');
+    req.flush(makePage([]));
+    await flush();
+    fixture.detectChanges();
+  });
+
+  it('shows pagination info when totalCount > 0', async () => {
+    fixture.detectChanges();
+    httpMock.expectOne((r) => r.url === '/api/users').flush(makePage(mockUsers, 2, 25));
+    await flush();
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.textContent).toContain('of 25 users');
   });
 });

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { CreateUserDto, UpdateUserDto, User } from './user.model';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { CreateUserDto, PER_PAGE, UpdateUserDto, User, UserPageParams, UsersPage } from './user.model';
 
 const BASE = '/api/users';
 
@@ -10,6 +10,18 @@ export class UsersApi {
 
   getAll() {
     return this.http.get<User[]>(BASE);
+  }
+
+  getPage(params: UserPageParams) {
+    let p = new HttpParams().set('_page', params.page).set('_per_page', PER_PAGE);
+    if (params.q) p = p.set('q', params.q);
+    if (params.role) p = p.set('role', params.role);
+    if (params.department) p = p.set('department', params.department);
+    if (params.country) p = p.set('country', params.country);
+    if (params.jobTitle) p = p.set('jobTitle', params.jobTitle);
+    if (params.active) p = p.set('active', params.active);
+    if (params.sortField) p = p.set('_sort', params.sortField).set('_order', params.sortOrder ?? 'asc');
+    return this.http.get<UsersPage>(BASE, { params: p });
   }
 
   getById(id: string) {

@@ -2,7 +2,12 @@ import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { UsersStore } from './user.store';
-import { User } from './user.model';
+import { User, UsersPage } from './user.model';
+
+const makePage = (data: User[], next: number | null = null, total = data.length): UsersPage => ({
+  data, items: total, pages: Math.max(1, Math.ceil(total / 10)),
+  first: 1, prev: null, next, last: Math.max(1, Math.ceil(total / 10)),
+});
 
 const mockUser: User = {
   id: '1',
@@ -110,6 +115,9 @@ describe('UsersStore', () => {
     expect(store.entities()).toEqual([]);
     expect(store.loading()).toBe(false);
     expect(store.error()).toBeNull();
+    expect(store.page()).toBe(1);
+    expect(store.totalCount()).toBe(0);
+    expect(store.totalPages()).toBe(0);
   });
 
   it('reset() after error also clears error', async () => {
@@ -122,5 +130,57 @@ describe('UsersStore', () => {
     expect(store.error()).toBeTruthy();
     store.reset();
     expect(store.error()).toBeNull();
+  });
+
+  describe('loadPage()', () => {
+    it('sets loading=true immediately, then replaces entities', async () => {
+      const promise = store.loadPage({ page: 1 });
+      expect(store.loading()).toBe(true);
+
+      httpMock.expectOne((r) => r.url === '/api/users').flush(makePage([mockUser], 2, 25));
+      await promise;
+
+      expect(store.loading()).toBe(false);
+      expect(store.entities()).toEqual([mockUser]);
+      expect(store.page()).toBe(1);
+      expect(store.totalCount()).toBe(25);
+      expect(store.totalPages()).toBe(3);
+    });
+
+    it('replaces (not appends) entities on page change', async () => {
+      const p1 = store.loadPage({ page: 1 });
+      httpMock.expectOne((r) => r.url === '/api/users').flush(makePage([mockUser], 2, 25));
+      await p1;
+
+      const mockUser2: User = { ...mockUser, id: '2', username: 'bsmith' };
+      const p2 = store.loadPage({ page: 2 });
+      httpMock.expectOne((r) => r.url === '/api/users').flush(makePage([mockUser2], null, 25));
+      await p2;
+
+      expect(store.entities()).toEqual([mockUser2]);
+      expect(store.page()).toBe(2);
+    });
+
+    it('sets error on failure', async () => {
+      const p = store.loadPage({ page: 1 });
+      httpMock
+        .expectOne((r) => r.url === '/api/users')
+        .flush('error', { status: 500, statusText: 'Server Error' });
+      await p;
+
+      expect(store.error()).toBe('Failed to load users');
+      expect(store.loading()).toBe(false);
+    });
+
+    it('sends _sort and _order params when provided', async () => {
+      const p = store.loadPage({ page: 1, sortField: 'firstName', sortOrder: 'desc' });
+      const req = httpMock.expectOne((r) => r.url === '/api/users');
+
+      expect(req.request.params.get('_sort')).toBe('firstName');
+      expect(req.request.params.get('_order')).toBe('desc');
+
+      req.flush(makePage([]));
+      await p;
+    });
   });
 });

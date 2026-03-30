@@ -13,7 +13,7 @@
     (closed)="showInviteDialog.set(false)"
   />
 
-  <app-user-filters [(filters)]="filters" />
+  <app-user-filters [filters]="filters()" (filtersChange)="onFiltersChange($event)" />
 
   <app-bulk-toolbar
     (deleteSelected)="bulkDelete()"
@@ -37,7 +37,7 @@
               <input
                 type="checkbox"
                 class="checkbox checkbox-sm"
-                [checked]="selectionStore.allSelected(filteredUsers().map(u => u.id))"
+                [checked]="selectionStore.allSelected(store.entities().map(u => u.id))"
                 (change)="toggleSelectAll()"
               />
             </th>
@@ -66,7 +66,7 @@
           </tr>
         </thead>
         <tbody>
-          @for (user of filteredUsers(); track user.id) {
+          @for (user of store.entities(); track user.id) {
             <tr [class.bg-base-200]="selectionStore.isSelected(user.id)">
               <td>
                 <input
@@ -105,5 +105,32 @@
         </tbody>
       </table>
     </div>
+
+    @if (store.totalCount() > 0) {
+      <div class="flex items-center justify-between mt-4">
+        <span class="text-sm text-base-content/60">
+          Showing {{ pageStart() }}–{{ pageEnd() }} of {{ store.totalCount() }} users
+        </span>
+        <div class="join">
+          <button
+            class="join-item btn btn-sm"
+            [disabled]="page() === 1"
+            (click)="goToPage(page() - 1)"
+          >«</button>
+          @for (p of pages(); track p) {
+            <button
+              class="join-item btn btn-sm"
+              [class.btn-active]="p === page()"
+              (click)="goToPage(p)"
+            >{{ p }}</button>
+          }
+          <button
+            class="join-item btn btn-sm"
+            [disabled]="page() === store.totalPages()"
+            (click)="goToPage(page() + 1)"
+          >»</button>
+        </div>
+      </div>
+    }
   }
 </div>

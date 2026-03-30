@@ -8,24 +8,42 @@ import {
   withEntities,
 } from '@ngrx/signals/entities';
 import { lastValueFrom } from 'rxjs';
-import { CreateUserDto, UpdateUserDto, User } from './user.model';
+import { CreateUserDto, UpdateUserDto, User, UserPageParams } from './user.model';
 import { UsersApi } from './user.api';
 
 interface UsersState {
   loading: boolean;
   error: string | null;
+  page: number;
+  totalCount: number;
+  totalPages: number;
 }
 
 export const UsersStore = signalStore(
   { providedIn: 'root' },
   withEntities<User>(),
-  withState<UsersState>({ loading: false, error: null }),
+  withState<UsersState>({ loading: false, error: null, page: 1, totalCount: 0, totalPages: 0 }),
   withMethods((store, api = inject(UsersApi)) => ({
     async loadAll(): Promise<void> {
       patchState(store, { loading: true, error: null });
       try {
         const users = await lastValueFrom(api.getAll());
         patchState(store, setAllEntities(users), { loading: false });
+      } catch {
+        patchState(store, { loading: false, error: 'Failed to load users' });
+      }
+    },
+
+    async loadPage(params: UserPageParams): Promise<void> {
+      patchState(store, { loading: true, error: null });
+      try {
+        const result = await lastValueFrom(api.getPage(params));
+        patchState(store, setAllEntities(result.data), {
+          loading: false,
+          page: params.page,
+          totalCount: result.items,
+          totalPages: result.pages,
+        });
       } catch {
         patchState(store, { loading: false, error: 'Failed to load users' });
       }
@@ -49,7 +67,9 @@ export const UsersStore = signalStore(
     },
 
     reset(): void {
-      patchState(store, setAllEntities([] as User[]), { loading: false, error: null });
+      patchState(store, setAllEntities([] as User[]), {
+        loading: false, error: null, page: 1, totalCount: 0, totalPages: 0,
+      });
     },
   })),
 );
