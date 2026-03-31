@@ -177,8 +177,8 @@ export interface BoardPosition {
 - [x] Все users имеют `managerId` (null или FK)
 - [x] Demo-иерархия из 4+ связей для acme
 - [x] Коллекция `board-positions` с demo-данными
-- [ ] `bun run backend` стартует без ошибок
-- [ ] GET `/users`, GET `/board-positions` возвращают данные с новыми полями
+- [x] `bun run backend` стартует без ошибок
+- [x] GET `/users`, GET `/board-positions` возвращают данные с новыми полями
 
 ---
 
@@ -348,7 +348,7 @@ describe('setManager()')
 
 ---
 
-### Phase 2: Библиотека + пустая Board Page
+### [x] Phase 2: Библиотека + пустая Board Page
 
 **Цель:** Установить @foblex/flow, создать пустую страницу с канвасом, добавить роут и nav link.
 
@@ -365,8 +365,8 @@ bun add @foblex/flow @foblex/2d @foblex/mediator @foblex/platform @foblex/utils
 Проверить документацию: скорее всего нужен import стилей в `angular.json` (`styles` массив) или в глобальном CSS. Добавить если нужно.
 
 **Definition of Done:**
-- [ ] `bun install` без ошибок
-- [ ] `bun run build` без ошибок (проверить что Foblex не ломает сборку)
+- [x] `bun install` без ошибок
+- [x] `bun run build` без ошибок (проверить что Foblex не ломает сборку)
 
 ---
 
@@ -445,12 +445,12 @@ describe('OrgBoardPage')
 ```
 
 **Definition of Done:**
-- [ ] Страница рендерится по URL `/app/acme/org-board`
-- [ ] Nav link "Org Board" в header
-- [ ] Пустой Foblex canvas с pan/zoom (можно drag'ать пустое пространство)
-- [ ] `bun run test` — green
-- [ ] `bun run build` — green
-- [ ] `bun run lint:arch` — clean
+- [x] Страница рендерится по URL `/app/acme/org-board`
+- [x] Nav link "Org Board" в header
+- [x] Пустой Foblex canvas с pan/zoom (можно drag'ать пустое пространство)
+- [x] `bun run test` — green
+- [x] `bun run build` — green
+- [x] `bun run lint:arch` — no new violations (2 pre-existing: audit-entry, invitation segmentless)
 
 ---
 

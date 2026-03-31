@@ -32,6 +32,12 @@ import { ActivityBellComponent } from '@features/activity-feed';
           </li>
           <li>
             <a
+              [routerLink]="['/app', appStore.currentAppId(), 'org-board']"
+              routerLinkActive="active"
+            >Org Board</a>
+          </li>
+          <li>
+            <a
               [routerLink]="['/app', appStore.currentAppId(), 'audit']"
               routerLinkActive="active"
             >Audit Log</a>
