@@ -1,6 +1,7 @@
 <f-flow
   fDraggable
   class="w-full h-full"
+  style="background-image: radial-gradient(circle, var(--color-base-300) 1.5px, transparent 1.5px); background-size: 24px 24px;"
   (fDragStarted)="onDragStarted()"
   (fDragEnded)="onDragEnded()"
   (fCreateConnection)="onConnectionCreated($event)"
@@ -38,6 +39,7 @@
           [selected]="selectedUserId() === node.userId"
           [highlighted]="highlightedUserIds().size === 0 || highlightedUserIds().has(node.userId)"
           [directReportsCount]="0"
+          [departmentIcon]="node.departmentIcon"
           (click)="onNodeClick(node.userId)"
         />
 

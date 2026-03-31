@@ -21,7 +21,7 @@ export class DepartmentCreatePage {
   private readonly store = inject(DepartmentStore);
   protected readonly appId = inject(ActivatedRoute).snapshot.paramMap.get('appId')!;
 
-  protected readonly model = signal<DepartmentFormModel>({ name: '', group: '' });
+  protected readonly model = signal<DepartmentFormModel>({ name: '', group: '', icon: '' });
 
   protected readonly departmentForm = createDepartmentForm(this.model, {
     onSubmit: async () => {

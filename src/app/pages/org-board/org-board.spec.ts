@@ -56,9 +56,10 @@ async function initPage(
   users = mockUsers,
   positions = mockPositions,
 ): Promise<void> {
-  fixture.detectChanges(); // ngOnInit → loadAll + loadPositions
+  fixture.detectChanges(); // ngOnInit → loadAll + loadPositions + load (departments)
   httpMock.expectOne((r) => r.url.includes('/api/users')).flush(users);
   httpMock.expectOne('/api/board-positions').flush(positions);
+  httpMock.expectOne('/api/departments').flush([]);
   await flush();
   fixture.detectChanges();
 }
@@ -448,6 +449,7 @@ describe('OrgBoardPage', () => {
         statusText: 'Server Error',
       });
       httpMock.expectOne('/api/board-positions').flush([]);
+      httpMock.expectOne('/api/departments').flush([]);
       await flush();
       fixture.detectChanges();
 

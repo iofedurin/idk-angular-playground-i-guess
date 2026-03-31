@@ -34,6 +34,11 @@
         />
       </fieldset>
 
+      <fieldset class="fieldset">
+        <legend class="fieldset-legend">Icon</legend>
+        <app-department-icon-picker [formField]="departmentForm().icon" />
+      </fieldset>
+
       <div class="card-actions mt-2 gap-2">
         <button type="submit" [disabled]="departmentForm()().submitting()" class="btn btn-primary w-full">{{ submitLabel() }}</button>
         <a [routerLink]="cancelLink()" class="btn btn-ghost w-full">Cancel</a>

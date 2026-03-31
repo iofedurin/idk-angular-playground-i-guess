@@ -14,6 +14,7 @@ export interface BoardNode {
   x: number;
   y: number;
   positionId: string;
+  departmentIcon?: string;
 }
 
 /** Computed edge: from manager to subordinate, both on board */

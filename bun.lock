@@ -5,6 +5,7 @@
     "": {
       "name": "playground",
       "dependencies": {
+        "@aliamdevs/airy-icons": "^2.2.167",
         "@angular/cdk": "^21.2.4",
         "@angular/common": "^21.2.0",
         "@angular/compiler": "^21.2.0",
@@ -72,6 +73,8 @@
     "@algolia/requester-fetch": ["@algolia/requester-fetch@5.48.1", "", { "dependencies": { "@algolia/client-common": "5.48.1" } }, "sha512-2oDT43Y5HWRSIQMPQI4tA/W+TN/N2tjggZCUsqQV440kxzzoPGsvv9QP1GhQ4CoDa+yn6ygUsGp6Dr+a9sPPSg=="],
 
     "@algolia/requester-node-http": ["@algolia/requester-node-http@5.48.1", "", { "dependencies": { "@algolia/client-common": "5.48.1" } }, "sha512-xcaCqbhupVWhuBP1nwbk1XNvwrGljozutEiLx06mvqDf3o8cHyEgQSHS4fKJM+UAggaWVnnFW+Nne5aQ8SUJXg=="],
+
+    "@aliamdevs/airy-icons": ["@aliamdevs/airy-icons@2.2.167", "", {}, "sha512-dj8zI1n9m697sYUhO8IECo6mSs+VYNblsMOhxjnzZ1ACCWD0eSbe05gpnYSJZqJNaQniQTw2UPMEPcZSjdX0PQ=="],
 
     "@alloc/quick-lru": ["@alloc/quick-lru@5.2.0", "", {}, "sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw=="],
 

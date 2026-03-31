@@ -16,6 +16,8 @@ export function createDepartmentForm(
       required(s.name);
       minLength(s.name, 2);
       required(s.group);
+      // icon is optional — no validators
+      void s.icon;
     },
     {
       submission: {

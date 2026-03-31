@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, OnInit, signal, viewChild } from '@angular/core';
 import { getAncestors, getDirectReports, getSubtree, UsersStore } from '@entities/user';
+import { DepartmentStore } from '@entities/department';
 import { BoardEdge, BoardNode, OrgBoardStore } from '@features/org-board';
 import { computeTreeLayout, type LayoutNode } from '@shared/lib';
 import { OrgBoardCanvasComponent } from '@widgets/org-board-canvas';
@@ -23,6 +24,7 @@ interface PendingConnection {
 export class OrgBoardPage implements OnInit {
   protected readonly usersStore = inject(UsersStore);
   protected readonly boardStore = inject(OrgBoardStore);
+  private readonly deptStore = inject(DepartmentStore);
 
   protected readonly pendingConnection = signal<PendingConnection | null>(null);
   protected readonly reassignMessage = computed(() => {
@@ -43,11 +45,19 @@ export class OrgBoardPage implements OnInit {
 
   protected readonly nodes = computed<BoardNode[]>(() => {
     const users = this.usersStore.entityMap();
+    const depts = this.deptStore.entityMap();
     return this.boardStore.entities()
-      .map((pos) => {
+      .map((pos): BoardNode | null => {
         const user = users[pos.userId];
         if (!user) return null;
-        return { userId: pos.userId, user, x: pos.x, y: pos.y, positionId: pos.id };
+        return {
+          userId: pos.userId,
+          user,
+          x: pos.x,
+          y: pos.y,
+          positionId: pos.id,
+          departmentIcon: depts[user.department]?.icon,
+        };
       })
       .filter((n): n is BoardNode => n !== null);
   });
@@ -116,6 +126,7 @@ export class OrgBoardPage implements OnInit {
   ngOnInit(): void {
     this.usersStore.loadAll();
     this.boardStore.loadPositions();
+    this.deptStore.load();
   }
 
   protected async onConnectionCreated(event: { managerId: string; subordinateId: string }): Promise<void> {

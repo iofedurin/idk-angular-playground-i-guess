@@ -20,7 +20,14 @@ import type { User } from '@entities/user';
           </div>
           <div class="min-w-0 flex-1">
             <h3 class="font-medium text-sm truncate">{{ user().firstName }} {{ user().lastName }}</h3>
-            <p class="text-xs text-base-content/60 truncate">{{ user().jobTitle }}</p>
+            <div class="flex items-center gap-1">
+              @if (departmentIcon()) {
+                <span class="text-base-content/40 text-xs leading-none">
+                  <i [class]="'airy-' + departmentIcon()"></i>
+                </span>
+              }
+              <p class="text-xs text-base-content/60 truncate">{{ user().jobTitle }}</p>
+            </div>
           </div>
         </div>
         @if (directReportsCount() > 0) {
@@ -37,6 +44,7 @@ export class UserBoardCardComponent {
   readonly selected = input(false);
   readonly highlighted = input(true);
   readonly directReportsCount = input(0);
+  readonly departmentIcon = input<string | undefined>();
 
   protected readonly initials = computed(() => {
     const u = this.user();

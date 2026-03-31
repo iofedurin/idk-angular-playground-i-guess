@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormField, FormRoot } from '@angular/forms/signals';
-import { DepartmentForm } from '@entities/department';
+import { DepartmentForm, DepartmentIconPickerComponent } from '@entities/department';
 import { FieldErrorsComponent } from '@shared/ui';
 
 @Component({
   selector: 'app-department-form',
-  imports: [FormRoot, FormField, RouterLink, FieldErrorsComponent],
+  imports: [FormRoot, FormField, RouterLink, FieldErrorsComponent, DepartmentIconPickerComponent],
   templateUrl: './department-form.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

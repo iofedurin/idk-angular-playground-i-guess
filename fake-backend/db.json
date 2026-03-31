@@ -868,32 +868,38 @@
     {
       "id": "engineering",
       "name": "Engineering",
-      "group": "Technology"
+      "group": "Technology",
+      "icon": "data-shell"
     },
     {
       "id": "design",
       "name": "Design",
-      "group": "Technology"
+      "group": "Technology",
+      "icon": "paint"
     },
     {
       "id": "product",
       "name": "Product",
-      "group": "Business"
+      "group": "Business",
+      "icon": "grid"
     },
     {
       "id": "marketing",
       "name": "Marketing",
-      "group": "Business"
+      "group": "Business",
+      "icon": "send"
     },
     {
       "id": "hr",
       "name": "Human Resources",
-      "group": "Operations"
+      "group": "Operations",
+      "icon": "users"
     },
     {
       "id": "finance",
       "name": "Finance",
-      "group": "Operations"
+      "group": "Operations",
+      "icon": "card"
     },
     {
       "name": "Brand New Dep",

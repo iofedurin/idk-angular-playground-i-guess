@@ -2,6 +2,8 @@ export type { Department, CreateDepartmentDto, UpdateDepartmentDto, DepartmentFo
 export { DepartmentStore } from './department.store';
 export { DepartmentSelectComponent } from './ui/department-select/department-select';
 export { DepartmentOptionsComponent } from './ui/department-options/department-options';
+export { DepartmentIconComponent } from './ui/department-icon/department-icon';
+export { DepartmentIconPickerComponent } from './ui/department-icon-picker/department-icon-picker';
 export { createDepartmentForm } from './lib/department-form-factory';
 export type { DepartmentForm } from './lib/department-form-factory';
 export { groupDepartments } from './lib/group-departments';

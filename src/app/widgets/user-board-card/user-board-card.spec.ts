@@ -62,4 +62,15 @@ describe('UserBoardCardComponent', () => {
     expect(card?.classList.contains('ring-2')).toBe(true);
     expect(card?.classList.contains('ring-primary')).toBe(true);
   });
+
+  it('shows department icon when departmentIcon is provided', () => {
+    fixture.componentRef.setInput('departmentIcon', 'users');
+    fixture.detectChanges();
+
+    expect(el.querySelector('i.airy-users')).toBeTruthy();
+  });
+
+  it('does not show department icon when departmentIcon is not provided', () => {
+    expect(el.querySelector('[class*="airy-"]')).toBeFalsy();
+  });
 });

@@ -28,7 +28,7 @@ export class DepartmentEditPage implements OnInit {
   protected readonly appId = this.route.snapshot.paramMap.get('appId')!;
   protected readonly departmentId = this.route.snapshot.paramMap.get('id')!;
 
-  protected readonly model = signal<DepartmentFormModel>({ name: '', group: '' });
+  protected readonly model = signal<DepartmentFormModel>({ name: '', group: '', icon: '' });
 
   protected readonly departmentForm = createDepartmentForm(this.model, {
     onSubmit: async () => {
@@ -46,6 +46,6 @@ export class DepartmentEditPage implements OnInit {
   }
 
   private patchModel(dept: Department) {
-    this.model.set({ name: dept.name, group: dept.group });
+    this.model.set({ name: dept.name, group: dept.group, icon: dept.icon ?? '' });
   }
 }
