@@ -14,6 +14,7 @@ export interface User {
   role: UserRole;
   active: boolean;
   bio: string;
+  managerId: string | null;
 }
 
 export type CreateUserDto = Omit<User, 'id'>;
@@ -54,4 +55,5 @@ export interface UserFormModel {
   role: UserRole;
   active: boolean;
   bio: string;
+  managerId: string;
 }

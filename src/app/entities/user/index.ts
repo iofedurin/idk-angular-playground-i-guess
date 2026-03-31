@@ -4,6 +4,7 @@ export { ROLE_VALUES } from './lib/roles';
 export { createUserForm } from './lib/user-form-factory';
 export type { UserForm, UserFormOptions } from './lib/user-form-factory';
 export { emailBaseSchema, roleSchema, userEmailSchema } from './lib/field-schemas';
+export { buildChildrenMap, getAncestors, getDirectReports, getSubtree, wouldCreateCycle } from './lib/hierarchy';
 export { UsersStore } from './user.store';
 
 export { NameGroupComponent } from './ui/fields/name-group/name-group';

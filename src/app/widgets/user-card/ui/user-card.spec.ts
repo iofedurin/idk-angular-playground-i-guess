@@ -15,6 +15,7 @@ const mockUser: User = {
   role: 'editor',
   active: true,
   bio: 'Frontend enthusiast',
+  managerId: null,
 };
 
 describe('UserCardComponent', () => {

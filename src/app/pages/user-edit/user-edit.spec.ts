@@ -18,6 +18,7 @@ const mockUser: User = {
   role: 'editor',
   active: true,
   bio: 'Bio text',
+  managerId: null,
 };
 
 /** Drain all pending microtasks (store awaits) before resuming the test. */

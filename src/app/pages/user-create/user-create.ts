@@ -27,6 +27,7 @@ export class UserCreatePage {
     role: 'viewer' as UserRole,
     active: false,
     bio: '',
+    managerId: '',
   });
 
   protected readonly userForm = createUserForm(this.model, {

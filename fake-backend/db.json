@@ -23,6 +23,7 @@
       "role": "editor",
       "active": true,
       "bio": "Frontend engineer with a passion for clean UI.",
+      "managerId": "3",
       "appId": "acme"
     },
     {
@@ -38,6 +39,7 @@
       "role": "editor",
       "active": true,
       "bio": "UX designer focused on accessibility.",
+      "managerId": "3",
       "appId": "acme"
     },
     {
@@ -53,6 +55,7 @@
       "role": "admin",
       "active": true,
       "bio": "",
+      "managerId": null,
       "appId": "acme"
     },
     {
@@ -68,6 +71,7 @@
       "role": "editor",
       "active": true,
       "bio": "Backend engineer, Node.js and Go.",
+      "managerId": "3",
       "appId": "acme"
     },
     {
@@ -83,6 +87,7 @@
       "role": "admin",
       "active": true,
       "bio": "",
+      "managerId": null,
       "appId": "acme"
     },
     {
@@ -98,6 +103,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
+      "managerId": null,
       "appId": "acme"
     },
     {
@@ -113,6 +119,7 @@
       "role": "viewer",
       "active": true,
       "bio": "",
+      "managerId": null,
       "appId": "acme"
     },
     {
@@ -128,6 +135,7 @@
       "role": "viewer",
       "active": false,
       "bio": "",
+      "managerId": null,
       "appId": "acme"
     },
     {
@@ -143,6 +151,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
+      "managerId": null,
       "appId": "acme"
     },
     {
@@ -158,6 +167,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
+      "managerId": null,
       "appId": "acme"
     },
     {
@@ -173,6 +183,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
+      "managerId": "1",
       "appId": "acme"
     },
     {
@@ -188,6 +199,7 @@
       "role": "admin",
       "active": true,
       "bio": "",
+      "managerId": null,
       "appId": "acme"
     },
     {
@@ -203,6 +215,7 @@
       "role": "viewer",
       "active": false,
       "bio": "",
+      "managerId": null,
       "appId": "acme"
     },
     {
@@ -218,6 +231,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
+      "managerId": null,
       "appId": "acme"
     },
     {
@@ -233,6 +247,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
+      "managerId": null,
       "appId": "acme"
     },
     {
@@ -248,6 +263,7 @@
       "role": "viewer",
       "active": true,
       "bio": "",
+      "managerId": null,
       "appId": "acme"
     },
     {
@@ -263,6 +279,7 @@
       "role": "viewer",
       "active": true,
       "bio": "",
+      "managerId": "1",
       "appId": "acme"
     },
     {
@@ -278,6 +295,7 @@
       "role": "admin",
       "active": true,
       "bio": "",
+      "managerId": null,
       "appId": "acme"
     },
     {
@@ -293,6 +311,7 @@
       "role": "editor",
       "active": false,
       "bio": "",
+      "managerId": null,
       "appId": "acme"
     },
     {
@@ -308,6 +327,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
+      "managerId": null,
       "appId": "acme"
     },
     {
@@ -323,6 +343,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
+      "managerId": null,
       "appId": "acme"
     },
     {
@@ -338,6 +359,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
+      "managerId": null,
       "appId": "acme"
     },
     {
@@ -353,6 +375,7 @@
       "role": "admin",
       "active": true,
       "bio": "",
+      "managerId": null,
       "appId": "acme"
     },
     {
@@ -368,6 +391,7 @@
       "role": "viewer",
       "active": false,
       "bio": "",
+      "managerId": null,
       "appId": "acme"
     },
     {
@@ -383,6 +407,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
+      "managerId": null,
       "appId": "acme"
     },
     {
@@ -398,6 +423,7 @@
       "role": "admin",
       "active": true,
       "bio": "Engineering lead at Globex.",
+      "managerId": null,
       "appId": "globex"
     },
     {
@@ -413,6 +439,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
+      "managerId": "g1",
       "appId": "globex"
     },
     {
@@ -428,6 +455,7 @@
       "role": "viewer",
       "active": false,
       "bio": "UX intern.",
+      "managerId": "g1",
       "appId": "globex"
     },
     {
@@ -443,6 +471,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
+      "managerId": null,
       "appId": "globex"
     },
     {
@@ -458,6 +487,7 @@
       "role": "editor",
       "active": true,
       "bio": "Product lead.",
+      "managerId": null,
       "appId": "globex"
     },
     {
@@ -473,6 +503,7 @@
       "role": "viewer",
       "active": true,
       "bio": "",
+      "managerId": null,
       "appId": "globex"
     },
     {
@@ -488,6 +519,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
+      "managerId": null,
       "appId": "globex"
     },
     {
@@ -503,6 +535,7 @@
       "role": "viewer",
       "active": false,
       "bio": "",
+      "managerId": null,
       "appId": "globex"
     },
     {
@@ -518,6 +551,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
+      "managerId": null,
       "appId": "globex"
     },
     {
@@ -533,6 +567,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
+      "managerId": null,
       "appId": "globex"
     },
     {
@@ -548,6 +583,7 @@
       "role": "viewer",
       "active": true,
       "bio": "",
+      "managerId": null,
       "appId": "globex"
     },
     {
@@ -563,8 +599,15 @@
       "role": "admin",
       "active": true,
       "bio": "",
+      "managerId": null,
       "appId": "globex"
     }
+  ],
+  "board-positions": [
+    { "id": "bp1", "userId": "3", "x": 400, "y": 50, "appId": "acme" },
+    { "id": "bp2", "userId": "1", "x": 200, "y": 250, "appId": "acme" },
+    { "id": "bp3", "userId": "2", "x": 400, "y": 250, "appId": "acme" },
+    { "id": "bp4", "userId": "5", "x": 600, "y": 250, "appId": "acme" }
   ],
   "countries": [
     {

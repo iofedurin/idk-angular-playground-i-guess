@@ -86,6 +86,13 @@ export const UsersStore = signalStore(
       return true;
     },
 
+    async setManager(userId: string, managerId: string | null): Promise<boolean> {
+      const r = await httpMutation(api.update(userId, { managerId }));
+      if (!r.ok) return false;
+      patchState(store, updateEntity({ id: userId, changes: r.data }));
+      return true;
+    },
+
     reset(): void {
       patchState(store, setAllEntities([] as User[]), {
         loading: false, error: null, page: 1, totalCount: 0, totalPages: 0,

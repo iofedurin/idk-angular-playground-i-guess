@@ -29,6 +29,7 @@ export class UserEditPage implements OnInit {
     role: 'viewer' as UserRole,
     active: false,
     bio: '',
+    managerId: '',
   });
 
   protected readonly userForm = createUserForm(this.model, {
@@ -62,6 +63,7 @@ export class UserEditPage implements OnInit {
       role: user.role,
       active: user.active,
       bio: user.bio ?? '',
+      managerId: user.managerId ?? '',
     });
   }
 }

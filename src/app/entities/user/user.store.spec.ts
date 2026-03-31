@@ -22,6 +22,7 @@ const mockUser: User = {
   role: 'editor',
   active: true,
   bio: '',
+  managerId: null,
 };
 
 describe('UsersStore', () => {
@@ -163,6 +164,56 @@ describe('UsersStore', () => {
 
     expect(store.entityMap()['1'].role).toBe('admin');
     expect(store.entityMap()['2'].role).toBe('admin');
+  });
+
+  describe('setManager()', () => {
+    it('PATCHes user with new managerId and updates entity', async () => {
+      const loadPromise = store.loadAll();
+      httpMock.expectOne((req) => req.url.includes('/api/users')).flush([mockUser]);
+      await loadPromise;
+
+      const updated: User = { ...mockUser, managerId: '3' };
+      const promise = store.setManager('1', '3');
+      const req = httpMock.expectOne((r) => r.url.includes('/api/users/1') && r.method === 'PATCH');
+      expect(req.request.body).toEqual(expect.objectContaining({ managerId: '3' }));
+      req.flush(updated);
+      const result = await promise;
+
+      expect(result).toBe(true);
+      expect(store.entityMap()['1'].managerId).toBe('3');
+    });
+
+    it('returns false on HTTP error', async () => {
+      const loadPromise = store.loadAll();
+      httpMock.expectOne((req) => req.url.includes('/api/users')).flush([mockUser]);
+      await loadPromise;
+
+      const promise = store.setManager('1', '3');
+      httpMock
+        .expectOne((r) => r.url.includes('/api/users/1') && r.method === 'PATCH')
+        .flush('Server Error', { status: 500, statusText: 'Server Error' });
+      const result = await promise;
+
+      expect(result).toBe(false);
+      expect(store.entityMap()['1'].managerId).toBeNull();
+    });
+
+    it('sets managerId to null (remove manager)', async () => {
+      const userWithManager: User = { ...mockUser, managerId: '3' };
+      const loadPromise = store.loadAll();
+      httpMock.expectOne((req) => req.url.includes('/api/users')).flush([userWithManager]);
+      await loadPromise;
+
+      const updated: User = { ...mockUser, managerId: null };
+      const promise = store.setManager('1', null);
+      const req = httpMock.expectOne((r) => r.url.includes('/api/users/1') && r.method === 'PATCH');
+      expect(req.request.body).toEqual(expect.objectContaining({ managerId: null }));
+      req.flush(updated);
+      const result = await promise;
+
+      expect(result).toBe(true);
+      expect(store.entityMap()['1'].managerId).toBeNull();
+    });
   });
 
   describe('loadPage()', () => {

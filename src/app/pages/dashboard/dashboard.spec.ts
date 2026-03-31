@@ -19,6 +19,7 @@ const mockUsers: User[] = [
     role: 'editor',
     active: true,
     bio: '',
+    managerId: null,
   },
   {
     id: '2',
@@ -33,6 +34,7 @@ const mockUsers: User[] = [
     role: 'admin',
     active: true,
     bio: '',
+    managerId: null,
   },
   {
     id: '3',
@@ -47,6 +49,7 @@ const mockUsers: User[] = [
     role: 'viewer',
     active: false,
     bio: '',
+    managerId: null,
   },
 ];
 
