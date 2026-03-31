@@ -1,13 +1,17 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
-import { FCreateConnectionEvent, FFlowModule, FReassignConnectionEvent } from '@foblex/flow';
+import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
+import { FCreateConnectionEvent, FCreateNodeEvent, FFlowModule, FReassignConnectionEvent } from '@foblex/flow';
 import { IPoint } from '@foblex/2d';
 import { UserBoardCardComponent } from '@widgets/user-board-card';
 import type { BoardEdge, BoardNode } from '@features/org-board';
+import { ORG_BOARD_CURVE_BUILDER } from './org-board-curve-builder';
+
+export type ConnectionMode = 'org-board-curve' | 'bezier';
 
 @Component({
   selector: 'app-org-board-canvas',
   imports: [FFlowModule, UserBoardCardComponent],
   templateUrl: './org-board-canvas.html',
+  providers: [ORG_BOARD_CURVE_BUILDER],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrgBoardCanvasComponent {
@@ -21,6 +25,34 @@ export class OrgBoardCanvasComponent {
   readonly connectionRemoved = output<{ subordinateId: string }>();
   readonly nodeClicked = output<string>();
   readonly externalDrop = output<{ userId: string; x: number; y: number }>();
+
+  protected readonly connectionMode = signal<ConnectionMode>('org-board-curve');
+
+  protected readonly hasIncomingEdge = computed(() => {
+    const set = new Set<string>();
+    for (const e of this.edges()) set.add(e.subordinateId);
+    return set;
+  });
+
+  protected toggleConnectionMode(): void {
+    this.connectionMode.update(m => m === 'org-board-curve' ? 'bezier' : 'org-board-curve');
+  }
+
+  private _dragging = false;
+
+  protected onDragStarted(): void {
+    this._dragging = true;
+  }
+
+  protected onDragEnded(): void {
+    // Reset after the click event fires (click fires synchronously after mouseup)
+    setTimeout(() => (this._dragging = false), 0);
+  }
+
+  protected onNodeClick(userId: string): void {
+    if (this._dragging) return;
+    this.nodeClicked.emit(userId);
+  }
 
   protected onPositionChange(node: BoardNode, position: IPoint): void {
     this.nodePositionChanged.emit({
@@ -43,5 +75,13 @@ export class OrgBoardCanvasComponent {
       const subordinateId = event.previousTargetId.replace('in-', '');
       this.connectionRemoved.emit({ subordinateId });
     }
+  }
+
+  protected onExternalDrop(event: FCreateNodeEvent<string>): void {
+    this.externalDrop.emit({
+      userId: event.data,
+      x: event.externalItemRect.x,
+      y: event.externalItemRect.y,
+    });
   }
 }

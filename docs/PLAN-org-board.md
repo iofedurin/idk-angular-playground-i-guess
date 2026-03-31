@@ -936,7 +936,7 @@ describe('OrgBoardPage')
 
 ---
 
-### Phase 4: Sidebar Panel
+### [x] Phase 4: Sidebar Panel
 
 **Цель:** Создать sidebar с: (a) список сотрудников с поиском/фильтром, (b) drag из sidebar на доску, (c) detail view по клику на карточку.
 
@@ -1027,12 +1027,12 @@ describe('OrgBoardSidebarComponent')
 **Минимум 8 тестов.**
 
 **Definition of Done:**
-- [ ] Sidebar рендерит список сотрудников с поиском
-- [ ] Сотрудники не на доске — draggable в канвас
-- [ ] Клик на карточку на доске → sidebar показывает детали
-- [ ] Detail view: информация + manager + direct reports
-- [ ] 8+ тестов
-- [ ] `bun run test` — green
+- [x] Sidebar рендерит список сотрудников с поиском
+- [x] Сотрудники не на доске — draggable в канвас
+- [x] Клик на карточку на доске → sidebar показывает детали
+- [x] Detail view: информация + manager + direct reports
+- [x] 8+ тестов (12 тестов)
+- [x] `bun run test` — green
 
 ---
 
@@ -1062,10 +1062,10 @@ Canvas widget обрабатывает `(fExternalItem)` event от Foblex → `
 **Тесты:** обновить `org-board.spec.ts` — 2-3 теста на interaction между sidebar и board state.
 
 **Definition of Done:**
-- [ ] Drag из sidebar → drop на canvas → карточка появляется
-- [ ] Клик на карточку → sidebar показывает детали
-- [ ] Direct reports и manager кликабельны
-- [ ] `bun run test` — green
+- [x] Drag из sidebar → drop на canvas → карточка появляется
+- [x] Клик на карточку → sidebar показывает детали
+- [x] Direct reports и manager кликабельны
+- [x] `bun run test` — green
 
 ---
 
@@ -1476,8 +1476,8 @@ describe('highlight subtree')
 - [ ] 3.4 Board page: data loading + computed nodes/edges/validTargets + tests (≥4)
 
 ### Phase 4: Sidebar Panel
-- [ ] 4.1 OrgBoardSidebar widget + tests (≥8)
-- [ ] 4.2 Sidebar ↔ page ↔ canvas integration
+- [x] 4.1 OrgBoardSidebar widget + tests (≥8)
+- [x] 4.2 Sidebar ↔ page ↔ canvas integration
 
 ### Phase 5: Connection System
 - [ ] 5.1 Replace manager confirmation dialog

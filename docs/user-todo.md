@@ -9,3 +9,4 @@
 TODO для Sonnet:
 
 TODO для Opus:
+- Спланировать и реализовать сохранение connection mode preference в localStorage (org-board canvas: step vs bezier toggle)

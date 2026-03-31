@@ -1,0 +1,164 @@
+@if (mode() === 'list') {
+  <!-- ── LIST MODE ── -->
+  <div class="flex flex-col h-full">
+    <!-- Search -->
+    <div class="p-3 border-b border-base-300 shrink-0">
+      <input
+        type="text"
+        placeholder="Search employees…"
+        [value]="search()"
+        (input)="updateSearch($event)"
+        class="input input-sm w-full"
+      />
+    </div>
+
+    <!-- User list -->
+    <ul class="flex-1 overflow-y-auto divide-y divide-base-200">
+      @for (user of filteredUsers(); track user.id) {
+        @if (userIdsOnBoard().has(user.id)) {
+          <!-- On board: clickable row -->
+          <li
+            class="flex items-center gap-3 p-3 cursor-pointer hover:bg-base-200 transition-colors"
+            (click)="userSelected.emit(user.id)"
+          >
+            <div class="avatar avatar-placeholder shrink-0">
+              <div class="bg-neutral text-neutral-content w-8 rounded-full">
+                <span class="text-xs">{{ user.firstName[0] }}{{ user.lastName[0] }}</span>
+              </div>
+            </div>
+            <div class="min-w-0 flex-1">
+              <p class="text-sm font-medium truncate">{{ user.firstName }} {{ user.lastName }}</p>
+              <p class="text-xs text-base-content/60 truncate">{{ user.jobTitle }}</p>
+            </div>
+            <span class="badge badge-xs badge-success shrink-0">on board</span>
+          </li>
+        } @else {
+          <!-- Not on board: drag to canvas -->
+          <li
+            fExternalItem
+            [fData]="user.id"
+            style="display: flex"
+            class="items-center gap-3 p-3 cursor-grab hover:bg-base-200 transition-colors active:cursor-grabbing"
+          >
+            <div class="avatar avatar-placeholder shrink-0">
+              <div class="bg-base-300 text-base-content w-8 rounded-full">
+                <span class="text-xs">{{ user.firstName[0] }}{{ user.lastName[0] }}</span>
+              </div>
+            </div>
+            <div class="min-w-0 flex-1">
+              <p class="text-sm font-medium truncate">{{ user.firstName }} {{ user.lastName }}</p>
+              <p class="text-xs text-base-content/60 truncate">{{ user.jobTitle }}</p>
+            </div>
+            <span class="text-base-content/30 text-xs shrink-0">drag</span>
+          </li>
+        }
+      }
+
+      @if (filteredUsers().length === 0) {
+        <li class="p-6 text-center text-sm text-base-content/50">No employees found</li>
+      }
+    </ul>
+  </div>
+} @else {
+  <!-- ── DETAILS MODE ── -->
+  @let user = selectedUser()!;
+  <div class="flex flex-col h-full">
+    <!-- Header -->
+    <div class="p-3 border-b border-base-300 flex items-center gap-2 shrink-0">
+      <button class="btn btn-ghost btn-xs" (click)="backToList.emit()">← Back</button>
+      <span class="text-sm font-semibold truncate">{{ user.firstName }} {{ user.lastName }}</span>
+    </div>
+
+    <!-- Content -->
+    <div class="flex-1 overflow-y-auto p-4 space-y-4">
+      <!-- Avatar + name -->
+      <div class="flex items-center gap-3">
+        <div class="avatar avatar-placeholder">
+          <div class="bg-primary text-primary-content w-12 rounded-full">
+            <span class="text-lg font-bold">{{ user.firstName[0] }}{{ user.lastName[0] }}</span>
+          </div>
+        </div>
+        <div>
+          <h3 class="font-bold">{{ user.firstName }} {{ user.lastName }}</h3>
+          <p class="text-sm text-base-content/60">{{ user.email }}</p>
+        </div>
+      </div>
+
+      <!-- Details -->
+      <dl class="space-y-2 text-sm">
+        <div class="flex gap-2">
+          <dt class="text-base-content/50 w-24 shrink-0">Job title</dt>
+          <dd class="font-medium truncate">{{ user.jobTitle }}</dd>
+        </div>
+        <div class="flex gap-2">
+          <dt class="text-base-content/50 w-24 shrink-0">Department</dt>
+          <dd class="font-medium truncate">{{ user.department }}</dd>
+        </div>
+        <div class="flex gap-2">
+          <dt class="text-base-content/50 w-24 shrink-0">Role</dt>
+          <dd class="font-medium">{{ user.role }}</dd>
+        </div>
+        @if (user.bio) {
+          <div class="flex gap-2">
+            <dt class="text-base-content/50 w-24 shrink-0">Bio</dt>
+            <dd class="text-base-content/70">{{ user.bio }}</dd>
+          </div>
+        }
+      </dl>
+
+      <!-- Manager -->
+      @if (manager(); as mgr) {
+        <div>
+          <h4 class="text-xs font-semibold uppercase tracking-wide text-base-content/50 mb-2">Manager</h4>
+          <button
+            class="flex items-center gap-2 w-full text-left hover:bg-base-200 rounded-lg p-2 transition-colors"
+            (click)="userSelected.emit(mgr.id)"
+          >
+            <div class="avatar avatar-placeholder">
+              <div class="bg-neutral text-neutral-content w-7 rounded-full">
+                <span class="text-xs">{{ mgr.firstName[0] }}{{ mgr.lastName[0] }}</span>
+              </div>
+            </div>
+            <span class="text-sm font-medium">{{ mgr.firstName }} {{ mgr.lastName }}</span>
+          </button>
+        </div>
+      }
+
+      <!-- Direct reports -->
+      @if (directReports().length > 0) {
+        <div>
+          <h4 class="text-xs font-semibold uppercase tracking-wide text-base-content/50 mb-2">
+            Direct reports ({{ directReports().length }})
+          </h4>
+          <ul class="space-y-1">
+            @for (report of directReports(); track report.id) {
+              <li>
+                <button
+                  class="flex items-center gap-2 w-full text-left hover:bg-base-200 rounded-lg p-2 transition-colors"
+                  (click)="userSelected.emit(report.id)"
+                >
+                  <div class="avatar avatar-placeholder">
+                    <div class="bg-neutral text-neutral-content w-7 rounded-full">
+                      <span class="text-xs">{{ report.firstName[0] }}{{ report.lastName[0] }}</span>
+                    </div>
+                  </div>
+                  <span class="text-sm">{{ report.firstName }} {{ report.lastName }}</span>
+                </button>
+              </li>
+            }
+          </ul>
+        </div>
+      }
+
+      <!-- Actions -->
+      <div class="pt-2 border-t border-base-300 space-y-2">
+        <button
+          class="btn btn-sm btn-error btn-outline w-full"
+          (click)="removeFromBoard.emit(user.id)"
+        >
+          Remove from board
+        </button>
+      </div>
+    </div>
+  </div>
+}

@@ -1,18 +1,19 @@
 import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core';
-import { getAncestors, UsersStore } from '@entities/user';
+import { getAncestors, getDirectReports, UsersStore } from '@entities/user';
 import { BoardEdge, BoardNode, OrgBoardStore } from '@features/org-board';
 import { OrgBoardCanvasComponent } from '@widgets/org-board-canvas';
+import { OrgBoardSidebarComponent } from '@widgets/org-board-sidebar';
 import { ErrorAlertComponent, SpinnerComponent } from '@shared/ui';
 
 @Component({
   selector: 'app-org-board-page',
-  imports: [OrgBoardCanvasComponent, SpinnerComponent, ErrorAlertComponent],
+  imports: [OrgBoardCanvasComponent, OrgBoardSidebarComponent, SpinnerComponent, ErrorAlertComponent],
   templateUrl: './org-board.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrgBoardPage implements OnInit {
-  private readonly usersStore = inject(UsersStore);
-  private readonly boardStore = inject(OrgBoardStore);
+  protected readonly usersStore = inject(UsersStore);
+  protected readonly boardStore = inject(OrgBoardStore);
 
   protected readonly nodes = computed<BoardNode[]>(() => {
     const users = this.usersStore.entityMap();
@@ -56,6 +57,21 @@ export class OrgBoardPage implements OnInit {
 
   protected readonly selectedUserId = signal<string | null>(null);
 
+  protected readonly selectedUser = computed(() => {
+    const id = this.selectedUserId();
+    return id ? (this.usersStore.entityMap()[id] ?? null) : null;
+  });
+
+  protected readonly directReports = computed(() => {
+    const user = this.selectedUser();
+    return user ? getDirectReports(user.id, this.usersStore.entities()) : [];
+  });
+
+  protected readonly manager = computed(() => {
+    const user = this.selectedUser();
+    return user?.managerId ? (this.usersStore.entityMap()[user.managerId] ?? null) : null;
+  });
+
   protected readonly loading = computed(
     () => this.usersStore.loading() || this.boardStore.loading(),
   );
@@ -88,5 +104,26 @@ export class OrgBoardPage implements OnInit {
 
   protected onNodeClicked(userId: string): void {
     this.selectedUserId.set(this.selectedUserId() === userId ? null : userId);
+  }
+
+  protected async onUserDropped(event: { userId: string; x: number; y: number }): Promise<void> {
+    await this.boardStore.addToBoard(event.userId, event.x, event.y);
+  }
+
+  protected onUserSelected(userId: string): void {
+    this.selectedUserId.set(userId);
+  }
+
+  protected onBackToList(): void {
+    this.selectedUserId.set(null);
+  }
+
+  protected async onRemoveFromBoard(userId: string): Promise<void> {
+    const pos = this.boardStore.positionByUserId().get(userId);
+    if (!pos) return;
+    await this.boardStore.removeFromBoard(pos.id);
+    if (this.selectedUserId() === userId) {
+      this.selectedUserId.set(null);
+    }
   }
 }

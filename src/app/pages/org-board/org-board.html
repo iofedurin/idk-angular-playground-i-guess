@@ -1,11 +1,24 @@
 <div class="flex h-[calc(100vh-64px)]">
-  <!-- sidebar placeholder -->
-  <aside class="w-72 border-r border-base-300 bg-base-100 p-4">
-    <h2 class="font-bold text-lg mb-4">Employees</h2>
-    <p class="text-sm text-base-content/60">Sidebar — Phase 4</p>
+  <!-- Sidebar -->
+  <aside class="w-72 border-r border-base-300 bg-base-100 shrink-0 overflow-hidden">
+    <div class="p-3 border-b border-base-300">
+      <h2 class="font-bold text-lg">Employees</h2>
+    </div>
+    <div class="h-[calc(100%-52px)]">
+      <app-org-board-sidebar
+        [users]="usersStore.entities()"
+        [userIdsOnBoard]="boardStore.userIdsOnBoard()"
+        [selectedUser]="selectedUser()"
+        [directReports]="directReports()"
+        [manager]="manager()"
+        (userSelected)="onUserSelected($event)"
+        (backToList)="onBackToList()"
+        (removeFromBoard)="onRemoveFromBoard($event)"
+      />
+    </div>
   </aside>
 
-  <!-- canvas area -->
+  <!-- Canvas area -->
   <main class="flex-1 bg-base-200 relative overflow-hidden">
     @if (loading()) {
       <div class="absolute inset-0 flex items-center justify-center z-10">
@@ -29,6 +42,7 @@
       (connectionCreated)="onConnectionCreated($event)"
       (connectionRemoved)="onConnectionRemoved($event)"
       (nodeClicked)="onNodeClicked($event)"
+      (externalDrop)="onUserDropped($event)"
     />
   </main>
 </div>

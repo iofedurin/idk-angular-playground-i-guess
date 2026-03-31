@@ -42,10 +42,9 @@ function broadcast(event) {
 
 // ---------- Wrapper app with custom bulk routes ----------
 const app = new App();
-app.use(json());
 
 // POST /users/bulk-delete — body: { ids: string[], appId?: string }
-app.post('/users/bulk-delete', async (req, res) => {
+app.post('/users/bulk-delete', json(), async (req, res) => {
   const { ids } = req.body ?? {};
   if (!Array.isArray(ids)) {
     res.status(400).json({ error: 'ids must be an array' });
@@ -62,7 +61,7 @@ app.post('/users/bulk-delete', async (req, res) => {
 });
 
 // PATCH /users/bulk-update — body: { ids: string[], changes: Partial<User> }
-app.patch('/users/bulk-update', async (req, res) => {
+app.patch('/users/bulk-update', json(), async (req, res) => {
   const { ids, changes } = req.body ?? {};
   if (!Array.isArray(ids) || typeof changes !== 'object' || changes === null) {
     res.status(400).json({ error: 'ids must be an array and changes must be an object' });

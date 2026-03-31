@@ -119,7 +119,7 @@
       "role": "viewer",
       "active": true,
       "bio": "",
-      "managerId": null,
+      "managerId": "3",
       "appId": "acme"
     },
     {
@@ -151,7 +151,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
-      "managerId": null,
+      "managerId": "3",
       "appId": "acme"
     },
     {
@@ -604,10 +604,48 @@
     }
   ],
   "board-positions": [
-    { "id": "bp1", "userId": "3", "x": 400, "y": 50, "appId": "acme" },
-    { "id": "bp2", "userId": "1", "x": 200, "y": 250, "appId": "acme" },
-    { "id": "bp3", "userId": "2", "x": 400, "y": 250, "appId": "acme" },
-    { "id": "bp4", "userId": "5", "x": 600, "y": 250, "appId": "acme" }
+    {
+      "id": "bp1",
+      "userId": "3",
+      "x": 460,
+      "y": -124,
+      "appId": "acme"
+    },
+    {
+      "id": "bp2",
+      "userId": "1",
+      "x": 200,
+      "y": 141,
+      "appId": "acme"
+    },
+    {
+      "id": "bp3",
+      "userId": "2",
+      "x": 490,
+      "y": 395,
+      "appId": "acme"
+    },
+    {
+      "id": "bp4",
+      "userId": "5",
+      "x": 684,
+      "y": 262,
+      "appId": "acme"
+    },
+    {
+      "userId": "a7",
+      "x": 339,
+      "y": 237,
+      "appId": "acme",
+      "id": "n-vLFRGA3a8"
+    },
+    {
+      "userId": "a9",
+      "x": -11,
+      "y": 88,
+      "appId": "acme",
+      "id": "GBn6Djyfgfs"
+    }
   ],
   "countries": [
     {

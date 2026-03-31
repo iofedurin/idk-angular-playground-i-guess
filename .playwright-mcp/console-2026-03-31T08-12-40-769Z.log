@@ -1,0 +1,5 @@
+[      78ms] [LOG] Angular is running in development mode. @ http://localhost:4200/@fs/Users/iofedurin/air/idk-angular-playground-i-guess/.angular/cache/21.2.5/playground/vite/deps/chunk-3UPHBN35.js?v=e19cac0f:11106
+[      92ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:4200/api/apps?appId=acme:0
+[      93ms] [ERROR] WebSocket connection to 'ws://localhost:3000/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:4200/@fs/Users/iofedurin/air/idk-angular-playground-i-guess/.angular/cache/21.2.5/playground/vite/deps/rxjs_webSocket.js?v=e19cac0f:105
+[     109ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:4200/api/users?appId=acme:0
+[    2628ms] [ERROR] WebSocket connection to 'ws://localhost:3000/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:4200/@fs/Users/iofedurin/air/idk-angular-playground-i-guess/.angular/cache/21.2.5/playground/vite/deps/rxjs_webSocket.js?v=e19cac0f:105

@@ -22,3 +22,12 @@
 .f-connection-selection:hover {
   stroke-opacity: 0.15;
 }
+
+/* Hide filled drag-handle circles at connection endpoints.
+ * The circles remain in DOM (pointer-events intact for reassign),
+ * but are visually replaced by the marker-end arrowhead. */
+circle[f-connection-drag-handle-end],
+circle[f-connection-drag-handle-start] {
+  fill: transparent;
+  stroke: none;
+}
