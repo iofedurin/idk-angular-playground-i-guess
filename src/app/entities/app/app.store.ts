@@ -1,7 +1,8 @@
 import { computed, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 import { lastValueFrom } from 'rxjs';
+import { GLOBAL_REQUEST } from '@shared/lib';
 import { App } from './app.model';
 
 interface AppState {
@@ -21,7 +22,9 @@ export const AppStore = signalStore(
     async loadApps(): Promise<void> {
       if (store.apps().length) return;
       try {
-        const apps = await lastValueFrom(http.get<App[]>('/api/apps'));
+        const apps = await lastValueFrom(
+          http.get<App[]>('/api/apps', { context: new HttpContext().set(GLOBAL_REQUEST, true) }),
+        );
         patchState(store, { apps });
       } catch {
         // Deviation from store-pattern (no loading/error state):

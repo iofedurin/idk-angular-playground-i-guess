@@ -33,12 +33,34 @@
       </div>
     }
 
+    <!-- Toolbar: auto-layout button (top-left of canvas area) -->
+    <div class="absolute top-3 left-3 z-20">
+      <button
+        class="btn btn-sm btn-ghost bg-base-200/80 backdrop-blur-sm gap-1"
+        (click)="autoLayout()"
+        title="Auto-layout: arrange nodes in hierarchy"
+      >
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="9" y="2" width="6" height="4" rx="1"/>
+          <rect x="2" y="10" width="6" height="4" rx="1"/>
+          <rect x="16" y="10" width="6" height="4" rx="1"/>
+          <rect x="9" y="18" width="6" height="4" rx="1"/>
+          <line x1="12" y1="6" x2="12" y2="10"/>
+          <line x1="5" y1="14" x2="5" y2="18"/>
+          <line x1="19" y1="14" x2="19" y2="18"/>
+          <line x1="5" y1="18" x2="19" y2="18"/>
+        </svg>
+        Auto-layout
+      </button>
+    </div>
+
     <app-org-board-canvas
       class="w-full h-full"
       [nodes]="nodes()"
       [edges]="edges()"
       [selectedUserId]="selectedUserId()"
       [validTargetsByUser]="validTargetsByUser()"
+      [highlightedUserIds]="highlightedUserIds()"
       (nodePositionChanged)="onPositionChanged($event)"
       (connectionCreated)="onConnectionCreated($event)"
       (connectionRemoved)="onConnectionRemoved($event)"

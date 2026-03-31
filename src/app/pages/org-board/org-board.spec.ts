@@ -379,6 +379,61 @@ describe('OrgBoardPage', () => {
     });
   });
 
+  describe('highlight subtree', () => {
+    it('highlights selected user and all descendants', async () => {
+      await initPage(fixture, httpMock);
+
+      // Select u1 (mid manager): subtree = u2 (leaf). u3, u4 are NOT in u1's subtree.
+      (page as any).selectedUserId.set('1');
+
+      const highlighted = (page as any).highlightedUserIds() as Set<string>;
+      expect(highlighted.has('1')).toBe(true);
+      expect(highlighted.has('2')).toBe(true); // u2 is u1's direct report
+      expect(highlighted.has('3')).toBe(false); // u3 is u1's manager, not subtree
+      expect(highlighted.has('4')).toBe(false); // u4 reports to u3, not in u1's subtree
+    });
+
+    it('clears highlight when selection is cleared', async () => {
+      await initPage(fixture, httpMock);
+
+      (page as any).selectedUserId.set('3');
+      (page as any).selectedUserId.set(null);
+
+      const highlighted = (page as any).highlightedUserIds() as Set<string>;
+      expect(highlighted.size).toBe(0);
+    });
+  });
+
+  describe('auto-layout', () => {
+    it('repositions all board nodes according to tree layout', async () => {
+      await initPage(fixture, httpMock);
+
+      // u3 (root) → u1 → u2: linear chain, all x=0, y=0/180/360
+      void (page as any).autoLayout();
+
+      const req3 = httpMock.expectOne(
+        (r) => r.url.includes('/api/board-positions/bp3') && r.method === 'PATCH',
+      );
+      expect(req3.request.body).toMatchObject({ x: 0, y: 0 });
+      req3.flush({ id: 'bp3', userId: '3', x: 0, y: 0 });
+      await flush();
+
+      const req1 = httpMock.expectOne(
+        (r) => r.url.includes('/api/board-positions/bp1') && r.method === 'PATCH',
+      );
+      expect(req1.request.body).toMatchObject({ x: 0, y: 180 });
+      req1.flush({ id: 'bp1', userId: '1', x: 0, y: 180 });
+      await flush();
+
+      const req2 = httpMock.expectOne(
+        (r) => r.url.includes('/api/board-positions/bp2') && r.method === 'PATCH',
+      );
+      expect(req2.request.body).toMatchObject({ x: 0, y: 360 });
+      req2.flush({ id: 'bp2', userId: '2', x: 0, y: 360 });
+      await flush();
+    });
+  });
+
   describe('loading and error states', () => {
     it('shows spinner while loading', () => {
       fixture.detectChanges(); // ngOnInit triggers loading=true

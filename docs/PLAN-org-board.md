@@ -1278,7 +1278,7 @@ it('computes max hierarchy depth')
 
 ---
 
-### Phase 8: Auto-layout + UX Polish
+### [x] Phase 8: Auto-layout + UX Polish
 
 **Цель:** Алгоритм авто-раскладки дерева, "Fit to screen", highlight subtree, minimap.
 
@@ -1446,13 +1446,13 @@ describe('highlight subtree')
 ```
 
 **Definition of Done:**
-- [ ] Кнопка "Auto-layout" раскладывает карточки по иерархии
-- [ ] Highlight поддерева при клике на менеджера
-- [ ] "Fit to screen" работает
+- [x] Кнопка "Auto-layout" раскладывает карточки по иерархии
+- [x] Highlight поддерева при клике на менеджера
+- [x] "Fit to screen" работает
 - [ ] Minimap (если Foblex поддерживает)
-- [ ] 2+ тестов для layout/highlight
-- [ ] `bun run test` — green
-- [ ] `bun run build` — green
+- [x] 2+ тестов для layout/highlight
+- [x] `bun run test` — green
+- [x] `bun run build` — green
 
 ---
 
@@ -1489,12 +1489,12 @@ describe('highlight subtree')
 ### [x] Phase 7: Dashboard Aggregations
 - [x] 7.1 Org metrics on Dashboard + tests (≥3)
 
-### Phase 8: Auto-layout + Polish
-- [ ] 8.1 Tree layout algorithm + unit tests (≥8)
-- [ ] 8.2 "Auto-layout" button
-- [ ] 8.3 Highlight subtree
-- [ ] 8.4 Fit to screen
-- [ ] 8.5 Minimap (stretch)
+### [x] Phase 8: Auto-layout + Polish
+- [x] 8.1 Tree layout algorithm + unit tests (≥8)
+- [x] 8.2 "Auto-layout" button
+- [x] 8.3 Highlight subtree
+- [x] 8.4 Fit to screen
+- [ ] 8.5 Minimap (stretch, skipped)
 
 ---
 

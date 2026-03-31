@@ -6,9 +6,10 @@ import type { User } from '@entities/user';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div
-      class="card card-compact bg-base-100 shadow-md w-48 select-none"
+      class="card card-compact bg-base-100 shadow-md w-48 select-none transition-opacity"
       [class.ring-2]="selected()"
       [class.ring-primary]="selected()"
+      [class.opacity-30]="!highlighted()"
     >
       <div class="card-body p-3">
         <div class="flex items-center gap-2">
@@ -34,6 +35,7 @@ import type { User } from '@entities/user';
 export class UserBoardCardComponent {
   readonly user = input.required<User>();
   readonly selected = input(false);
+  readonly highlighted = input(true);
   readonly directReportsCount = input(0);
 
   protected readonly initials = computed(() => {

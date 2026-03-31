@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
-import { FCreateConnectionEvent, FCreateNodeEvent, FFlowModule, FReassignConnectionEvent } from '@foblex/flow';
+import { ChangeDetectionStrategy, Component, computed, input, output, signal, viewChild } from '@angular/core';
+import { FCanvasComponent, FCreateConnectionEvent, FCreateNodeEvent, FFlowModule, FReassignConnectionEvent } from '@foblex/flow';
 import { IPoint } from '@foblex/2d';
 import { UserBoardCardComponent } from '@widgets/user-board-card';
 import type { BoardEdge, BoardNode } from '@features/org-board';
@@ -19,6 +19,7 @@ export class OrgBoardCanvasComponent {
   readonly edges = input.required<BoardEdge[]>();
   readonly selectedUserId = input<string | null>(null);
   readonly validTargetsByUser = input.required<Map<string, string[]>>();
+  readonly highlightedUserIds = input<Set<string>>(new Set());
 
   readonly nodePositionChanged = output<{ userId: string; positionId: string; x: number; y: number }>();
   readonly connectionCreated = output<{ managerId: string; subordinateId: string }>();
@@ -28,6 +29,8 @@ export class OrgBoardCanvasComponent {
 
   protected readonly connectionMode = signal<ConnectionMode>('org-board-curve');
 
+  private readonly fCanvas = viewChild(FCanvasComponent);
+
   protected readonly hasIncomingEdge = computed(() => {
     const set = new Set<string>();
     for (const e of this.edges()) set.add(e.subordinateId);
@@ -36,6 +39,24 @@ export class OrgBoardCanvasComponent {
 
   protected toggleConnectionMode(): void {
     this.connectionMode.update(m => m === 'org-board-curve' ? 'bezier' : 'org-board-curve');
+  }
+
+  protected fitToScreen(): void {
+    this.fCanvas()?.fitToScreen(undefined, true);
+  }
+
+  protected zoomIn(): void {
+    const c = this.fCanvas();
+    if (!c) return;
+    c.setScale(c.getScale() + 0.2);
+    c.redraw();
+  }
+
+  protected zoomOut(): void {
+    const c = this.fCanvas();
+    if (!c) return;
+    c.setScale(Math.max(0.1, c.getScale() - 0.2));
+    c.redraw();
   }
 
   private _dragging = false;

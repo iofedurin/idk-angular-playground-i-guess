@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, OnInit, signal, viewChild } from '@angular/core';
-import { getAncestors, getDirectReports, UsersStore } from '@entities/user';
+import { getAncestors, getDirectReports, getSubtree, UsersStore } from '@entities/user';
 import { BoardEdge, BoardNode, OrgBoardStore } from '@features/org-board';
+import { computeTreeLayout, type LayoutNode } from '@shared/lib';
 import { OrgBoardCanvasComponent } from '@widgets/org-board-canvas';
 import { OrgBoardSidebarComponent } from '@widgets/org-board-sidebar';
 import { ConfirmDialogComponent, ErrorAlertComponent, SpinnerComponent } from '@shared/ui';
@@ -105,6 +106,13 @@ export class OrgBoardPage implements OnInit {
     () => this.usersStore.error() ?? this.boardStore.error(),
   );
 
+  protected readonly highlightedUserIds = computed(() => {
+    const selected = this.selectedUserId();
+    if (!selected) return new Set<string>();
+    const subtree = getSubtree(selected, this.usersStore.entities());
+    return new Set([selected, ...subtree.map((u) => u.id)]);
+  });
+
   ngOnInit(): void {
     this.usersStore.loadAll();
     this.boardStore.loadPositions();
@@ -176,6 +184,21 @@ export class OrgBoardPage implements OnInit {
 
   protected async onRemoveManager(userId: string): Promise<void> {
     await this.usersStore.setManager(userId, null);
+  }
+
+  protected async autoLayout(): Promise<void> {
+    const users = this.usersStore.entities();
+    const onBoard = this.boardStore.userIdsOnBoard();
+    const layoutNodes: LayoutNode[] = users
+      .filter((u) => onBoard.has(u.id))
+      .map((u) => ({ id: u.id, parentId: u.managerId }));
+    const positions = computeTreeLayout(layoutNodes);
+    for (const pos of positions) {
+      const existing = this.boardStore.positionByUserId().get(pos.id);
+      if (existing) {
+        await this.boardStore.updatePosition(existing.id, pos.x, pos.y);
+      }
+    }
   }
 
   protected async onRemoveFromBoard(userId: string): Promise<void> {

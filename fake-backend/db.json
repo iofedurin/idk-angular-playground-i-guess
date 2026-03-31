@@ -167,7 +167,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
-      "managerId": null,
+      "managerId": "1",
       "appId": "acme"
     },
     {
@@ -311,7 +311,7 @@
       "role": "editor",
       "active": false,
       "bio": "",
-      "managerId": null,
+      "managerId": "1",
       "appId": "acme"
     },
     {
@@ -375,7 +375,7 @@
       "role": "admin",
       "active": true,
       "bio": "",
-      "managerId": null,
+      "managerId": "a9",
       "appId": "acme"
     },
     {
@@ -423,7 +423,7 @@
       "role": "admin",
       "active": true,
       "bio": "Engineering lead at Globex.",
-      "managerId": null,
+      "managerId": "g11",
       "appId": "globex"
     },
     {
@@ -439,7 +439,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
-      "managerId": "g1",
+      "managerId": "g10",
       "appId": "globex"
     },
     {
@@ -455,7 +455,7 @@
       "role": "viewer",
       "active": false,
       "bio": "UX intern.",
-      "managerId": "g1",
+      "managerId": "g11",
       "appId": "globex"
     },
     {
@@ -487,7 +487,7 @@
       "role": "editor",
       "active": true,
       "bio": "Product lead.",
-      "managerId": null,
+      "managerId": "g6",
       "appId": "globex"
     },
     {
@@ -503,7 +503,7 @@
       "role": "viewer",
       "active": true,
       "bio": "",
-      "managerId": null,
+      "managerId": "g11",
       "appId": "globex"
     },
     {
@@ -519,7 +519,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
-      "managerId": null,
+      "managerId": "g6",
       "appId": "globex"
     },
     {
@@ -535,7 +535,7 @@
       "role": "viewer",
       "active": false,
       "bio": "",
-      "managerId": null,
+      "managerId": "g6",
       "appId": "globex"
     },
     {
@@ -551,7 +551,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
-      "managerId": null,
+      "managerId": "g7",
       "appId": "globex"
     },
     {
@@ -567,7 +567,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
-      "managerId": null,
+      "managerId": "g3",
       "appId": "globex"
     },
     {
@@ -583,7 +583,7 @@
       "role": "viewer",
       "active": true,
       "bio": "",
-      "managerId": null,
+      "managerId": "g4",
       "appId": "globex"
     },
     {
@@ -599,7 +599,7 @@
       "role": "admin",
       "active": true,
       "bio": "",
-      "managerId": null,
+      "managerId": "g10",
       "appId": "globex"
     }
   ],
@@ -607,79 +607,184 @@
     {
       "id": "bp2",
       "userId": "1",
-      "x": 170,
-      "y": -5,
+      "x": 1080,
+      "y": 180,
       "appId": "acme"
     },
     {
       "userId": "a11",
-      "x": 583,
-      "y": 205,
+      "x": 600,
+      "y": 180,
       "appId": "acme",
       "id": "JH49JJR2Apg"
     },
     {
       "userId": "WZQk9HFF1II",
-      "x": 369,
-      "y": 451,
+      "x": 480,
+      "y": 360,
       "appId": "acme",
       "id": "d5u87fHFy6c"
     },
     {
       "userId": "a12",
-      "x": 804,
-      "y": -69,
+      "x": 600,
+      "y": 0,
       "appId": "acme",
       "id": "jyRDtUJJuMY"
     },
     {
       "userId": "a13",
-      "x": 356.0397644042969,
-      "y": -346.045446395874,
+      "x": 1320,
+      "y": 0,
       "appId": "acme",
       "id": "Zek-Zu2K4bA"
     },
     {
       "userId": "a15",
-      "x": -172,
-      "y": 297,
+      "x": 0,
+      "y": 360,
       "appId": "acme",
       "id": "62dXxO1riEs"
     },
     {
       "userId": "a9",
-      "x": -302,
-      "y": 54,
+      "x": 120,
+      "y": 180,
       "appId": "acme",
       "id": "6SDHw7v4g5o"
     },
     {
       "userId": "a7",
-      "x": -192,
-      "y": -142,
+      "x": 120,
+      "y": 0,
       "appId": "acme",
       "id": "daHyDDPSPOE"
     },
     {
       "userId": "a18",
-      "x": 637,
-      "y": 472,
+      "x": 720,
+      "y": 360,
       "appId": "acme",
       "id": "sN3oKsiPpi0"
     },
     {
       "userId": "a17",
-      "x": 398,
-      "y": 60,
+      "x": 1680,
+      "y": 180,
       "appId": "acme",
       "id": "mPfUaav2Sos"
     },
     {
       "userId": "a14",
-      "x": 24,
-      "y": -119,
+      "x": 1440,
+      "y": 180,
       "appId": "acme",
       "id": "BSCbOZKW3ts"
+    },
+    {
+      "userId": "a19",
+      "x": 1200,
+      "y": 360,
+      "appId": "acme",
+      "id": "P7QtQB9EoSA"
+    },
+    {
+      "userId": "a10",
+      "x": 960,
+      "y": 360,
+      "appId": "acme",
+      "id": "3mWF6qZDH4Q"
+    },
+    {
+      "userId": "a23",
+      "x": 240,
+      "y": 360,
+      "appId": "acme",
+      "id": "3ljKF4Obdu4"
+    },
+    {
+      "userId": "g6",
+      "x": 960,
+      "y": 360,
+      "appId": "globex",
+      "id": "ulgdOegZDZM"
+    },
+    {
+      "userId": "g7",
+      "x": 960,
+      "y": 540,
+      "appId": "globex",
+      "id": "XS5uB7iPhaE"
+    },
+    {
+      "userId": "g8",
+      "x": 1200,
+      "y": 540,
+      "appId": "globex",
+      "id": "H-27x2RLjUw"
+    },
+    {
+      "userId": "g3",
+      "x": 360,
+      "y": 360,
+      "appId": "globex",
+      "id": "YKrFNfVFuFE"
+    },
+    {
+      "userId": "g5",
+      "x": 720,
+      "y": 540,
+      "appId": "globex",
+      "id": "_st_sx69isw"
+    },
+    {
+      "userId": "g9",
+      "x": 960,
+      "y": 720,
+      "appId": "globex",
+      "id": "MyiCA1jIXX0"
+    },
+    {
+      "userId": "g10",
+      "x": 360,
+      "y": 540,
+      "appId": "globex",
+      "id": "PaQqer_Llt0"
+    },
+    {
+      "userId": "g2",
+      "x": 240,
+      "y": 720,
+      "appId": "globex",
+      "id": "wgm96fkb7qk"
+    },
+    {
+      "userId": "g12",
+      "x": 480,
+      "y": 720,
+      "appId": "globex",
+      "id": "fAuf8eCmLcg"
+    },
+    {
+      "userId": "g11",
+      "x": 600,
+      "y": 180,
+      "appId": "globex",
+      "id": "aRAYk4pPLr0"
+    },
+    {
+      "userId": "g4",
+      "x": 600,
+      "y": 0,
+      "appId": "globex",
+      "id": "TvZfDDNysDY"
+    },
+    {
+      "userId": "g1",
+      "x": 0,
+      "y": 360,
+      "appId": "globex",
+      "id": "jZhYf4wlBGQ"
     }
   ],
   "countries": [
