@@ -28,6 +28,15 @@
         <div class="stat-title">Viewers</div>
         <div class="stat-value">{{ byRole().viewer }}</div>
       </div>
+      <div class="stat">
+        <div class="stat-title">Without Manager</div>
+        <div class="stat-value">{{ orphanedUsers() }}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">Hierarchy Depth</div>
+        <div class="stat-value">{{ maxDepth() }}</div>
+        <div class="stat-desc">levels</div>
+      </div>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
@@ -50,6 +59,32 @@
               } @empty {
                 <tr>
                   <td colspan="2" class="text-center text-base-content/50">No data</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card bg-base-100 shadow">
+        <div class="card-body">
+          <h2 class="card-title text-base">Top Managers</h2>
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th>Manager</th>
+                <th class="text-right">Reports</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (mgr of topManagers(); track mgr.name) {
+                <tr>
+                  <td>{{ mgr.name }}</td>
+                  <td class="text-right">{{ mgr.count }}</td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="2" class="text-center text-base-content/50">No hierarchy yet</td>
                 </tr>
               }
             </tbody>

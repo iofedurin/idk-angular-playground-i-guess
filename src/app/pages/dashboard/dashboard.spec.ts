@@ -60,6 +60,7 @@ describe('DashboardPage', () => {
   let fixture: ComponentFixture<DashboardPage>;
   let httpMock: HttpTestingController;
   let el: HTMLElement;
+  let page: DashboardPage;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -74,6 +75,7 @@ describe('DashboardPage', () => {
     fixture = TestBed.createComponent(DashboardPage);
     httpMock = TestBed.inject(HttpTestingController);
     el = fixture.nativeElement;
+    page = fixture.componentInstance;
   });
 
   afterEach(() => httpMock.verify());
@@ -118,7 +120,9 @@ describe('DashboardPage', () => {
     await flush();
     fixture.detectChanges();
 
-    const rows = el.querySelectorAll('table tbody tr');
+    // target only the By Department table (first table in DOM)
+    const deptTable = el.querySelector('table')!;
+    const rows = deptTable.querySelectorAll('tbody tr');
     expect(rows.length).toBe(2); // engineering (2), design (1)
 
     const firstRow = rows[0].textContent!;
@@ -152,5 +156,43 @@ describe('DashboardPage', () => {
 
     expect(el.textContent).toContain('No data');
     expect(el.textContent).toContain('No users yet');
+  });
+
+  describe('org metrics', () => {
+    // Hierarchy: u1 (root) → u2, u3 (direct reports); u2 → u4 (depth 2)
+    const hierarchyUsers: User[] = [
+      { ...mockUsers[0], id: 'u1', managerId: null },
+      { ...mockUsers[1], id: 'u2', managerId: 'u1' },
+      { ...mockUsers[2], id: 'u3', managerId: 'u1' },
+      { ...mockUsers[0], id: 'u4', username: 'u4', managerId: 'u2' },
+    ];
+
+    async function loadHierarchy(): Promise<void> {
+      fixture.detectChanges();
+      httpMock.expectOne((r) => r.url.includes('/api/users')).flush(hierarchyUsers);
+      await flush();
+      fixture.detectChanges();
+    }
+
+    it('computes orphaned users count', async () => {
+      await loadHierarchy();
+      // only u1 has no manager
+      expect((page as any).orphanedUsers()).toBe(1);
+    });
+
+    it('computes top managers with report counts', async () => {
+      await loadHierarchy();
+      const top = (page as any).topManagers() as { name: string; count: number }[];
+      // u1 has 2 direct reports (u2, u3); u2 has 1 (u4)
+      expect(top[0].count).toBe(2);
+      expect(top[0].name).toContain('John');
+      expect(top[1].count).toBe(1);
+    });
+
+    it('computes max hierarchy depth', async () => {
+      await loadHierarchy();
+      // u4 ancestors: u2, u1 → depth 2
+      expect((page as any).maxDepth()).toBe(2);
+    });
   });
 });

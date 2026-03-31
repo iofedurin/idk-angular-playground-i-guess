@@ -1210,7 +1210,7 @@ describe('UserDeleteAction — cascade')
 
 ---
 
-### Phase 7: Dashboard Aggregations
+### [x] Phase 7: Dashboard Aggregations
 
 **Цель:** Добавить организационные метрики на Dashboard.
 
@@ -1272,9 +1272,9 @@ it('computes max hierarchy depth')
 ```
 
 **Definition of Done:**
-- [ ] 3 новых метрики на Dashboard
-- [ ] 3+ тестов
-- [ ] `bun run test` — green
+- [x] 3 новых метрики на Dashboard
+- [x] 3+ тестов
+- [x] `bun run test` — green
 
 ---
 
@@ -1486,8 +1486,8 @@ describe('highlight subtree')
 - [x] 6.1 Remove from board action
 - [x] 6.2 Enhanced user-delete with subordinate reassignment + tests (≥4)
 
-### Phase 7: Dashboard Aggregations
-- [ ] 7.1 Org metrics on Dashboard + tests (≥3)
+### [x] Phase 7: Dashboard Aggregations
+- [x] 7.1 Org metrics on Dashboard + tests (≥3)
 
 ### Phase 8: Auto-layout + Polish
 - [ ] 8.1 Tree layout algorithm + unit tests (≥8)

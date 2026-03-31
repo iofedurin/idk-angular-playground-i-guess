@@ -87,7 +87,7 @@
       "role": "admin",
       "active": true,
       "bio": "",
-      "managerId": null,
+      "managerId": "a11",
       "appId": "acme"
     },
     {
@@ -151,7 +151,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
-      "managerId": null,
+      "managerId": "a7",
       "appId": "acme"
     },
     {
@@ -167,7 +167,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
-      "managerId": "a12",
+      "managerId": null,
       "appId": "acme"
     },
     {
@@ -183,7 +183,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
-      "managerId": "WZQk9HFF1II",
+      "managerId": "a12",
       "appId": "acme"
     },
     {
@@ -231,7 +231,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
-      "managerId": null,
+      "managerId": "a13",
       "appId": "acme"
     },
     {
@@ -247,7 +247,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
-      "managerId": null,
+      "managerId": "a9",
       "appId": "acme"
     },
     {
@@ -279,7 +279,7 @@
       "role": "viewer",
       "active": true,
       "bio": "",
-      "managerId": "1",
+      "managerId": "a13",
       "appId": "acme"
     },
     {
@@ -295,7 +295,7 @@
       "role": "admin",
       "active": true,
       "bio": "",
-      "managerId": null,
+      "managerId": "a11",
       "appId": "acme"
     },
     {
@@ -607,35 +607,28 @@
     {
       "id": "bp2",
       "userId": "1",
-      "x": 223,
-      "y": 35,
+      "x": 170,
+      "y": -5,
       "appId": "acme"
     },
     {
       "userId": "a11",
-      "x": 447,
-      "y": 586,
+      "x": 583,
+      "y": 205,
       "appId": "acme",
       "id": "JH49JJR2Apg"
     },
     {
-      "userId": "a10",
-      "x": 634,
-      "y": 324,
-      "appId": "acme",
-      "id": "DRalD4bDL00"
-    },
-    {
       "userId": "WZQk9HFF1II",
-      "x": 123.03976440429688,
-      "y": 403.95454597473145,
+      "x": 369,
+      "y": 451,
       "appId": "acme",
       "id": "d5u87fHFy6c"
     },
     {
       "userId": "a12",
-      "x": 747,
-      "y": 39,
+      "x": 804,
+      "y": -69,
       "appId": "acme",
       "id": "jyRDtUJJuMY"
     },
@@ -645,6 +638,48 @@
       "y": -346.045446395874,
       "appId": "acme",
       "id": "Zek-Zu2K4bA"
+    },
+    {
+      "userId": "a15",
+      "x": -172,
+      "y": 297,
+      "appId": "acme",
+      "id": "62dXxO1riEs"
+    },
+    {
+      "userId": "a9",
+      "x": -302,
+      "y": 54,
+      "appId": "acme",
+      "id": "6SDHw7v4g5o"
+    },
+    {
+      "userId": "a7",
+      "x": -192,
+      "y": -142,
+      "appId": "acme",
+      "id": "daHyDDPSPOE"
+    },
+    {
+      "userId": "a18",
+      "x": 637,
+      "y": 472,
+      "appId": "acme",
+      "id": "sN3oKsiPpi0"
+    },
+    {
+      "userId": "a17",
+      "x": 398,
+      "y": 60,
+      "appId": "acme",
+      "id": "mPfUaav2Sos"
+    },
+    {
+      "userId": "a14",
+      "x": 24,
+      "y": -119,
+      "appId": "acme",
+      "id": "BSCbOZKW3ts"
     }
   ],
   "countries": [
