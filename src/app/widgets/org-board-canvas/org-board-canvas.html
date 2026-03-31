@@ -1,13 +1,16 @@
 <f-flow
   fDraggable
   class="w-full h-full"
-  style="background-image: radial-gradient(circle, var(--color-base-300) 1.5px, transparent 1.5px); background-size: 24px 24px;"
   (fDragStarted)="onDragStarted()"
   (fDragEnded)="onDragEnded()"
   (fCreateConnection)="onConnectionCreated($event)"
   (fReassignConnection)="onConnectionReassigned($event)"
   (fCreateNode)="onExternalDrop($event)"
 >
+  <f-background>
+    <f-circle-pattern [radius]="24" color="color-mix(in srgb, var(--color-base-content) 12%, transparent)" />
+  </f-background>
+
   <f-canvas>
     <f-connection-for-create [fType]="connectionMode()">
       <svg fMarker [width]="12" [height]="8" [refX]="12" [refY]="4"

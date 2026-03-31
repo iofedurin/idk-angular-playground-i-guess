@@ -105,4 +105,5 @@ export class OrgBoardCanvasComponent {
       y: event.externalItemRect.y,
     });
   }
+
 }
