@@ -14,6 +14,7 @@
         (userSelected)="onUserSelected($event)"
         (backToList)="onBackToList()"
         (removeFromBoard)="onRemoveFromBoard($event)"
+        (removeManager)="onRemoveManager($event)"
       />
     </div>
   </aside>
@@ -46,3 +47,13 @@
     />
   </main>
 </div>
+
+
+<app-confirm-dialog
+  #confirmDialog
+  title="Reassign manager"
+  [message]="reassignMessage()"
+  confirmLabel="Reassign"
+  (confirmed)="confirmReassignment()"
+  (cancelled)="cancelReassignment()"
+/>

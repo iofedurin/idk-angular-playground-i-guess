@@ -230,14 +230,34 @@ describe('OrgBoardPage', () => {
   });
 
   describe('event handlers → store calls', () => {
-    it('onConnectionCreated calls usersStore.setManager', async () => {
+    it('onConnectionCreated calls setManager directly when subordinate has no existing manager', async () => {
       await initPage(fixture, httpMock);
 
-      const promise = (page as any).onConnectionCreated({ managerId: '3', subordinateId: '2' });
-      httpMock.expectOne((r) => r.url.includes('/api/users/2') && r.method === 'PATCH').flush({
-        ...mockUsers[2],
-        managerId: '3',
+      // u3 (id='3') has managerId: null → direct setManager call, no confirmation dialog
+      const promise = (page as any).onConnectionCreated({ managerId: '1', subordinateId: '3' });
+      httpMock.expectOne((r) => r.url.includes('/api/users/3') && r.method === 'PATCH').flush({
+        ...mockUsers[0], // u3 is mockUsers[0]
+        managerId: '1',
       });
+      await promise;
+      expect((page as any).pendingConnection()).toBeNull();
+    });
+
+    it('onRemoveFromBoard removes position and clears manager links for removed user and their direct reports', async () => {
+      await initPage(fixture, httpMock);
+
+      // Removing u1 (has manager u3, has direct report u2)
+      // Expect 3 parallel calls: DELETE position, PATCH u1.managerId=null, PATCH u2.managerId=null
+      const promise = (page as any).onRemoveFromBoard('1');
+      httpMock
+        .expectOne((r) => r.url === '/api/board-positions/bp1' && r.method === 'DELETE')
+        .flush(null);
+      httpMock
+        .expectOne((r) => r.url.includes('/api/users/1') && r.method === 'PATCH')
+        .flush({ ...mockUsers[1], managerId: null });
+      httpMock
+        .expectOne((r) => r.url.includes('/api/users/2') && r.method === 'PATCH')
+        .flush({ ...mockUsers[2], managerId: null });
       await promise;
     });
 
@@ -266,6 +286,90 @@ describe('OrgBoardPage', () => {
         userId: '3',
         x: 999,
         y: 888,
+      });
+      await promise;
+    });
+  });
+
+  describe('connection reassignment — Phase 5', () => {
+    it('shows confirmation when subordinate already has a different manager', async () => {
+      await initPage(fixture, httpMock);
+
+      // u2 (id='2') has managerId: '1'. Connecting to managerId: '3' → should show dialog
+      (page as any).onConnectionCreated({ managerId: '3', subordinateId: '2' });
+      const pending = (page as any).pendingConnection();
+      expect(pending).not.toBeNull();
+      expect(pending.managerId).toBe('3');
+      expect(pending.subordinateId).toBe('2');
+      expect(pending.subordinateName).toBe('Leaf Worker');
+      expect(pending.currentManagerName).toBe('Mid Manager');
+      expect(pending.newManagerName).toBe('Boss Top');
+    });
+
+    it('does not show confirmation when connecting to the same existing manager', async () => {
+      await initPage(fixture, httpMock);
+
+      // u2 already has managerId: '1'. Connecting to managerId: '1' → same manager, no dialog
+      const promise = (page as any).onConnectionCreated({ managerId: '1', subordinateId: '2' });
+      httpMock.expectOne((r) => r.url.includes('/api/users/2') && r.method === 'PATCH').flush({
+        ...mockUsers[2],
+        managerId: '1',
+      });
+      await promise;
+      expect((page as any).pendingConnection()).toBeNull();
+    });
+
+    it('confirmReassignment calls setManager and clears pendingConnection', async () => {
+      await initPage(fixture, httpMock);
+
+      (page as any).onConnectionCreated({ managerId: '3', subordinateId: '2' });
+      expect((page as any).pendingConnection()).not.toBeNull();
+
+      const promise = (page as any).confirmReassignment();
+      expect((page as any).pendingConnection()).toBeNull(); // cleared immediately
+      httpMock.expectOne((r) => r.url.includes('/api/users/2') && r.method === 'PATCH').flush({
+        ...mockUsers[2],
+        managerId: '3',
+      });
+      await promise;
+    });
+
+    it('cancelReassignment clears pendingConnection without HTTP call', async () => {
+      await initPage(fixture, httpMock);
+
+      (page as any).onConnectionCreated({ managerId: '3', subordinateId: '2' });
+      expect((page as any).pendingConnection()).not.toBeNull();
+
+      (page as any).cancelReassignment();
+      expect((page as any).pendingConnection()).toBeNull();
+      // No HTTP requests — afterEach httpMock.verify() confirms this
+    });
+
+    it('does not show confirmation when current manager is not on the board', async () => {
+      // u5 has managerId: '4', but u4 has no board position → no visible connection on canvas
+      const usersWithU5 = [
+        ...mockUsers,
+        makeUser('5', { username: 'u5', firstName: 'Five', lastName: 'User', managerId: '4' }),
+      ];
+      await initPage(fixture, httpMock, usersWithU5);
+
+      // Connecting u1 as manager of u5 — u5's current manager (u4) is NOT on the board
+      const promise = (page as any).onConnectionCreated({ managerId: '1', subordinateId: '5' });
+      expect((page as any).pendingConnection()).toBeNull(); // no dialog
+      httpMock.expectOne((r) => r.url.includes('/api/users/5') && r.method === 'PATCH').flush({
+        ...usersWithU5[4],
+        managerId: '1',
+      });
+      await promise;
+    });
+
+    it('onRemoveManager calls setManager with null', async () => {
+      await initPage(fixture, httpMock);
+
+      const promise = (page as any).onRemoveManager('2');
+      httpMock.expectOne((r) => r.url.includes('/api/users/2') && r.method === 'PATCH').flush({
+        ...mockUsers[2],
+        managerId: null,
       });
       await promise;
     });

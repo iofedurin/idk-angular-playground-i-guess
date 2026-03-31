@@ -188,5 +188,15 @@ describe('OrgBoardSidebarComponent', () => {
 
       expect(emitted).toContain('0');
     });
+
+    it('emits removeManager with selectedUser id when × button is clicked', () => {
+      const emitted: string[] = [];
+      component.removeManager.subscribe((id) => emitted.push(id));
+
+      const removeBtn = el.querySelector('button[title="Remove manager"]') as HTMLButtonElement;
+      removeBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+
+      expect(emitted).toEqual(['1']); // selectedUser.id
+    });
   });
 });

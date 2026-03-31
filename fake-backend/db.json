@@ -183,7 +183,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
-      "managerId": "1",
+      "managerId": "WZQk9HFF1II",
       "appId": "acme"
     },
     {
@@ -614,30 +614,9 @@
     {
       "id": "bp2",
       "userId": "1",
-      "x": 200,
-      "y": 141,
+      "x": 306,
+      "y": 205,
       "appId": "acme"
-    },
-    {
-      "id": "bp3",
-      "userId": "2",
-      "x": 490,
-      "y": 395,
-      "appId": "acme"
-    },
-    {
-      "id": "bp4",
-      "userId": "5",
-      "x": 684,
-      "y": 262,
-      "appId": "acme"
-    },
-    {
-      "userId": "a7",
-      "x": 339,
-      "y": 237,
-      "appId": "acme",
-      "id": "n-vLFRGA3a8"
     },
     {
       "userId": "a9",
@@ -645,6 +624,34 @@
       "y": 88,
       "appId": "acme",
       "id": "GBn6Djyfgfs"
+    },
+    {
+      "userId": "a11",
+      "x": 447,
+      "y": 586,
+      "appId": "acme",
+      "id": "JH49JJR2Apg"
+    },
+    {
+      "userId": "a10",
+      "x": 815,
+      "y": 311,
+      "appId": "acme",
+      "id": "DRalD4bDL00"
+    },
+    {
+      "userId": "WZQk9HFF1II",
+      "x": 123.03976440429688,
+      "y": 403.95454597473145,
+      "appId": "acme",
+      "id": "d5u87fHFy6c"
+    },
+    {
+      "userId": "a12",
+      "x": 662.0397644042969,
+      "y": 48.954532623291016,
+      "appId": "acme",
+      "id": "jyRDtUJJuMY"
     }
   ],
   "countries": [

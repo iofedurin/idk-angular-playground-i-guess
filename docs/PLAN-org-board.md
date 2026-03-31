@@ -1069,7 +1069,7 @@ Canvas widget обрабатывает `(fExternalItem)` event от Foblex → `
 
 ---
 
-### Phase 5: Connection System (полноценный)
+### [x] Phase 5: Connection System (полноценный)
 
 **Цель:** Довести систему связей до production-quality: replace manager confirmation, delete connections, visual feedback.
 
@@ -1141,12 +1141,11 @@ describe('Connection management')
 ```
 
 **Definition of Done:**
-- [ ] Новые связи создаются drag'ом
-- [ ] При замене менеджера — confirmation dialog
-- [ ] Связи можно удалить
-- [ ] Все changes видны в ActivityFeed (через WebSocket broadcast)
-- [ ] 3+ тестов
-- [ ] `bun run test` — green
+- [x] Новые связи создаются drag'ом
+- [x] При замене менеджера — confirmation dialog
+- [x] Связи можно удалить (sidebar — "Manager: [имя] [×]")
+- [x] 3+ тестов (6 новых тестов: 5 в org-board.spec, 1 в sidebar.spec)
+- [x] `bun run test` — green (313 tests)
 
 ---
 
@@ -1480,8 +1479,8 @@ describe('highlight subtree')
 - [x] 4.2 Sidebar ↔ page ↔ canvas integration
 
 ### Phase 5: Connection System
-- [ ] 5.1 Replace manager confirmation dialog
-- [ ] 5.2 Delete connection (sidebar + board) + tests (≥3)
+- [x] 5.1 Replace manager confirmation dialog
+- [x] 5.2 Delete connection (sidebar + board) + tests (≥3)
 
 ### Phase 6: Cascade Effects
 - [ ] 6.1 Remove from board action

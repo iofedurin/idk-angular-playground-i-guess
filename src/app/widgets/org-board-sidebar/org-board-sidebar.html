@@ -110,17 +110,24 @@
       @if (manager(); as mgr) {
         <div>
           <h4 class="text-xs font-semibold uppercase tracking-wide text-base-content/50 mb-2">Manager</h4>
-          <button
-            class="flex items-center gap-2 w-full text-left hover:bg-base-200 rounded-lg p-2 transition-colors"
-            (click)="userSelected.emit(mgr.id)"
-          >
-            <div class="avatar avatar-placeholder">
-              <div class="bg-neutral text-neutral-content w-7 rounded-full">
-                <span class="text-xs">{{ mgr.firstName[0] }}{{ mgr.lastName[0] }}</span>
+          <div class="flex items-center gap-1">
+            <button
+              class="flex items-center gap-2 flex-1 text-left hover:bg-base-200 rounded-lg p-2 transition-colors"
+              (click)="userSelected.emit(mgr.id)"
+            >
+              <div class="avatar avatar-placeholder">
+                <div class="bg-neutral text-neutral-content w-7 rounded-full">
+                  <span class="text-xs">{{ mgr.firstName[0] }}{{ mgr.lastName[0] }}</span>
+                </div>
               </div>
-            </div>
-            <span class="text-sm font-medium">{{ mgr.firstName }} {{ mgr.lastName }}</span>
-          </button>
+              <span class="text-sm font-medium">{{ mgr.firstName }} {{ mgr.lastName }}</span>
+            </button>
+            <button
+              class="btn btn-ghost btn-xs text-error shrink-0"
+              title="Remove manager"
+              (click)="removeManager.emit(user.id)"
+            >×</button>
+          </div>
         </div>
       }
 

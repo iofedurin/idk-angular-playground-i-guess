@@ -18,6 +18,7 @@ export class OrgBoardSidebarComponent {
   readonly userSelected = output<string>();
   readonly backToList = output<void>();
   readonly removeFromBoard = output<string>();
+  readonly removeManager = output<string>(); // emits userId of the person whose manager should be removed
 
   protected readonly search = signal('');
 

@@ -23,6 +23,7 @@ export class ConfirmDialogComponent {
   readonly confirmLabel = input('Delete');
 
   readonly confirmed = output<void>();
+  readonly cancelled = output<void>();
 
   private readonly dialogEl = viewChild.required<ElementRef<HTMLDialogElement>>('dialog');
 
@@ -32,6 +33,7 @@ export class ConfirmDialogComponent {
 
   cancel(): void {
     this.dialogEl().nativeElement.close();
+    this.cancelled.emit();
   }
 
   onConfirm(): void {
