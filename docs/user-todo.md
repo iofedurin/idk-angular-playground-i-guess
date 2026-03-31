@@ -7,6 +7,14 @@
 -->
 
 TODO для Sonnet:
+- Захостить приложение на GitHub Pages (вариант A — MSW + статика, без бэкенда):
+    1. Изучить fake-backend/server.mjs и db.json — составить список всех эндпоинтов
+    2. Установить MSW, сгенерировать Service Worker
+    3. Написать MSW handlers для всех /api/* эндпоинтов — in-memory хранилище на базе db.json
+    4. WebSocket / live activity feed — эмулировать через MSW WebSocket или отключить для demo-режима
+    5. Настроить environment: production включает MSW, dev — реальный сервер
+    6. Собрать с --base-href под GitHub Pages URL, настроить 404.html redirect для SPA routing
+    7. Настроить GitHub Actions workflow: push → build → deploy to gh-pages branch
 
 TODO для Opus:
 - добавить какой-то бэкграунд для канваса, чтоб было прозрачней, что как двигается (сетка может, хз)

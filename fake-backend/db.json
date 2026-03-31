@@ -23,7 +23,7 @@
       "role": "editor",
       "active": true,
       "bio": "Frontend engineer with a passion for clean UI.",
-      "managerId": "3",
+      "managerId": "a13",
       "appId": "acme"
     },
     {
@@ -39,7 +39,7 @@
       "role": "editor",
       "active": true,
       "bio": "UX designer focused on accessibility.",
-      "managerId": "3",
+      "managerId": null,
       "appId": "acme"
     },
     {
@@ -71,7 +71,7 @@
       "role": "editor",
       "active": true,
       "bio": "Backend engineer, Node.js and Go.",
-      "managerId": "3",
+      "managerId": null,
       "appId": "acme"
     },
     {
@@ -119,7 +119,7 @@
       "role": "viewer",
       "active": true,
       "bio": "",
-      "managerId": "3",
+      "managerId": null,
       "appId": "acme"
     },
     {
@@ -151,7 +151,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
-      "managerId": "3",
+      "managerId": null,
       "appId": "acme"
     },
     {
@@ -605,25 +605,11 @@
   ],
   "board-positions": [
     {
-      "id": "bp1",
-      "userId": "3",
-      "x": 460,
-      "y": -124,
-      "appId": "acme"
-    },
-    {
       "id": "bp2",
       "userId": "1",
-      "x": 325,
-      "y": 258,
+      "x": 223,
+      "y": 35,
       "appId": "acme"
-    },
-    {
-      "userId": "a9",
-      "x": 119,
-      "y": 74,
-      "appId": "acme",
-      "id": "GBn6Djyfgfs"
     },
     {
       "userId": "a11",
@@ -652,6 +638,13 @@
       "y": 39,
       "appId": "acme",
       "id": "jyRDtUJJuMY"
+    },
+    {
+      "userId": "a13",
+      "x": 356.0397644042969,
+      "y": -346.045446395874,
+      "appId": "acme",
+      "id": "Zek-Zu2K4bA"
     }
   ],
   "countries": [

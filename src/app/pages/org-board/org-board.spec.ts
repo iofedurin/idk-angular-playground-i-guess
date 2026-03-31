@@ -243,11 +243,15 @@ describe('OrgBoardPage', () => {
       expect((page as any).pendingConnection()).toBeNull();
     });
 
-    it('onRemoveFromBoard removes position and clears manager links for removed user and their direct reports', async () => {
+    it('onRemoveFromBoard removes position, clears removed user manager link, and cascade-reassigns direct reports to removed user manager', async () => {
       await initPage(fixture, httpMock);
 
       // Removing u1 (has manager u3, has direct report u2)
-      // Expect 3 parallel calls: DELETE position, PATCH u1.managerId=null, PATCH u2.managerId=null
+      // u1.managerId = '3' → newManagerId = '3'
+      // Expect 3 parallel calls:
+      //   DELETE position/bp1
+      //   PATCH u1.managerId=null (clear own link)
+      //   PATCH u2.managerId='3' (cascade: u2 gets u1's manager = u3)
       const promise = (page as any).onRemoveFromBoard('1');
       httpMock
         .expectOne((r) => r.url === '/api/board-positions/bp1' && r.method === 'DELETE')
@@ -257,7 +261,7 @@ describe('OrgBoardPage', () => {
         .flush({ ...mockUsers[1], managerId: null });
       httpMock
         .expectOne((r) => r.url.includes('/api/users/2') && r.method === 'PATCH')
-        .flush({ ...mockUsers[2], managerId: null });
+        .flush({ ...mockUsers[2], managerId: '3' }); // cascaded to u3
       await promise;
     });
 

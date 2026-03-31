@@ -182,8 +182,9 @@ export class OrgBoardPage implements OnInit {
     const pos = this.boardStore.positionByUserId().get(userId);
     if (!pos) return;
 
-    // Clear manager links: the removed user's own managerId + all their direct reports'
+    // Cascade: direct reports are reassigned to the removed user's manager (or null if root)
     const removedUser = this.usersStore.entityMap()[userId];
+    const newManagerId = removedUser?.managerId ?? null;
     const clearPromises: Promise<unknown>[] = [this.boardStore.removeFromBoard(pos.id)];
 
     if (removedUser?.managerId) {
@@ -191,7 +192,7 @@ export class OrgBoardPage implements OnInit {
     }
     for (const u of this.usersStore.entities()) {
       if (u.managerId === userId) {
-        clearPromises.push(this.usersStore.setManager(u.id, null));
+        clearPromises.push(this.usersStore.setManager(u.id, newManagerId));
       }
     }
 
