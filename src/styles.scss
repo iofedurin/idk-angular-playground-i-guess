@@ -1,1 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+
+/*
+ * @foblex/flow connection styling override.
+ *
+ * FConnectionPath binds [style.stroke]="linkToGradient()" on the host <path>.
+ * When no <f-connection-gradient> child is provided, linkToGradient() returns
+ * null — but Angular still applies an empty inline style that blocks class-based
+ * CSS. We use !important to override the inline binding.
+ */
+.f-connection-path {
+  stroke: #6366f1 !important;
+  stroke-width: 2px !important;
+}
+
+.f-connection-selection {
+  stroke: #6366f1;
+  stroke-width: 10px;
+  stroke-opacity: 0;
+}
+
+.f-connection-selection:hover {
+  stroke-opacity: 0.15;
+}

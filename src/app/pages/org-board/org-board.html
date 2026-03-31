@@ -6,11 +6,29 @@
   </aside>
 
   <!-- canvas area -->
-  <main class="flex-1 bg-base-200 relative">
-    <f-flow fDraggable>
-      <f-canvas>
-        <!-- nodes and edges will appear here in Phase 3 -->
-      </f-canvas>
-    </f-flow>
+  <main class="flex-1 bg-base-200 relative overflow-hidden">
+    @if (loading()) {
+      <div class="absolute inset-0 flex items-center justify-center z-10">
+        <app-spinner />
+      </div>
+    }
+
+    @if (error()) {
+      <div class="p-4">
+        <app-error-alert [message]="error()!" />
+      </div>
+    }
+
+    <app-org-board-canvas
+      class="w-full h-full"
+      [nodes]="nodes()"
+      [edges]="edges()"
+      [selectedUserId]="selectedUserId()"
+      [validTargetsByUser]="validTargetsByUser()"
+      (nodePositionChanged)="onPositionChanged($event)"
+      (connectionCreated)="onConnectionCreated($event)"
+      (connectionRemoved)="onConnectionRemoved($event)"
+      (nodeClicked)="onNodeClicked($event)"
+    />
   </main>
 </div>

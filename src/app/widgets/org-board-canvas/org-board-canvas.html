@@ -1,0 +1,51 @@
+<f-flow
+  fDraggable
+  class="w-full h-full"
+  (fCreateConnection)="onConnectionCreated($event)"
+  (fReassignConnection)="onConnectionReassigned($event)"
+>
+  <f-canvas>
+    @for (node of nodes(); track node.userId) {
+      <div
+        fNode
+        fDragHandle
+        [fNodePosition]="{ x: node.x, y: node.y }"
+        (fNodePositionChange)="onPositionChange(node, $event)"
+        class="relative"
+      >
+        <app-user-board-card
+          [user]="node.user"
+          [selected]="selectedUserId() === node.userId"
+          [directReportsCount]="0"
+          (click)="nodeClicked.emit(node.userId)"
+        />
+
+        <!-- Output: drag from this node to create a manager→subordinate connection -->
+        <div
+          fNodeOutput
+          [fOutputId]="'out-' + node.userId"
+          [fOutputMultiple]="true"
+          [fCanBeConnectedInputs]="validTargetsByUser().get(node.userId) ?? []"
+          fOutputConnectableSide="bottom"
+          class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2
+                 w-3 h-3 rounded-full bg-primary cursor-crosshair
+                 hover:scale-150 transition-transform z-10"
+        ></div>
+
+        <!-- Input: drop target for incoming manager connection -->
+        <div
+          fNodeInput
+          [fInputId]="'in-' + node.userId"
+          fInputConnectableSide="top"
+          class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2
+                 w-3 h-3 rounded-full bg-secondary cursor-crosshair
+                 hover:scale-150 transition-transform z-10"
+        ></div>
+      </div>
+    }
+
+    @for (edge of edges(); track edge.id) {
+      <f-connection [fOutputId]="edge.outputId" [fInputId]="edge.inputId" />
+    }
+  </f-canvas>
+</f-flow>

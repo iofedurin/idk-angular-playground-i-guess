@@ -454,7 +454,7 @@ describe('OrgBoardPage')
 
 ---
 
-### Phase 3: OrgBoardStore + Card Rendering
+### [x] Phase 3: OrgBoardStore + Card Rendering
 
 **Цель:** Создать OrgBoardStore для позиций, загрузить пользователей + позиции, отрендерить карточки как ноды на канвасе.
 
@@ -619,10 +619,10 @@ describe('OrgBoardStore')
 **Минимум 10 тестов.**
 
 **Definition of Done:**
-- [ ] Feature `org-board` создана с model, api, store, barrel
-- [ ] Store-тесты: ≥10, все проходят
-- [ ] `bun run test` — green
-- [ ] `bun run lint:arch` — clean
+- [x] Feature `org-board` создана с model, api, store, barrel
+- [x] Store-тесты: ≥10, все проходят (12 тестов)
+- [x] `bun run test` — green
+- [x] `bun run lint:arch` — no new violations
 
 ---
 
@@ -691,9 +691,9 @@ describe('UserBoardCardComponent')
 ```
 
 **Definition of Done:**
-- [ ] Widget создан, компилируется
-- [ ] 5 тестов, все проходят
-- [ ] `bun run test` — green
+- [x] Widget создан, компилируется
+- [x] 5 тестов, все проходят
+- [x] `bun run test` — green
 
 ---
 
@@ -821,10 +821,10 @@ describe('OrgBoardCanvasComponent')
 **Примечание:** полное тестирование drag/drop и connection creation сложно в unit-тестах (зависит от Foblex internals). Основная логика (cycle detection, store operations) покрыта в Phase 1 и 3.1.
 
 **Definition of Done:**
-- [ ] Canvas widget рендерит карточки и связи из input data
-- [ ] Connection points видны на карточках
-- [ ] 4+ тестов, все проходят
-- [ ] `bun run test` — green
+- [x] Canvas widget рендерит карточки и связи из input data
+- [x] Connection points видны на карточках
+- [x] 4+ тестов, все проходят (4 тестов)
+- [x] `bun run test` — green
 
 ---
 
@@ -924,15 +924,15 @@ describe('OrgBoardPage')
 ```
 
 **Definition of Done:**
-- [ ] Page загружает данные и рендерит карточки на канвасе
-- [ ] Связи рисуются между manager и subordinate
-- [ ] Карточки можно двигать по канвасу
-- [ ] Позиции сохраняются при перемещении (PATCH)
-- [ ] Новые связи создаются drag'ом от connection point
-- [ ] Cycle detection работает: нельзя создать цикл
-- [ ] 4+ тестов
-- [ ] `bun run test` — green
-- [ ] `bun run build` — green
+- [x] Page загружает данные и рендерит карточки на канвасе
+- [x] Связи рисуются между manager и subordinate
+- [x] Карточки можно двигать по канвасу
+- [x] Позиции сохраняются при перемещении (PATCH)
+- [x] Новые связи создаются drag'ом от connection point
+- [x] Cycle detection работает: нельзя создать цикл
+- [x] 4+ тестов (5 тестов)
+- [x] `bun run test` — green
+- [x] `bun run build` — green
 
 ---
 
