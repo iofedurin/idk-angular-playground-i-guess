@@ -14,7 +14,10 @@ export class App implements OnInit {
   private readonly appStore = inject(AppStore);
 
   constructor() {
-    inject(WebSocketService).connect('ws://localhost:3000');
+    // Demo mode (GitHub Pages): no WebSocket server available
+    if (location.hostname === 'localhost') {
+      inject(WebSocketService).connect('ws://localhost:3000');
+    }
   }
 
   ngOnInit() {
