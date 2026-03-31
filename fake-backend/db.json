@@ -167,7 +167,7 @@
       "role": "editor",
       "active": true,
       "bio": "",
-      "managerId": null,
+      "managerId": "a12",
       "appId": "acme"
     },
     {
@@ -614,14 +614,14 @@
     {
       "id": "bp2",
       "userId": "1",
-      "x": 306,
-      "y": 205,
+      "x": 325,
+      "y": 258,
       "appId": "acme"
     },
     {
       "userId": "a9",
-      "x": -11,
-      "y": 88,
+      "x": 119,
+      "y": 74,
       "appId": "acme",
       "id": "GBn6Djyfgfs"
     },
@@ -634,8 +634,8 @@
     },
     {
       "userId": "a10",
-      "x": 815,
-      "y": 311,
+      "x": 634,
+      "y": 324,
       "appId": "acme",
       "id": "DRalD4bDL00"
     },
@@ -648,8 +648,8 @@
     },
     {
       "userId": "a12",
-      "x": 662.0397644042969,
-      "y": 48.954532623291016,
+      "x": 747,
+      "y": 39,
       "appId": "acme",
       "id": "jyRDtUJJuMY"
     }

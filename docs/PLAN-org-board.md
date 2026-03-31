@@ -1149,7 +1149,7 @@ describe('Connection management')
 
 ---
 
-### Phase 6: Cascade Effects + Enhanced Delete
+### [x] Phase 6: Cascade Effects + Enhanced Delete
 
 **Цель:** Обработать удаление пользователя с подчинёнными; удаление карточки с доски.
 
@@ -1203,10 +1203,10 @@ describe('UserDeleteAction — cascade')
 ```
 
 **Definition of Done:**
-- [ ] "Remove from board" работает (не удаляет user, убирает с доски)
-- [ ] Delete user с подчинёнными → enhanced dialog → reassign → delete
-- [ ] 4+ тестов
-- [ ] `bun run test` — green
+- [x] "Remove from board" работает (не удаляет user, убирает с доски)
+- [x] Delete user с подчинёнными → enhanced dialog → reassign → delete
+- [x] 4+ тестов
+- [x] `bun run test` — green
 
 ---
 
@@ -1483,8 +1483,8 @@ describe('highlight subtree')
 - [x] 5.2 Delete connection (sidebar + board) + tests (≥3)
 
 ### Phase 6: Cascade Effects
-- [ ] 6.1 Remove from board action
-- [ ] 6.2 Enhanced user-delete with subordinate reassignment + tests (≥4)
+- [x] 6.1 Remove from board action
+- [x] 6.2 Enhanced user-delete with subordinate reassignment + tests (≥4)
 
 ### Phase 7: Dashboard Aggregations
 - [ ] 7.1 Org metrics on Dashboard + tests (≥3)
