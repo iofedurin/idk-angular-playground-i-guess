@@ -62,7 +62,13 @@
                 }
               ],
               "outputHashing": "all",
-              "baseHref": "/idk-angular-playground-i-guess/"
+              "baseHref": "/idk-angular-playground-i-guess/",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.ghpages.ts"
+                }
+              ]
             },
             "development": {
               "optimization": false,

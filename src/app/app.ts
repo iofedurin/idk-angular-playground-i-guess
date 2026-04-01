@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { AppStore } from '@entities/app';
 import { ToastComponent } from '@shared/ui';
 import { WebSocketService } from '@shared/lib';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -14,8 +15,7 @@ export class App implements OnInit {
   private readonly appStore = inject(AppStore);
 
   constructor() {
-    // Demo mode (GitHub Pages): no WebSocket server available
-    if (location.hostname === 'localhost') {
+    if (!environment.useMsw) {
       inject(WebSocketService).connect('ws://localhost:3000');
     }
   }
