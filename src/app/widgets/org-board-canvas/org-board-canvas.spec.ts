@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ErrorHandler } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { OrgBoardCanvasComponent } from './org-board-canvas';
 
@@ -8,7 +9,17 @@ import { OrgBoardCanvasComponent } from './org-board-canvas';
   unobserve() {}
   disconnect() {}
 };
+
 import { FCreateConnectionEvent, FReassignConnectionEvent } from '@foblex/flow';
+
+// Suppress Foblex internal errors during cleanup (e.g. "minimap does not exist" in jsdom)
+class TestErrorHandler extends ErrorHandler {
+  override handleError(error: unknown): void {
+    const msg = error instanceof Error ? error.message : String(error);
+    if (msg.includes('does not exist')) return;
+    throw error;
+  }
+}
 import type { BoardEdge, BoardNode } from '@features/org-board';
 import type { User } from '@entities/user';
 
@@ -48,7 +59,10 @@ describe('OrgBoardCanvasComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [OrgBoardCanvasComponent],
-      providers: [provideRouter([])],
+      providers: [
+        provideRouter([]),
+        { provide: ErrorHandler, useClass: TestErrorHandler },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(OrgBoardCanvasComponent);
