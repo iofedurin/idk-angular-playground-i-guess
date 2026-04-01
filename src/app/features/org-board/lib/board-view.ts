@@ -2,10 +2,24 @@ import type { User } from '@entities/user';
 import { getAncestors, getSubtree } from '@entities/user';
 import type { BoardEdge, BoardNode, BoardPosition } from '../org-board.model';
 
+export function computeDirectReportsCounts(
+  users: User[],
+  onBoardUserIds: Set<string>,
+): Map<string, number> {
+  const counts = new Map<string, number>();
+  for (const user of users) {
+    if (user.managerId && onBoardUserIds.has(user.id) && onBoardUserIds.has(user.managerId)) {
+      counts.set(user.managerId, (counts.get(user.managerId) ?? 0) + 1);
+    }
+  }
+  return counts;
+}
+
 export function computeBoardNodes(
   positions: BoardPosition[],
   userMap: Record<string, User>,
   deptMap: Record<string, { icon?: string }>,
+  directReportsCounts?: Map<string, number>,
 ): BoardNode[] {
   return positions
     .map((pos): BoardNode | null => {
@@ -18,6 +32,7 @@ export function computeBoardNodes(
         y: pos.y,
         positionId: pos.id,
         departmentIcon: deptMap[user.department]?.icon,
+        directReportsCount: directReportsCounts?.get(pos.userId) ?? 0,
       };
     })
     .filter((n): n is BoardNode => n !== null);

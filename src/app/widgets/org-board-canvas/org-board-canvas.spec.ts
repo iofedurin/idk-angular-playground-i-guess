@@ -30,9 +30,9 @@ const makeUser = (id: string, overrides: Partial<User> = {}): User => ({
 });
 
 const mockNodes: BoardNode[] = [
-  { userId: '1', user: makeUser('1'), x: 100, y: 100, positionId: 'bp1' },
-  { userId: '2', user: makeUser('2'), x: 300, y: 100, positionId: 'bp2' },
-  { userId: '3', user: makeUser('3'), x: 200, y: 300, positionId: 'bp3' },
+  { userId: '1', user: makeUser('1'), x: 100, y: 100, positionId: 'bp1', directReportsCount: 0 },
+  { userId: '2', user: makeUser('2'), x: 300, y: 100, positionId: 'bp2', directReportsCount: 0 },
+  { userId: '3', user: makeUser('3'), x: 200, y: 300, positionId: 'bp3', directReportsCount: 0 },
 ];
 
 const mockEdges: BoardEdge[] = [

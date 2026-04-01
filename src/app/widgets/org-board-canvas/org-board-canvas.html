@@ -41,7 +41,7 @@
           [user]="node.user"
           [selected]="selectedUserId() === node.userId"
           [highlighted]="highlightedUserIds().size === 0 || highlightedUserIds().has(node.userId)"
-          [directReportsCount]="0"
+          [directReportsCount]="node.directReportsCount"
           [departmentIcon]="node.departmentIcon"
           (click)="onNodeClick(node.userId)"
         />

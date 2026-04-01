@@ -132,6 +132,16 @@ describe('OrgBoardPage', () => {
       expect(node3.y).toBe(50);
       expect(node3.positionId).toBe('bp3');
     });
+
+    it('nodes with on-board subordinates have directReportsCount > 0', async () => {
+      // u3→u1→u2: u3 has 1 on-board report (u1), u1 has 1 (u2), u2 has 0
+      await initPage(fixture, httpMock);
+
+      const nodes = (page as any).nodes() as any[];
+      expect(nodes.find((n) => n.userId === '3').directReportsCount).toBe(1);
+      expect(nodes.find((n) => n.userId === '1').directReportsCount).toBe(1);
+      expect(nodes.find((n) => n.userId === '2').directReportsCount).toBe(0);
+    });
   });
 
   describe('computed edges', () => {

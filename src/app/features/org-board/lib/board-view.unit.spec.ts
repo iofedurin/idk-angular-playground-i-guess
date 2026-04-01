@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   computeBoardEdges,
   computeBoardNodes,
+  computeDirectReportsCounts,
   computeHighlightedUserIds,
   computeValidTargets,
 } from './board-view';
@@ -69,6 +70,39 @@ describe('computeBoardNodes', () => {
   it('skips positions whose userId is not in userMap', () => {
     const nodes = computeBoardNodes([{ id: 'ghost', userId: 'unknown', x: 0, y: 0 }], userMap, {});
     expect(nodes).toHaveLength(0);
+  });
+
+  it('sets directReportsCount from provided map', () => {
+    const counts = new Map([['3', 1], ['1', 1]]);
+    const nodes = computeBoardNodes(positions, userMap, {}, counts);
+    expect(nodes.find((n) => n.userId === '3')!.directReportsCount).toBe(1);
+    expect(nodes.find((n) => n.userId === '1')!.directReportsCount).toBe(1);
+    expect(nodes.find((n) => n.userId === '2')!.directReportsCount).toBe(0);
+  });
+
+  it('defaults directReportsCount to 0 when map not provided', () => {
+    const nodes = computeBoardNodes(positions, userMap, {});
+    expect(nodes.every((n) => n.directReportsCount === 0)).toBe(true);
+  });
+});
+
+describe('computeDirectReportsCounts', () => {
+  it('counts on-board subordinates per on-board manager', () => {
+    const onBoard = new Set(['1', '2', '3']);
+    const counts = computeDirectReportsCounts(users, onBoard);
+    expect(counts.get('3')).toBe(1); // u1 reports to u3
+    expect(counts.get('1')).toBe(1); // u2 reports to u1
+    expect(counts.has('2')).toBe(false); // u2 has no subordinates
+  });
+
+  it('does not count off-board subordinates', () => {
+    const onBoard = new Set(['1', '3']); // u2 not on board
+    const counts = computeDirectReportsCounts(users, onBoard);
+    expect(counts.get('1')).toBeUndefined(); // u2 (u1's report) is off board
+  });
+
+  it('returns empty map when nobody is on board', () => {
+    expect(computeDirectReportsCounts(users, new Set()).size).toBe(0);
   });
 });
 

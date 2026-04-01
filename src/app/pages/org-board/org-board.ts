@@ -7,6 +7,7 @@ import {
   OrgBoardStore,
   computeBoardEdges,
   computeBoardNodes,
+  computeDirectReportsCounts,
   computeHighlightedUserIds,
   computeValidTargets,
 } from '@features/org-board';
@@ -51,8 +52,17 @@ export class OrgBoardPage implements OnInit {
     });
   }
 
+  private readonly directReportsCounts = computed(() =>
+    computeDirectReportsCounts(this.usersStore.entities(), this.boardStore.userIdsOnBoard()),
+  );
+
   protected readonly nodes = computed<BoardNode[]>(() =>
-    computeBoardNodes(this.boardStore.entities(), this.usersStore.entityMap(), this.deptStore.entityMap()),
+    computeBoardNodes(
+      this.boardStore.entities(),
+      this.usersStore.entityMap(),
+      this.deptStore.entityMap(),
+      this.directReportsCounts(),
+    ),
   );
 
   protected readonly edges = computed<BoardEdge[]>(() =>

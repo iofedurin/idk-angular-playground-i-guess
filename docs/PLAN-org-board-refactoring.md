@@ -115,7 +115,7 @@ protected readonly manager = computed(() => {
 
 ---
 
-## Step 3: Извлечь board-view pure functions
+## Step 3: [x] Извлечь board-view pure functions
 
 **Цель:** Вынести логику computed-маппинга из page в тестируемые pure functions.
 
