@@ -13,6 +13,16 @@ export type ConnectionMode = 'org-board-curve' | 'bezier';
   templateUrl: './org-board-canvas.html',
   providers: [ORG_BOARD_CURVE_BUILDER],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styles: `
+    :host ::ng-deep .f-minimap-view {
+      fill: transparent !important;
+      stroke: #6366f1 !important;
+      stroke-width: 2 !important;
+    }
+    :host ::ng-deep .f-minimap-node {
+      fill: #6366f1 !important;
+    }
+  `,
 })
 export class OrgBoardCanvasComponent {
   readonly nodes = input.required<BoardNode[]>();
