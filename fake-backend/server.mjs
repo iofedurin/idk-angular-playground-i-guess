@@ -85,6 +85,32 @@ app.patch('/users/bulk-update', json(), async (req, res) => {
   res.json(updated);
 });
 
+// PATCH /board-positions/bulk — body: { updates: { id: string, x: number, y: number }[] }
+app.patch('/board-positions/bulk', json(), async (req, res) => {
+  const { updates } = req.body ?? {};
+  if (!Array.isArray(updates)) {
+    res.status(400).json({ error: 'updates must be an array' });
+    return;
+  }
+  const updateMap = new Map(updates.map((u) => [u.id, { x: u.x, y: u.y }]));
+  const updated = [];
+  db.data['board-positions'] = (db.data['board-positions'] ?? []).map((pos) => {
+    const upd = updateMap.get(pos.id);
+    if (upd) {
+      const patched = { ...pos, ...upd };
+      updated.push(patched);
+      return patched;
+    }
+    return pos;
+  });
+  await db.write();
+  broadcast({
+    channel: 'board-position.bulk-updated',
+    payload: { resource: 'board-positions', action: 'bulk-updated', summary: `${updates.length} positions updated`, timestamp: Date.now() },
+  });
+  res.json(updated);
+});
+
 // Broadcast intercept middleware for json-server mutations
 app.use((req, res, next) => {
   if (req.method === 'GET') return next();

@@ -60,6 +60,15 @@ export const OrgBoardStore = signalStore(
       return true;
     },
 
+    async bulkUpdatePositions(updates: { id: string; x: number; y: number }[]): Promise<boolean> {
+      const r = await httpMutation(api.bulkUpdatePositions(updates));
+      if (!r.ok) return false;
+      for (const pos of r.data) {
+        patchState(store, updateEntity({ id: pos.id, changes: { x: pos.x, y: pos.y } }));
+      }
+      return true;
+    },
+
     reset(): void {
       patchState(store, setAllEntities([] as BoardPosition[]), {
         loading: false,

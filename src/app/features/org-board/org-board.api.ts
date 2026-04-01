@@ -21,4 +21,8 @@ export class OrgBoardApi {
   removePosition(id: string) {
     return this.http.delete<void>(`/api/board-positions/${id}`);
   }
+
+  bulkUpdatePositions(updates: { id: string; x: number; y: number }[]) {
+    return this.http.patch<BoardPosition[]>('/api/board-positions/bulk', { updates });
+  }
 }

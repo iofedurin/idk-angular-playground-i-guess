@@ -406,32 +406,25 @@ describe('OrgBoardPage', () => {
   });
 
   describe('auto-layout', () => {
-    it('repositions all board nodes according to tree layout', async () => {
+    it('repositions all board nodes via a single bulk request', async () => {
       await initPage(fixture, httpMock);
 
-      // u3 (root) → u1 → u2: linear chain, all x=0, y=0/180/360
-      void (page as any).autoLayout();
+      const promise = (page as any).autoLayout();
 
-      const req3 = httpMock.expectOne(
-        (r) => r.url.includes('/api/board-positions/bp3') && r.method === 'PATCH',
+      const req = httpMock.expectOne(
+        (r) => r.url === '/api/board-positions/bulk' && r.method === 'PATCH',
       );
-      expect(req3.request.body).toMatchObject({ x: 0, y: 0 });
-      req3.flush({ id: 'bp3', userId: '3', x: 0, y: 0 });
-      await flush();
-
-      const req1 = httpMock.expectOne(
-        (r) => r.url.includes('/api/board-positions/bp1') && r.method === 'PATCH',
-      );
-      expect(req1.request.body).toMatchObject({ x: 0, y: 180 });
-      req1.flush({ id: 'bp1', userId: '1', x: 0, y: 180 });
-      await flush();
-
-      const req2 = httpMock.expectOne(
-        (r) => r.url.includes('/api/board-positions/bp2') && r.method === 'PATCH',
-      );
-      expect(req2.request.body).toMatchObject({ x: 0, y: 360 });
-      req2.flush({ id: 'bp2', userId: '2', x: 0, y: 360 });
-      await flush();
+      const { updates } = req.request.body as { updates: { id: string; x: number; y: number }[] };
+      expect(updates).toHaveLength(3);
+      expect(updates).toContainEqual({ id: 'bp3', x: 0, y: 0 });
+      expect(updates).toContainEqual({ id: 'bp1', x: 0, y: 180 });
+      expect(updates).toContainEqual({ id: 'bp2', x: 0, y: 360 });
+      req.flush([
+        { id: 'bp3', userId: '3', x: 0, y: 0 },
+        { id: 'bp1', userId: '1', x: 0, y: 180 },
+        { id: 'bp2', userId: '2', x: 0, y: 360 },
+      ]);
+      await promise;
     });
   });
 

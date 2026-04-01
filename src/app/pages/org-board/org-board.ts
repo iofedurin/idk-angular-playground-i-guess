@@ -204,11 +204,15 @@ export class OrgBoardPage implements OnInit {
       .filter((u) => onBoard.has(u.id))
       .map((u) => ({ id: u.id, parentId: u.managerId }));
     const positions = computeTreeLayout(layoutNodes);
-    for (const pos of positions) {
-      const existing = this.boardStore.positionByUserId().get(pos.id);
-      if (existing) {
-        await this.boardStore.updatePosition(existing.id, pos.x, pos.y);
-      }
+    const positionByUserId = this.boardStore.positionByUserId();
+    const updates = positions
+      .map((pos) => {
+        const existing = positionByUserId.get(pos.id);
+        return existing ? { id: existing.id, x: pos.x, y: pos.y } : undefined;
+      })
+      .filter((u): u is { id: string; x: number; y: number } => u !== undefined);
+    if (updates.length) {
+      await this.boardStore.bulkUpdatePositions(updates);
     }
   }
 

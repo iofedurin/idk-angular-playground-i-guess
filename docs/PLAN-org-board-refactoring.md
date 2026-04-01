@@ -223,7 +223,7 @@ export function computeDirectReportsCounts(users: User[], onBoardUserIds: Set<st
 
 ---
 
-## Step 5: `autoLayout` — `Promise.all` вместо sequential
+## Step 5: [x] `autoLayout` — bulk endpoint вместо sequential
 
 **Цель:** Параллельные HTTP-запросы при auto-layout.
 
