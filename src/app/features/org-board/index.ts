@@ -7,3 +7,4 @@ export {
   computeValidTargets,
   computeHighlightedUserIds,
 } from './lib/board-view';
+export { cascadeRemoveFromBoard } from './lib/cascade-remove';

@@ -176,7 +176,7 @@ protected readonly highlightedUserIds = computed(() =>
 
 ---
 
-## Step 4: `directReportsCount` — заменить hardcoded `0`
+## Step 4: [x] `directReportsCount` — заменить hardcoded `0`
 
 **Цель:** Board card показывает реальное количество подчинённых.
 

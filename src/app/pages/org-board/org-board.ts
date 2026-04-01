@@ -5,6 +5,7 @@ import {
   BoardEdge,
   BoardNode,
   OrgBoardStore,
+  cascadeRemoveFromBoard,
   computeBoardEdges,
   computeBoardNodes,
   computeDirectReportsCounts,
@@ -189,21 +190,16 @@ export class OrgBoardPage implements OnInit {
     const pos = this.boardStore.positionByUserId().get(userId);
     if (!pos) return;
 
-    // Cascade: direct reports are reassigned to the removed user's manager (or null if root)
-    const removedUser = this.usersStore.entityMap()[userId];
-    const newManagerId = removedUser?.managerId ?? null;
-    const clearPromises: Promise<unknown>[] = [this.boardStore.removeFromBoard(pos.id)];
-
-    if (removedUser?.managerId) {
-      clearPromises.push(this.usersStore.setManager(userId, null));
-    }
-    for (const u of this.usersStore.entities()) {
-      if (u.managerId === userId) {
-        clearPromises.push(this.usersStore.setManager(u.id, newManagerId));
-      }
-    }
-
-    await Promise.all(clearPromises);
+    await cascadeRemoveFromBoard(
+      userId,
+      pos,
+      this.usersStore.entityMap()[userId],
+      this.usersStore.entities(),
+      {
+        removeFromBoard: (id) => this.boardStore.removeFromBoard(id),
+        setManager: (uid, managerId) => this.usersStore.setManager(uid, managerId),
+      },
+    );
 
     if (this.selectedUserId() === userId) {
       this.selectedUserId.set(null);
