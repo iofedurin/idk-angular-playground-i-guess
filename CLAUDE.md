@@ -25,6 +25,9 @@ Before making architectural decisions, consult the ADRs:
 @docs/adr/0008-form-model-ownership.md
 @docs/adr/0009-effect-usage-policy.md
 @docs/adr/0010-mutation-error-handling.md
+@docs/adr/0011-feature-store-for-ui-state.md
+@docs/adr/0012-page-decomposition-pure-functions.md
+@docs/adr/0013-foblex-canvas-in-fsd.md
 
 Follow the established patterns. When making a new non-obvious decision, create a new ADR in `docs/adr/`.
 

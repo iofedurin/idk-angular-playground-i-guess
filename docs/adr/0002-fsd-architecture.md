@@ -87,6 +87,25 @@ import type { Country } from '@entities/country/@x/user';
 
 ### 3. Где живут UI-компоненты с доменной логикой
 
+### Decision tree: размещение UI-компонента
+
+```
+Компонент без бизнес-логики (TextField, Spinner, ConfirmDialog)?
+  └─ ДА → shared/ui/
+
+Работает с данными ровно ОДНОЙ entity?
+  │
+  ├─ ДА → Загружает данные через store этой entity?
+  │         ├─ ДА  → entities/<entity>/ui/   (CountrySelect → CountryStore)
+  │         └─ НЕТ → entities/<entity>/ui/   (UserCard — только отображает)
+  │
+  └─ НЕТ → Пересекает несколько entities или содержит сложный local state?
+             ├─ ДА  → features/<use-case>/ui/
+             │
+             └─ Составной блок, переиспользуемый между pages?
+                  └─ ДА → widgets/
+```
+
 | Тип компонента | Слой |
 |---|---|
 | Примитивный input без бизнес-контекста (TextField, SubmitButton) | `shared/ui` |

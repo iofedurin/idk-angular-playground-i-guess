@@ -17,6 +17,28 @@ Angular HttpClient возвращает `Observable`. NgRx Signal Store опер
 
 ## Решение
 
+### Decision tree: какой мост Observable → Signal использовать?
+
+```
+Где находится код?
+  │
+  ├─ Компонент / widget / page
+  │   └─ RxJS запрещён. Только signal() / computed() / effect().
+  │      Данные приходят из store (уже signals).
+  │
+  └─ Store / инфраструктурный сервис (shared/lib/)
+       │
+       └─ Какой тип потока?
+            │
+            ├─ HTTP CRUD (один ответ, завершается)
+            │   └─ lastValueFrom() → async/await → patchState()
+            │
+            └─ Continuous stream (WebSocket, SSE)
+                └─ Observable + .subscribe() в withHooks.onInit()
+                   + takeUntilDestroyed()
+                   Каждое событие → store.addEvent() → patchState()
+```
+
 Два паттерна интеграции в зависимости от природы потока:
 
 ### HTTP CRUD — `lastValueFrom()` (Promise-мост)
