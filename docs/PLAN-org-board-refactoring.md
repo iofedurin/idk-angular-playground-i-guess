@@ -66,7 +66,7 @@ Code review (`docs/org-board-code-review.md`) выявил 10 проблем в 
 
 ---
 
-## Step 2: Sidebar — internalize `directReports` и `manager`
+## Step 2: [x] Sidebar — internalize `directReports` и `manager`
 
 **Цель:** Убрать implicit contract. Sidebar сам вычисляет derived data из `users` + `selectedUser`.
 

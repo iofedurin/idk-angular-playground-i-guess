@@ -1,7 +1,15 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, OnInit, signal, viewChild } from '@angular/core';
-import { getAncestors, getSubtree, UsersStore } from '@entities/user';
+import { UsersStore } from '@entities/user';
 import { DepartmentStore } from '@entities/department';
-import { BoardEdge, BoardNode, OrgBoardStore } from '@features/org-board';
+import {
+  BoardEdge,
+  BoardNode,
+  OrgBoardStore,
+  computeBoardEdges,
+  computeBoardNodes,
+  computeHighlightedUserIds,
+  computeValidTargets,
+} from '@features/org-board';
 import { computeTreeLayout, type LayoutNode } from '@shared/lib';
 import { OrgBoardCanvasComponent } from '@widgets/org-board-canvas';
 import { OrgBoardSidebarComponent } from '@widgets/org-board-sidebar';
@@ -43,53 +51,17 @@ export class OrgBoardPage implements OnInit {
     });
   }
 
-  protected readonly nodes = computed<BoardNode[]>(() => {
-    const users = this.usersStore.entityMap();
-    const depts = this.deptStore.entityMap();
-    return this.boardStore.entities()
-      .map((pos): BoardNode | null => {
-        const user = users[pos.userId];
-        if (!user) return null;
-        return {
-          userId: pos.userId,
-          user,
-          x: pos.x,
-          y: pos.y,
-          positionId: pos.id,
-          departmentIcon: depts[user.department]?.icon,
-        };
-      })
-      .filter((n): n is BoardNode => n !== null);
-  });
+  protected readonly nodes = computed<BoardNode[]>(() =>
+    computeBoardNodes(this.boardStore.entities(), this.usersStore.entityMap(), this.deptStore.entityMap()),
+  );
 
-  protected readonly edges = computed<BoardEdge[]>(() => {
-    const onBoard = this.boardStore.userIdsOnBoard();
-    return this.usersStore.entities()
-      .filter((u) => u.managerId && onBoard.has(u.id) && onBoard.has(u.managerId))
-      .map((u) => ({
-        id: `edge-${u.managerId}-${u.id}`,
-        managerId: u.managerId!,
-        subordinateId: u.id,
-        outputId: `out-${u.managerId}`,
-        inputId: `in-${u.id}`,
-      }));
-  });
+  protected readonly edges = computed<BoardEdge[]>(() =>
+    computeBoardEdges(this.usersStore.entities(), this.boardStore.userIdsOnBoard()),
+  );
 
-  protected readonly validTargetsByUser = computed(() => {
-    const users = this.usersStore.entities();
-    const onBoard = this.boardStore.userIdsOnBoard();
-    const result = new Map<string, string[]>();
-
-    for (const user of users) {
-      if (!onBoard.has(user.id)) continue;
-      const ancestors = getAncestors(user.id, users);
-      const validInputs = users
-        .filter((u) => onBoard.has(u.id) && u.id !== user.id && !ancestors.has(u.id))
-        .map((u) => `in-${u.id}`);
-      result.set(user.id, validInputs);
-    }
-    return result;
-  });
+  protected readonly validTargetsByUser = computed(() =>
+    computeValidTargets(this.usersStore.entities(), this.boardStore.userIdsOnBoard()),
+  );
 
   protected readonly selectedUserId = signal<string | null>(null);
 
@@ -106,12 +78,9 @@ export class OrgBoardPage implements OnInit {
     () => this.usersStore.error() ?? this.boardStore.error(),
   );
 
-  protected readonly highlightedUserIds = computed(() => {
-    const selected = this.selectedUserId();
-    if (!selected) return new Set<string>();
-    const subtree = getSubtree(selected, this.usersStore.entities());
-    return new Set([selected, ...subtree.map((u) => u.id)]);
-  });
+  protected readonly highlightedUserIds = computed(() =>
+    computeHighlightedUserIds(this.selectedUserId(), this.usersStore.entities()),
+  );
 
   ngOnInit(): void {
     this.usersStore.loadAll();
