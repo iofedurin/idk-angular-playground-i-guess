@@ -6,7 +6,7 @@ Code review (`docs/org-board-code-review.md`) выявил 10 проблем в 
 
 ---
 
-## Step 1: `UserAvatarComponent` — устранение дублирования ×5
+## Step 1: [x] `UserAvatarComponent` — устранение дублирования ×5
 
 **Цель:** Один компонент для всех avatar-плейсхолдеров.
 

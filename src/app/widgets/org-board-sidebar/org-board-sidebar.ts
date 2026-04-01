@@ -13,8 +13,6 @@ export class OrgBoardSidebarComponent {
   readonly users = input.required<User[]>();
   readonly userIdsOnBoard = input.required<Set<string>>();
   readonly selectedUser = input<User | null>(null);
-  readonly directReports = input<User[]>([]);
-  readonly manager = input<User | null>(null);
 
   readonly userSelected = output<string>();
   readonly backToList = output<void>();
@@ -22,6 +20,18 @@ export class OrgBoardSidebarComponent {
   readonly removeManager = output<string>(); // emits userId of the person whose manager should be removed
 
   protected readonly search = signal('');
+
+  protected readonly directReports = computed(() => {
+    const user = this.selectedUser();
+    if (!user) return [];
+    return this.users().filter((u) => u.managerId === user.id);
+  });
+
+  protected readonly manager = computed(() => {
+    const user = this.selectedUser();
+    if (!user?.managerId) return null;
+    return this.users().find((u) => u.id === user.managerId) ?? null;
+  });
 
   protected readonly mode = computed(() =>
     this.selectedUser() ? ('details' as const) : ('list' as const),

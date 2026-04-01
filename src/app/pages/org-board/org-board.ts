@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, OnInit, signal, viewChild } from '@angular/core';
-import { getAncestors, getDirectReports, getSubtree, UsersStore } from '@entities/user';
+import { getAncestors, getSubtree, UsersStore } from '@entities/user';
 import { DepartmentStore } from '@entities/department';
 import { BoardEdge, BoardNode, OrgBoardStore } from '@features/org-board';
 import { computeTreeLayout, type LayoutNode } from '@shared/lib';
@@ -96,16 +96,6 @@ export class OrgBoardPage implements OnInit {
   protected readonly selectedUser = computed(() => {
     const id = this.selectedUserId();
     return id ? (this.usersStore.entityMap()[id] ?? null) : null;
-  });
-
-  protected readonly directReports = computed(() => {
-    const user = this.selectedUser();
-    return user ? getDirectReports(user.id, this.usersStore.entities()) : [];
-  });
-
-  protected readonly manager = computed(() => {
-    const user = this.selectedUser();
-    return user?.managerId ? (this.usersStore.entityMap()[user.managerId] ?? null) : null;
   });
 
   protected readonly loading = computed(

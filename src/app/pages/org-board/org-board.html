@@ -9,8 +9,6 @@
         [users]="usersStore.entities()"
         [userIdsOnBoard]="boardStore.userIdsOnBoard()"
         [selectedUser]="selectedUser()"
-        [directReports]="directReports()"
-        [manager]="manager()"
         (userSelected)="onUserSelected($event)"
         (backToList)="onBackToList()"
         (removeFromBoard)="onRemoveFromBoard($event)"

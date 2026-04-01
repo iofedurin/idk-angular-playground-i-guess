@@ -27,9 +27,11 @@ const makeUser = (id: string, overrides: Partial<User> = {}): User => ({
   ...overrides,
 });
 
+// user '0' is manager of '1'; user '1' manages user '2'
 const mockUsers: User[] = [
-  makeUser('1', { firstName: 'Alice', lastName: 'Admin', jobTitle: 'manager' }),
-  makeUser('2', { firstName: 'Bob', lastName: 'Builder', jobTitle: 'dev' }),
+  makeUser('0', { firstName: 'Zara', lastName: 'Boss' }),
+  makeUser('1', { firstName: 'Alice', lastName: 'Admin', jobTitle: 'manager', managerId: '0' }),
+  makeUser('2', { firstName: 'Bob', lastName: 'Builder', jobTitle: 'dev', managerId: '1' }),
   makeUser('3', { firstName: 'Carol', lastName: 'Coder', jobTitle: 'dev' }),
 ];
 
@@ -44,8 +46,6 @@ describe('OrgBoardSidebarComponent', () => {
     fixture.componentRef.setInput('users', mockUsers);
     fixture.componentRef.setInput('userIdsOnBoard', userIdsOnBoard);
     fixture.componentRef.setInput('selectedUser', selectedUser);
-    fixture.componentRef.setInput('directReports', []);
-    fixture.componentRef.setInput('manager', null);
     fixture.detectChanges();
     el = fixture.nativeElement;
   }
@@ -62,7 +62,7 @@ describe('OrgBoardSidebarComponent', () => {
 
     it('renders user list', () => {
       const items = el.querySelectorAll('li');
-      expect(items.length).toBe(3);
+      expect(items.length).toBe(4);
     });
 
     it('marks on-board users with badge', () => {
@@ -73,7 +73,7 @@ describe('OrgBoardSidebarComponent', () => {
 
     it('applies fExternalItem to not-on-board users', () => {
       const draggable = el.querySelectorAll('[fExternalItem]');
-      expect(draggable).toHaveLength(2); // users 2 and 3
+      expect(draggable).toHaveLength(3); // users 0, 2, 3
     });
 
     it('filters users by firstName search', async () => {
@@ -117,22 +117,24 @@ describe('OrgBoardSidebarComponent', () => {
 
     it('sorts not-on-board users before on-board users', () => {
       const items = el.querySelectorAll('li');
-      // users 2 and 3 not on board → appear first, user 1 on board → last
+      // users 0, 2, 3 not on board → appear first; user 1 on board → last
       expect(items[0].textContent).not.toContain('Alice Admin');
-      expect(items[2].textContent).toContain('Alice Admin');
+      expect(items[3].textContent).toContain('Alice Admin');
     });
   });
 
   describe('details mode', () => {
-    const selectedUser = makeUser('1', { firstName: 'Alice', lastName: 'Admin', jobTitle: 'manager', bio: 'My bio' });
-    const directReport = makeUser('2', { firstName: 'Bob', lastName: 'Builder' });
-    const managerUser = makeUser('0', { firstName: 'Zara', lastName: 'Boss' });
+    // selectedUser is user '1' (managerId: '0'); sidebar computes manager + directReports from mockUsers
+    const selectedUser = makeUser('1', {
+      firstName: 'Alice',
+      lastName: 'Admin',
+      jobTitle: 'manager',
+      managerId: '0',
+      bio: 'My bio',
+    });
 
     beforeEach(() => {
       create(new Set(['1']), selectedUser);
-      fixture.componentRef.setInput('directReports', [directReport]);
-      fixture.componentRef.setInput('manager', managerUser);
-      fixture.detectChanges();
     });
 
     it('switches to details mode when selectedUser is provided', () => {
@@ -150,11 +152,11 @@ describe('OrgBoardSidebarComponent', () => {
       expect(el.textContent).toContain('My bio');
     });
 
-    it('shows manager name', () => {
+    it('shows manager name (computed from users input)', () => {
       expect(el.textContent).toContain('Zara Boss');
     });
 
-    it('shows direct reports list', () => {
+    it('shows direct reports list (computed from users input)', () => {
       expect(el.textContent).toContain('Bob Builder');
     });
 
