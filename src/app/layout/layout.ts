@@ -53,7 +53,7 @@ import { ActivityBellComponent } from '@features/activity-feed';
               <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
             </svg>
           </button>
-          <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box shadow-md w-48 z-10" role="menu">
+          <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box shadow-md w-48 z-50" role="menu">
             @for (app of appStore.apps(); track app.id) {
               <li role="none">
                 <a

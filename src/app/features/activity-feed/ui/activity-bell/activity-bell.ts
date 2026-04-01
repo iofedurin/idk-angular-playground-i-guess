@@ -36,7 +36,7 @@ import { ActivityFeedStore } from '../../activity-feed.store';
       </div>
       <div
         tabindex="0"
-        class="dropdown-content bg-base-200 rounded-box shadow-lg w-80 max-h-96 overflow-y-auto z-10"
+        class="dropdown-content bg-base-200 rounded-box shadow-lg w-80 max-h-96 overflow-y-auto z-50"
       >
         <div class="p-2">
           <div class="flex justify-between items-center px-2 pb-2 border-b border-base-content/10">
