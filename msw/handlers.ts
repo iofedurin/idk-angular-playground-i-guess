@@ -148,6 +148,16 @@ export const handlers = [
     return HttpResponse.json(pos, { status: 201 });
   }),
 
+  http.patch('/api/board-positions/bulk', async ({ request }) => {
+    await delay(DELAY_MS);
+    const { updates } = (await request.json()) as { updates: { id: string; x: number; y: number }[] };
+    if (!Array.isArray(updates)) return new HttpResponse(null, { status: 400 });
+    const updated = updates
+      .map((u) => db['board-positions'].update(u.id, { x: u.x, y: u.y }))
+      .filter((p): p is NonNullable<typeof p> => p != null);
+    return HttpResponse.json(updated);
+  }),
+
   http.patch('/api/board-positions/:id', async ({ params, request }) => {
     await delay(DELAY_MS);
     const body = (await request.json()) as Record<string, unknown>;
