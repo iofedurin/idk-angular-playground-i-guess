@@ -69,11 +69,8 @@
 </div>
 
 
-<app-confirm-dialog
-  #confirmDialog
-  title="Reassign manager"
-  [message]="reassignMessage()"
-  confirmLabel="Reassign"
-  (confirmed)="confirmReassignment()"
+<app-reassign-confirm
+  [pending]="pendingConnection()"
+  (confirmed)="confirmReassignment($event)"
   (cancelled)="cancelReassignment()"
 />

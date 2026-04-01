@@ -340,7 +340,8 @@ describe('OrgBoardPage', () => {
       (page as any).onConnectionCreated({ managerId: '3', subordinateId: '2' });
       expect((page as any).pendingConnection()).not.toBeNull();
 
-      const promise = (page as any).confirmReassignment();
+      const pending = (page as any).pendingConnection();
+      const promise = (page as any).confirmReassignment(pending);
       expect((page as any).pendingConnection()).toBeNull(); // cleared immediately
       httpMock.expectOne((r) => r.url.includes('/api/users/2') && r.method === 'PATCH').flush({
         ...mockUsers[2],

@@ -1,5 +1,13 @@
 import type { User } from '@entities/user';
 
+export interface PendingConnection {
+  managerId: string;
+  subordinateId: string;
+  subordinateName: string;
+  currentManagerName: string;
+  newManagerName: string;
+}
+
 export interface BoardPosition {
   id: string;
   userId: string;

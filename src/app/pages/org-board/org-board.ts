@@ -1,10 +1,12 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, OnInit, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core';
 import { UsersStore } from '@entities/user';
 import { DepartmentStore } from '@entities/department';
 import {
   BoardEdge,
   BoardNode,
   OrgBoardStore,
+  PendingConnection,
+  ReassignConfirmComponent,
   cascadeRemoveFromBoard,
   computeBoardEdges,
   computeBoardNodes,
@@ -15,19 +17,11 @@ import {
 import { computeTreeLayout, type LayoutNode } from '@shared/lib';
 import { OrgBoardCanvasComponent } from '@widgets/org-board-canvas';
 import { OrgBoardSidebarComponent } from '@widgets/org-board-sidebar';
-import { ConfirmDialogComponent, ErrorAlertComponent, SpinnerComponent } from '@shared/ui';
-
-interface PendingConnection {
-  managerId: string;
-  subordinateId: string;
-  subordinateName: string;
-  currentManagerName: string;
-  newManagerName: string;
-}
+import { ErrorAlertComponent, SpinnerComponent } from '@shared/ui';
 
 @Component({
   selector: 'app-org-board-page',
-  imports: [OrgBoardCanvasComponent, OrgBoardSidebarComponent, SpinnerComponent, ErrorAlertComponent, ConfirmDialogComponent],
+  imports: [OrgBoardCanvasComponent, OrgBoardSidebarComponent, SpinnerComponent, ErrorAlertComponent, ReassignConfirmComponent],
   templateUrl: './org-board.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -37,21 +31,6 @@ export class OrgBoardPage implements OnInit {
   private readonly deptStore = inject(DepartmentStore);
 
   protected readonly pendingConnection = signal<PendingConnection | null>(null);
-  protected readonly reassignMessage = computed(() => {
-    const p = this.pendingConnection();
-    if (!p) return '';
-    return `${p.subordinateName} already reports to ${p.currentManagerName}. Reassign to ${p.newManagerName}?`;
-  });
-  private readonly confirmDialogRef = viewChild<ConfirmDialogComponent>('confirmDialog');
-
-  constructor() {
-    // Imperative DOM: ConfirmDialogComponent.open() calls showModal() — legitimate effect() use (ADR-0009)
-    effect(() => {
-      if (this.pendingConnection()) {
-        this.confirmDialogRef()?.open();
-      }
-    });
-  }
 
   private readonly directReportsCounts = computed(() =>
     computeDirectReportsCounts(this.usersStore.entities(), this.boardStore.userIdsOnBoard()),
@@ -123,9 +102,7 @@ export class OrgBoardPage implements OnInit {
     await this.usersStore.setManager(event.subordinateId, event.managerId);
   }
 
-  protected async confirmReassignment(): Promise<void> {
-    const pending = this.pendingConnection();
-    if (!pending) return;
+  protected async confirmReassignment(pending: PendingConnection): Promise<void> {
     this.pendingConnection.set(null);
     await this.usersStore.setManager(pending.subordinateId, pending.managerId);
   }

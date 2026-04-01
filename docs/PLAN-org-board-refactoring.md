@@ -255,7 +255,7 @@ await Promise.all(
 
 ---
 
-## Step 6: Извлечь `cascadeRemoveFromBoard`
+## Step 6: [x] Извлечь `cascadeRemoveFromBoard`
 
 **Цель:** Вынести доменную логику cascade remove из page.
 
