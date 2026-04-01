@@ -1,8 +1,10 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import type { User } from '@entities/user';
+import { UserAvatarComponent } from '@entities/user';
 
 @Component({
   selector: 'app-user-board-card',
+  imports: [UserAvatarComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div
@@ -13,11 +15,7 @@ import type { User } from '@entities/user';
     >
       <div class="card-body p-3">
         <div class="flex items-center gap-2">
-          <div class="avatar avatar-placeholder">
-            <div class="bg-neutral text-neutral-content w-8 rounded-full">
-              <span class="text-xs">{{ initials() }}</span>
-            </div>
-          </div>
+          <app-user-avatar [firstName]="user().firstName" [lastName]="user().lastName" />
           <div class="min-w-0 flex-1">
             <h3 class="font-medium text-sm truncate">{{ user().firstName }} {{ user().lastName }}</h3>
             <div class="flex items-center gap-1">
@@ -45,9 +43,4 @@ export class UserBoardCardComponent {
   readonly highlighted = input(true);
   readonly directReportsCount = input(0);
   readonly departmentIcon = input<string | undefined>();
-
-  protected readonly initials = computed(() => {
-    const u = this.user();
-    return (u.firstName[0] ?? '') + (u.lastName[0] ?? '');
-  });
 }

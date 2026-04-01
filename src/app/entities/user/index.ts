@@ -14,3 +14,4 @@ export { AgeFieldComponent } from './ui/fields/age-field/age-field';
 export { RoleFieldComponent } from './ui/fields/role-field/role-field';
 export { ActiveFieldComponent } from './ui/fields/active-field/active-field';
 export { BioFieldComponent } from './ui/fields/bio-field/bio-field';
+export { UserAvatarComponent } from './ui/user-avatar/user-avatar';

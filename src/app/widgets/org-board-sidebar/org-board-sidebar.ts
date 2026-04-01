@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
 import { FFlowModule } from '@foblex/flow';
 import type { User } from '@entities/user';
+import { UserAvatarComponent } from '@entities/user';
 
 @Component({
   selector: 'app-org-board-sidebar',
-  imports: [FFlowModule],
+  imports: [FFlowModule, UserAvatarComponent],
   templateUrl: './org-board-sidebar.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
