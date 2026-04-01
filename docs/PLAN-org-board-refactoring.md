@@ -300,7 +300,7 @@ export async function cascadeRemoveFromBoard(
 
 ---
 
-## Step 7: Извлечь `ReassignConfirmComponent`
+## Step 7: [x] Извлечь `ReassignConfirmComponent`
 
 **Цель:** Убрать dialog state machine из page.
 

@@ -59,19 +59,19 @@ export class OrgBoardCanvasComponent {
     c.redraw();
   }
 
-  private _dragging = false;
+  private isDragging = false;
 
   protected onDragStarted(): void {
-    this._dragging = true;
+    this.isDragging = true;
   }
 
   protected onDragEnded(): void {
     // Reset after the click event fires (click fires synchronously after mouseup)
-    setTimeout(() => (this._dragging = false), 0);
+    setTimeout(() => (this.isDragging = false), 0);
   }
 
   protected onNodeClick(userId: string): void {
-    if (this._dragging) return;
+    if (this.isDragging) return;
     this.nodeClicked.emit(userId);
   }
 
@@ -91,6 +91,7 @@ export class OrgBoardCanvasComponent {
     this.connectionCreated.emit({ managerId, subordinateId });
   }
 
+  /** Handles disconnect only (drag to void). If Foblex emits reassign to new target, handle here. */
   protected onConnectionReassigned(event: FReassignConnectionEvent): void {
     if (event.endpoint === 'target' && event.nextTargetId == null) {
       const subordinateId = event.previousTargetId.replace('in-', '');
