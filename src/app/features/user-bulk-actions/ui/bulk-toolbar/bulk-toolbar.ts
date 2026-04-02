@@ -9,17 +9,17 @@ import { SelectionStore } from '../../lib/selection.store';
   imports: [ConfirmDialogComponent],
   template: `
     @if (selectionStore.selectedCount() > 0) {
-      <app-confirm-dialog
-        #confirmDialog
-        [message]="'Delete ' + selectionStore.selectedCount() + ' selected users?'"
-        (confirmed)="deleteSelected.emit()"
-      />
       <div class="flex items-center gap-3 p-3 bg-base-200 rounded-box mb-4">
         <span class="text-sm font-medium">{{ selectionStore.selectedCount() }} selected</span>
 
-        <button class="btn btn-sm btn-error" (click)="confirmDialog.open()">
-          Delete selected ({{ selectionStore.selectedCount() }})
-        </button>
+        <app-confirm-dialog
+          [message]="'Delete ' + selectionStore.selectedCount() + ' selected users?'"
+          (confirmed)="deleteSelected.emit()"
+        >
+          <button class="btn btn-sm btn-error">
+            Delete selected ({{ selectionStore.selectedCount() }})
+          </button>
+        </app-confirm-dialog>
 
         <div class="dropdown">
           <button tabindex="0" class="btn btn-sm btn-outline">Change role ▾</button>

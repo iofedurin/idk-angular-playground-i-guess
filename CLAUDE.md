@@ -28,6 +28,7 @@ Before making architectural decisions, consult the ADRs:
 @docs/adr/0011-feature-store-for-ui-state.md
 @docs/adr/0012-page-decomposition-pure-functions.md
 @docs/adr/0013-foblex-canvas-in-fsd.md
+@docs/adr/0014-dialog-content-projection.md
 
 Follow the established patterns. When making a new non-obvious decision, create a new ADR in `docs/adr/`.
 

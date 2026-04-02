@@ -5,7 +5,6 @@ import {
   effect,
   inject,
   input,
-  output,
   signal,
   viewChild,
 } from '@angular/core';
@@ -17,7 +16,12 @@ import { EmailFieldComponent, RoleFieldComponent, UserRole, roleSchema, userEmai
   selector: 'app-user-invite-dialog',
   imports: [FormRoot, EmailFieldComponent, RoleFieldComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { style: 'display: contents' },
   template: `
+    <span style="display: contents" (click)="open.set(true)">
+      <ng-content />
+    </span>
+
     <dialog class="modal" #dialog>
       <div class="modal-box">
         <h3 class="font-bold text-lg mb-4">Invite User</h3>
@@ -28,22 +32,21 @@ import { EmailFieldComponent, RoleFieldComponent, UserRole, roleSchema, userEmai
 
           <div class="modal-action mt-0">
             <button type="submit" [disabled]="inviteForm().submitting()" class="btn btn-primary">Send Invite</button>
-            <button type="button" class="btn btn-ghost" (click)="closed.emit()">Cancel</button>
+            <button type="button" class="btn btn-ghost" (click)="close()">Cancel</button>
           </div>
         </form>
       </div>
 
       <form method="dialog" class="modal-backdrop">
-        <button (click)="closed.emit()">close</button>
+        <button (click)="close()">close</button>
       </form>
     </dialog>
   `,
 })
 export class UserInviteDialogComponent {
-  readonly open = input.required<boolean>();
   readonly appId = input.required<string>();
-  readonly closed = output<void>();
 
+  protected readonly open = signal(false);
   private readonly dialogRef = viewChild<ElementRef<HTMLDialogElement>>('dialog');
   private readonly store = inject(InvitationStore);
 
@@ -63,7 +66,7 @@ export class UserInviteDialogComponent {
             role: this.model().role,
             appId: this.appId(),
           });
-          if (invitation) this.closed.emit();
+          if (invitation) this.close();
           return undefined;
         },
       },
@@ -82,5 +85,9 @@ export class UserInviteDialogComponent {
         this.model.set({ email: '', role: '' as UserRole });
       }
     });
+  }
+
+  protected close(): void {
+    this.open.set(false);
   }
 }

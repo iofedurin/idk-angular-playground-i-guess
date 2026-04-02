@@ -8,20 +8,19 @@ import { ConfirmDialogComponent } from '@shared/ui';
   imports: [ConfirmDialogComponent],
   template: `
     <app-confirm-dialog
-      #confirmDialog
       message="Are you sure you want to delete this department?"
       (confirmed)="doDelete()"
-    />
-    <button
-      class="btn btn-sm btn-error btn-outline"
-      [disabled]="deleting()"
-      (click)="confirmDialog.open()"
     >
-      @if (deleting()) {
-        <span class="loading loading-spinner loading-xs"></span>
-      }
-      Delete
-    </button>
+      <button
+        class="btn btn-sm btn-error btn-outline"
+        [disabled]="deleting()"
+      >
+        @if (deleting()) {
+          <span class="loading loading-spinner loading-xs"></span>
+        }
+        Delete
+      </button>
+    </app-confirm-dialog>
   `,
 })
 export class DepartmentDeleteActionComponent {

@@ -2,16 +2,12 @@
   <div class="flex items-center justify-between mb-6">
     <h1 class="text-2xl font-bold">Users</h1>
     <div class="flex gap-2">
-      <button class="btn btn-outline" (click)="showInviteDialog.set(true)">Invite</button>
+      <app-user-invite-dialog [appId]="appId">
+        <button class="btn btn-outline">Invite</button>
+      </app-user-invite-dialog>
       <a [routerLink]="['/app', appId, 'users', 'new']" class="btn btn-primary">Add User</a>
     </div>
   </div>
-
-  <app-user-invite-dialog
-    [open]="showInviteDialog()"
-    [appId]="appId"
-    (closed)="showInviteDialog.set(false)"
-  />
 
   <app-user-filters [filters]="filters()" (filtersChange)="onFiltersChange($event)" />
 

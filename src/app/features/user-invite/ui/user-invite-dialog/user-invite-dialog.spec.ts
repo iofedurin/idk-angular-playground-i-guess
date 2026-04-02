@@ -27,7 +27,6 @@ describe('UserInviteDialogComponent', () => {
     httpMock = TestBed.inject(HttpTestingController);
 
     fixture = TestBed.createComponent(UserInviteDialogComponent);
-    fixture.componentRef.setInput('open', true);
     fixture.componentRef.setInput('appId', 'acme');
     fixture.detectChanges();
   });
@@ -46,17 +45,15 @@ describe('UserInviteDialogComponent', () => {
     expect(buttons.some((b) => b.textContent?.includes('Send Invite'))).toBe(true);
   });
 
-  it('emits closed when Cancel is clicked', () => {
-    const closed: boolean[] = [];
-    fixture.componentInstance.closed.subscribe(() => closed.push(true));
-
+  it('closes dialog when Cancel is clicked', () => {
     const el: HTMLElement = fixture.nativeElement;
     const cancelBtn = Array.from(el.querySelectorAll('button')).find((b) =>
       b.textContent?.includes('Cancel'),
     ) as HTMLButtonElement;
     cancelBtn.click();
+    fixture.detectChanges();
 
-    expect(closed).toHaveLength(1);
+    expect(fixture.componentInstance['open']()).toBe(false);
   });
 
   it('InvitationStore.create() POSTs to /api/invitations', async () => {

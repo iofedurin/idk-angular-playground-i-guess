@@ -34,8 +34,6 @@ export class UsersListComponent {
   protected readonly filters = signal<UserFilters>(EMPTY_FILTERS);
   protected readonly sort = signal<SortState>(DEFAULT_SORT);
   protected readonly page = signal(1);
-  protected readonly showInviteDialog = signal(false);
-
   protected readonly pageStart = computed(() => (this.page() - 1) * PER_PAGE + 1);
   protected readonly pageEnd = computed(() => Math.min(this.page() * PER_PAGE, this.store.totalCount()));
   protected readonly pages = computed(() => Array.from({ length: this.store.totalPages() }, (_, i) => i + 1));

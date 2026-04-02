@@ -3,7 +3,12 @@ import { ChangeDetectionStrategy, Component, ElementRef, input, output, viewChil
 @Component({
   selector: 'app-confirm-dialog',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { style: 'display: contents' },
   template: `
+    <span style="display: contents" (click)="open()">
+      <ng-content />
+    </span>
+
     <dialog #dialog class="modal">
       <div class="modal-box">
         <h3 class="text-lg font-bold">{{ title() }}</h3>
@@ -13,7 +18,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, input, output, viewChil
           <button class="btn btn-error" (click)="onConfirm()">{{ confirmLabel() }}</button>
         </div>
       </div>
-      <form method="dialog" class="modal-backdrop"><button>close</button></form>
+      <form method="dialog" class="modal-backdrop"><button (click)="cancel()">close</button></form>
     </dialog>
   `,
 })
